@@ -1,0 +1,7 @@
+include "bullet"
+include "freetype"
+include "zlib"
+include "irrlicht"
+include "bzip2"
+include "jpeglib"
+include "libpng"
