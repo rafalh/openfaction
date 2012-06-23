@@ -3,6 +3,7 @@ project "OfServer"
 	language "C++"
 	files {
 		"*.h", "*.cpp",
+		"gamemodes/*.h", "gamemodes/*.cpp",
 		"../shared/*.h", "../shared/*.cpp",
 		"../shared/tables/*.h", "../shared/tables/*.cpp",
 		"../packets/*.h", "../packets/*.cpp"

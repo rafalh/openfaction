@@ -3,6 +3,8 @@ project "OfClient"
 	language "C++"
 	files {
 		"*.h", "*.cpp",
+		"camera/*.h", "camera/*.cpp",
+		"irr/*.h", "irr/*.cpp",
 		"../shared/*.h", "../shared/*.cpp",
 		"../shared/tables/*.h", "../shared/tables/*.cpp"
 	}
