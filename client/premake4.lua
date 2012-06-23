@@ -23,6 +23,7 @@ project "OfClient"
 		"LinearMath",
 		"Irrlicht",
 		"irrKlang",
+		"FreeType",
 	}
 	defines { "OF_CLIENT" }
 	
