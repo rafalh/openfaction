@@ -156,24 +156,33 @@ int main(int argc, const char *argv[])
     // Init randomizer
     srand((unsigned)time(NULL));
     
-    // Init server configuration
-    CServerConfig *pServConfig = new CServerConfig;
-    int iRet = ParseCmdLine(argc, argv, pServConfig);
-    if(iRet <= 0)
-        return iRet;
-    
-    // Init the server
-    g_pServer = new CServer(pServConfig);
-    g_pServer->Init();
-    
-    // Load banlist
-    CBanlist *pBanlist = g_pServer->GetBanlist();
-    if(pBanlist->Load() >= 0)
-        CLogger::GetInst().PrintStatus("Loaded %u %s.", pBanlist->GetCount(), pBanlist->GetCount() != 1 ? "bans" : "ban");
-    
-    // Load MOD
-    if(pServConfig->GetMod())
-        g_pServer->GetGame()->LoadMod(pServConfig->GetMod());
+    try
+    {
+        // Init server configuration
+        CServerConfig *pServConfig = new CServerConfig;
+        int iRet = ParseCmdLine(argc, argv, pServConfig);
+        if(iRet <= 0)
+            return iRet;
+        
+        // Init the server
+        g_pServer = new CServer(pServConfig);
+        g_pServer->Init();
+        
+        // Load banlist
+        CBanlist *pBanlist = g_pServer->GetBanlist();
+        if(pBanlist->Load() >= 0)
+            CLogger::GetInst().PrintStatus("Loaded %u %s.", pBanlist->GetCount(), pBanlist->GetCount() != 1 ? "bans" : "ban");
+        
+        // Load MOD
+        if(pServConfig->GetMod())
+            g_pServer->GetGame()->LoadMod(pServConfig->GetMod());
+    }
+    catch(const exception &e)
+    {
+        pConsole->Print("Failed to initialize server:\n%s\n", e.what());
+        delete pConsole;
+        return -1;
+    }
     
     /* Set exit handler */
 #if !LINUX
@@ -198,3 +207,4 @@ int main(int argc, const char *argv[])
     
     return 0;
 }
+

@@ -97,7 +97,7 @@ inline CServer::~CServer()
     m_pBanlist = NULL;
 }
 
-void CServer::Init()
+void CServer::Init() throw(CException)
 {
     CGame::SConfig GameConfig;
     GameConfig.bWeaponsStay = m_pConf->GetWeaponsStay();
@@ -197,7 +197,7 @@ void CServer::Stop()
     g_Lock.Release();
 }
 
-void CServer::LoadLevel(const char *pszFilename)
+void CServer::LoadLevel(const char *pszFilename) throw(CException)
 {
     /* Load level */
     m_pGame->LoadLevel(pszFilename);
@@ -211,7 +211,7 @@ void CServer::LoadLevel(const char *pszFilename)
     m_LoadingLevelTimestamp = time(NULL);
 }
 
-void CServer::LoadNextLevel()
+void CServer::LoadNextLevel() throw(CException)
 {
     ++m_nCurrentLevel;
     

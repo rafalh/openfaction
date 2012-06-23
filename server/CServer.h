@@ -22,6 +22,7 @@
 #include "rfproto.h"
 #include "CGame.h"
 #include "CEventsHandler.h"
+#include "CException.h"
 
 class CPlayer;
 class CClutter;
@@ -40,11 +41,11 @@ class CServer: public CEventsHandler
     public:
         CServer(CServerConfig *pServerConfig);
         ~CServer();
-        void Init();
+        void Init() throw(CException);
         void Start(bool bBlock);
         void Stop();
-        void LoadLevel(const char *pFileName);
-        void LoadNextLevel();
+        void LoadLevel(const char *pFileName) throw(CException);
+        void LoadNextLevel() throw(CException);
         void SendGlobalMessage(const char *pMsg) const;
         
         inline CSocket &GetSocket()
