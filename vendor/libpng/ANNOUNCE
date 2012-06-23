@@ -1,5 +1,5 @@
 
-Libpng 1.5.7 - December 15, 2011
+Libpng 1.5.11 - June 14, 2012
 
 This is a public release of libpng, intended for use in production codes.
 
@@ -8,86 +8,43 @@ Files available for download:
 Source files with LF line endings (for Unix/Linux) and with a
 "configure" script
 
-   libpng-1.5.7.tar.xz (LZMA-compressed, recommended)
-   libpng-1.5.7.tar.gz
-   libpng-1.5.7.tar.bz2
+   libpng-1.5.11.tar.xz (LZMA-compressed, recommended)
+   libpng-1.5.11.tar.gz
+   libpng-1.5.11.tar.bz2
 
 Source files with CRLF line endings (for Windows), without the
 "configure" script
 
-   lpng157.7z  (LZMA-compressed, recommended)
-   lpng157.zip
+   lpng1511.7z  (LZMA-compressed, recommended)
+   lpng1511.zip
 
 Other information:
 
-   libpng-1.5.7-README.txt
-   libpng-1.5.7-LICENSE.txt
+   libpng-1.5.11-README.txt
+   libpng-1.5.11-LICENSE.txt
 
-Changes since the last public release (1.5.6):
-  Added support for ARM processor (Mans Rullgard)
-  Fixed bug in pngvalid on early allocation failure; fixed type cast in
-    pngmem.c; pngvalid would attempt to call png_error() if the allocation
-    of a png_struct or png_info failed. This would probably have led to a
-    crash.  The pngmem.c implementation of png_malloc() included a cast
-    to png_size_t which would fail on large allocations on 16-bit systems.
-  Fix for the preprocessor of the Intel C compiler. The preprocessor
-    splits adjacent @ signs with a space; this changes the concatentation
-    token from @-@-@ to PNG_JOIN; that should work with all compiler
-    preprocessors.
-  Paeth filter speed improvements from work by Siarhei Siamashka. This
-    changes the 'Paeth' reconstruction function to improve the GCC code
-    generation on x86. The changes are only part of the suggested ones;
-    just the changes that definitely improve speed and remain simple.
-    The changes also slightly increase the clarity of the code.
-  Check compression_type parameter in png_get_iCCP and remove spurious
-    casts. The compression_type parameter is always assigned to, so must
-    be non-NULL. The cast of the profile length potentially truncated the
-    value unnecessarily on a 16-bit int system, so the cast of the (byte)
-    compression type to (int) is specified by ANSI-C anyway.
-  Fixed FP division by zero in pngvalid.c; the 'test_pixel' code left
-    the sBIT fields in the test pixel as 0, which resulted in a floating
-    point division by zero which was irrelevant but causes systems where
-    FP exceptions cause a crash. Added code to pngvalid to turn on FP
-    exceptions if the appropriate glibc support is there to ensure this is
-    tested in the future.
-  Added versioning to pnglibconf.h comments.
-  Installed more accurate linear to sRGB conversion tables. The slightly
-    modified tables reduce the number of 16-bit values that
-    convert to an off-by-one 8-bit value.  The "makesRGB.c" code that was used
-    to generate the tables is now in a contrib/sRGBtables sub-directory.
-  Added run-time detection of NEON support.
-  Multiple transform bug fixes plus a work-round for double gamma correction.
-    libpng does not support more than one transform that requires linear data
-    at once - if this is tried typically the results is double gamma
-    correction. Since the simplified APIs can need rgb to gray combined with
-    a compose operation it is necessary to do one of these outside the main
-    libpng transform code. This check-in also contains fixes to various bugs
-    in compose and rgb to gray (on palette).
-  Fixes for C++ compilation using g++ When libpng source is compiled
-    using g++. The compiler imposes C++ rules on the C source; thus it
-    is desireable to make the source work with either C or C++ rules
-    without throwing away useful error information.  This change adds
-    png_voidcast to allow C semantic (void*) cases or the corresponding
-    C++ static_cast operation, as appropriate.
-  Added --noexecstack to assembler file compilation. GCC does not set
-    this on assembler compilation, even though it does on C compilation.
-    This creates security issues if assembler code is enabled; the
-    work-around is to set it by default in the flags for $(CCAS)
-  Removed "zTXt" from warning in generic chunk decompression function.
-  Validate time settings passed to pngset() and png_convert_to_rfc1123()
-    (Frank Busse).
-  Added MINGW support to CMakeLists.txt
-  Reject invalid compression flag or method when reading the iTXt chunk.
-  Moved pngvalid.c into contrib/libtests
-  Rebuilt Makefile.in, configure, etc., with autoconf-2.68
-  Replaced an "#if" with "#ifdef" in pngrtran.c
-  Revised #if PNG_DO_BC block in png.c (use #ifdef and add #else)
-  Revised pngconf.h to use " __declspec(restrict)" only when MSC_VER >= 1400,
-    as in libpng-1.5.4.
-  Put CRLF line endings in the owatcom project files.
-  Updated CMakeLists.txt to account for the relocation of pngvalid.c
-  Minor fixes to pngvalid.c for gcc 4.6.2 compatibility to remove warnings
-    reported by earlier versions.
+Changes since the last public release (1.5.10):
+  Revised scripts/makefile.darwin: use system zlib; remove quotes around
+    architecture list; add missing ppc architecture; add architecture options
+    to shared library link; don't try to create a shared lib based on missing
+    RELEASE variable.
+  Enable png_set_check_for_invalid_index() for both read and write.
+  Removed #ifdef PNG_HANDLE_AS_UNKNOWN_SUPPORTED/#endif in pngpriv.h around
+    declaration of png_handle_unknown().
+  Added -lssp_nonshared in a comment in scripts/makefile.freebsd
+    and changed deprecated NOOBJ and NOPROFILE to NO_OBJ and NO_PROFILE.
+  Revised CMakeLists.txt to not attempt to make a symlink under mingw.
+  Added two images to contrib/pngsuite (1-bit and 2-bit transparent grayscale),
+    and renamed three whose names were inconsistent with those in
+    pngsuite/README.txt.
+  Do not depend upon a GCC feature macro being available for use in generating
+    the linker mapfile symbol prefix.
+  Made fixes for new optimization warnings from gcc 4.7.0. The compiler
+    performed an optimization which is safe but then warned about it.
+    Changing the type of 'palette_number' in pngvalid.c removes the warning.
+  Improved efficiency of new do_check_palette_indexes() function.
+  Don't check palette indexes if num_palette is 0 (as it can be in MNG files).
+  Include zlib.h in contrib/gregbook and contrib/visupng examples.
 
 Send comments/corrections/commendations to png-mng-implement at lists.sf.net
 (subscription required; visit

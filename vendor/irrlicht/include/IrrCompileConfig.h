@@ -176,7 +176,7 @@ the engine will no longer read .jpeg images. */
 //! Define _IRR_USE_NON_SYSTEM_JPEG_LIB_ to let irrlicht use the jpeglib which comes with irrlicht.
 /** If this is commented out, Irrlicht will try to compile using the jpeg lib installed in the system.
 	This is only used when _IRR_COMPILE_WITH_LIBJPEG_ is defined. */
-#define _IRR_USE_NON_SYSTEM_JPEG_LIB_
+//#define _IRR_USE_NON_SYSTEM_JPEG_LIB_
 
 
 //! Define _IRR_COMPILE_WITH_LIBPNG_ to enable compiling the engine using libpng.
@@ -187,7 +187,7 @@ the engine will no longer read .png images. */
 //! Define _IRR_USE_NON_SYSTEM_LIBPNG_ to let irrlicht use the libpng which comes with irrlicht.
 /** If this is commented out, Irrlicht will try to compile using the libpng installed in the system.
 	This is only used when _IRR_COMPILE_WITH_LIBPNG_ is defined. */
-#define _IRR_USE_NON_SYSTEM_LIB_PNG_
+//#define _IRR_USE_NON_SYSTEM_LIB_PNG_
 
 
 //! Define _IRR_D3D_NO_SHADER_DEBUGGING to disable shader debugging in D3D9
@@ -243,7 +243,7 @@ tool <http://developer.nvidia.com/object/nvperfhud_home.html>. */
 //! Define _IRR_COMPILE_WITH_SKINNED_MESH_SUPPORT_ if you want to use bone based
 /** animated meshes. If you compile without this, you will be unable to load
 B3D, MS3D or X meshes */
-#define _IRR_COMPILE_WITH_SKINNED_MESH_SUPPORT_
+//#define _IRR_COMPILE_WITH_SKINNED_MESH_SUPPORT_
 
 #ifdef _IRR_COMPILE_WITH_SKINNED_MESH_SUPPORT_
 //! Define _IRR_COMPILE_WITH_B3D_LOADER_ if you want to use Blitz3D files
@@ -257,48 +257,48 @@ B3D, MS3D or X meshes */
 #endif
 
 //! Define _IRR_COMPILE_WITH_IRR_MESH_LOADER_ if you want to load Irrlicht Engine .irrmesh files
-#define _IRR_COMPILE_WITH_IRR_MESH_LOADER_
+//#define _IRR_COMPILE_WITH_IRR_MESH_LOADER_
 
 //! Define _IRR_COMPILE_WITH_MD2_LOADER_ if you want to load Quake 2 animated files
-#define _IRR_COMPILE_WITH_MD2_LOADER_
+//#define _IRR_COMPILE_WITH_MD2_LOADER_
 //! Define _IRR_COMPILE_WITH_MD3_LOADER_ if you want to load Quake 3 animated files
-#define _IRR_COMPILE_WITH_MD3_LOADER_
+//#define _IRR_COMPILE_WITH_MD3_LOADER_
 
 //! Define _IRR_COMPILE_WITH_3DS_LOADER_ if you want to load 3D Studio Max files
-#define _IRR_COMPILE_WITH_3DS_LOADER_
+//#define _IRR_COMPILE_WITH_3DS_LOADER_
 //! Define _IRR_COMPILE_WITH_COLLADA_LOADER_ if you want to load Collada files
-#define _IRR_COMPILE_WITH_COLLADA_LOADER_
+//#define _IRR_COMPILE_WITH_COLLADA_LOADER_
 //! Define _IRR_COMPILE_WITH_CSM_LOADER_ if you want to load Cartography Shop files
-#define _IRR_COMPILE_WITH_CSM_LOADER_
+//#define _IRR_COMPILE_WITH_CSM_LOADER_
 //! Define _IRR_COMPILE_WITH_BSP_LOADER_ if you want to load Quake 3 BSP files
-#define _IRR_COMPILE_WITH_BSP_LOADER_
+//#define _IRR_COMPILE_WITH_BSP_LOADER_
 //! Define _IRR_COMPILE_WITH_DMF_LOADER_ if you want to load DeleD files
-#define _IRR_COMPILE_WITH_DMF_LOADER_
+//#define _IRR_COMPILE_WITH_DMF_LOADER_
 //! Define _IRR_COMPILE_WITH_LMTS_LOADER_ if you want to load LMTools files
-#define _IRR_COMPILE_WITH_LMTS_LOADER_
+//#define _IRR_COMPILE_WITH_LMTS_LOADER_
 //! Define _IRR_COMPILE_WITH_MY3D_LOADER_ if you want to load MY3D files
-#define _IRR_COMPILE_WITH_MY3D_LOADER_
+//#define _IRR_COMPILE_WITH_MY3D_LOADER_
 //! Define _IRR_COMPILE_WITH_OBJ_LOADER_ if you want to load Wavefront OBJ files
-#define _IRR_COMPILE_WITH_OBJ_LOADER_
+//#define _IRR_COMPILE_WITH_OBJ_LOADER_
 //! Define _IRR_COMPILE_WITH_OCT_LOADER_ if you want to load FSRad OCT files
-#define _IRR_COMPILE_WITH_OCT_LOADER_
+//#define _IRR_COMPILE_WITH_OCT_LOADER_
 //! Define _IRR_COMPILE_WITH_LWO_LOADER_ if you want to load Lightwave3D files
-#define _IRR_COMPILE_WITH_LWO_LOADER_
+//#define _IRR_COMPILE_WITH_LWO_LOADER_
 //! Define _IRR_COMPILE_WITH_STL_LOADER_ if you want to load stereolithography files
-#define _IRR_COMPILE_WITH_STL_LOADER_
+//#define _IRR_COMPILE_WITH_STL_LOADER_
 //! Define _IRR_COMPILE_WITH_PLY_LOADER_ if you want to load Polygon (Stanford Triangle) files
-#define _IRR_COMPILE_WITH_PLY_LOADER_
+//#define _IRR_COMPILE_WITH_PLY_LOADER_
 
 //! Define _IRR_COMPILE_WITH_IRR_WRITER_ if you want to write static .irrMesh files
-#define _IRR_COMPILE_WITH_IRR_WRITER_
+//#define _IRR_COMPILE_WITH_IRR_WRITER_
 //! Define _IRR_COMPILE_WITH_COLLADA_WRITER_ if you want to write Collada files
-#define _IRR_COMPILE_WITH_COLLADA_WRITER_
+//#define _IRR_COMPILE_WITH_COLLADA_WRITER_
 //! Define _IRR_COMPILE_WITH_STL_WRITER_ if you want to write .stl files
-#define _IRR_COMPILE_WITH_STL_WRITER_
+//#define _IRR_COMPILE_WITH_STL_WRITER_
 //! Define _IRR_COMPILE_WITH_OBJ_WRITER_ if you want to write .obj files
-#define _IRR_COMPILE_WITH_OBJ_WRITER_
+//#define _IRR_COMPILE_WITH_OBJ_WRITER_
 //! Define _IRR_COMPILE_WITH_PLY_WRITER_ if you want to write .ply files
-#define _IRR_COMPILE_WITH_PLY_WRITER_
+//#define _IRR_COMPILE_WITH_PLY_WRITER_
 
 //! Define _IRR_COMPILE_WITH_BMP_LOADER_ if you want to load .bmp files
 //! Disabling this loader will also disable the built-in font
@@ -306,38 +306,38 @@ B3D, MS3D or X meshes */
 //! Define _IRR_COMPILE_WITH_JPG_LOADER_ if you want to load .jpg files
 #define _IRR_COMPILE_WITH_JPG_LOADER_
 //! Define _IRR_COMPILE_WITH_PCX_LOADER_ if you want to load .pcx files
-#define _IRR_COMPILE_WITH_PCX_LOADER_
+//#define _IRR_COMPILE_WITH_PCX_LOADER_
 //! Define _IRR_COMPILE_WITH_PNG_LOADER_ if you want to load .png files
 #define _IRR_COMPILE_WITH_PNG_LOADER_
 //! Define _IRR_COMPILE_WITH_PPM_LOADER_ if you want to load .ppm/.pgm/.pbm files
-#define _IRR_COMPILE_WITH_PPM_LOADER_
+//#define _IRR_COMPILE_WITH_PPM_LOADER_
 //! Define _IRR_COMPILE_WITH_PSD_LOADER_ if you want to load .psd files
-#define _IRR_COMPILE_WITH_PSD_LOADER_
+//#define _IRR_COMPILE_WITH_PSD_LOADER_
 //! Define _IRR_COMPILE_WITH_TGA_LOADER_ if you want to load .tga files
 #define _IRR_COMPILE_WITH_TGA_LOADER_
 //! Define _IRR_COMPILE_WITH_WAL_LOADER_ if you want to load .wal files
-#define _IRR_COMPILE_WITH_WAL_LOADER_
+//#define _IRR_COMPILE_WITH_WAL_LOADER_
 //! Define _IRR_COMPILE_WITH_RGB_LOADER_ if you want to load Silicon Graphics .rgb/.rgba/.sgi/.int/.inta/.bw files
-#define _IRR_COMPILE_WITH_RGB_LOADER_
+//#define _IRR_COMPILE_WITH_RGB_LOADER_
 
 //! Define _IRR_COMPILE_WITH_BMP_WRITER_ if you want to write .bmp files
 #define _IRR_COMPILE_WITH_BMP_WRITER_
 //! Define _IRR_COMPILE_WITH_JPG_WRITER_ if you want to write .jpg files
 #define _IRR_COMPILE_WITH_JPG_WRITER_
 //! Define _IRR_COMPILE_WITH_PCX_WRITER_ if you want to write .pcx files
-#define _IRR_COMPILE_WITH_PCX_WRITER_
+//#define _IRR_COMPILE_WITH_PCX_WRITER_
 //! Define _IRR_COMPILE_WITH_PNG_WRITER_ if you want to write .png files
 #define _IRR_COMPILE_WITH_PNG_WRITER_
 //! Define _IRR_COMPILE_WITH_PPM_WRITER_ if you want to write .ppm files
-#define _IRR_COMPILE_WITH_PPM_WRITER_
+//#define _IRR_COMPILE_WITH_PPM_WRITER_
 //! Define _IRR_COMPILE_WITH_PSD_WRITER_ if you want to write .psd files
-#define _IRR_COMPILE_WITH_PSD_WRITER_
+//#define _IRR_COMPILE_WITH_PSD_WRITER_
 //! Define _IRR_COMPILE_WITH_TGA_WRITER_ if you want to write .tga files
 #define _IRR_COMPILE_WITH_TGA_WRITER_
 
 //! Define __IRR_COMPILE_WITH_ZIP_ARCHIVE_LOADER_ if you want to open ZIP and GZIP archives
 /** ZIP reading has several more options below to configure. */
-#define __IRR_COMPILE_WITH_ZIP_ARCHIVE_LOADER_
+//#define __IRR_COMPILE_WITH_ZIP_ARCHIVE_LOADER_
 #ifdef __IRR_COMPILE_WITH_ZIP_ARCHIVE_LOADER_
 //! Define _IRR_COMPILE_WITH_ZLIB_ to enable compiling the engine using zlib.
 /** This enables the engine to read from compressed .zip archives. If you
@@ -368,13 +368,13 @@ currently only supports zip archives, though. */
 #endif
 
 //! Define __IRR_COMPILE_WITH_MOUNT_ARCHIVE_LOADER_ if you want to mount folders as archives
-#define __IRR_COMPILE_WITH_MOUNT_ARCHIVE_LOADER_
+//#define __IRR_COMPILE_WITH_MOUNT_ARCHIVE_LOADER_
 //! Define __IRR_COMPILE_WITH_PAK_ARCHIVE_LOADER_ if you want to open ID software PAK archives
-#define __IRR_COMPILE_WITH_PAK_ARCHIVE_LOADER_
+//#define __IRR_COMPILE_WITH_PAK_ARCHIVE_LOADER_
 //! Define __IRR_COMPILE_WITH_NPK_ARCHIVE_LOADER_ if you want to open Nebula Device NPK archives
-#define __IRR_COMPILE_WITH_NPK_ARCHIVE_LOADER_
+//#define __IRR_COMPILE_WITH_NPK_ARCHIVE_LOADER_
 //! Define __IRR_COMPILE_WITH_TAR_ARCHIVE_LOADER_ if you want to open TAR archives
-#define __IRR_COMPILE_WITH_TAR_ARCHIVE_LOADER_
+//#define __IRR_COMPILE_WITH_TAR_ARCHIVE_LOADER_
 
 //! Set FPU settings
 /** Irrlicht should use approximate float and integer fpu techniques

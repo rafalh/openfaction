@@ -5,6 +5,8 @@
 		"include",
 		"src",
 		"../zlib",
+		"../jpeglib",
+		"../libpng",
 	}
 	
 	files {
