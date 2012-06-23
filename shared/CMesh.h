@@ -58,7 +58,7 @@ class CMesh: public CSharedObject
     public:
         CMesh(CMeshMgr *pMeshMgr = NULL);
         ~CMesh();
-        int Load(CInputBinaryStream &Stream);
+        void Load(CInputBinaryStream &Stream);
         void Unload();
         btMultiSphereShape *GetMultiColSphere();
 #ifdef OF_CLIENT

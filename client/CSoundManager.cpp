@@ -37,8 +37,6 @@ bool CSoundManager::PlayFoleySound(const char *pszName)
     if(!pszName || !pszName[0])
         return false;
     
-    m_pGame->GetConsole()->DbgPrint("PlayFoleySound %s", pszName);
-    
     // Find foley sound set
     const SFoleySound *pSndSet = m_pGame->GetFoleyTbl()->Get(pszName);
     if(!pSndSet || pSndSet->Sounds.empty())
@@ -73,7 +71,6 @@ bool CSoundManager::PlaySound(const char *pszFilename)
         m_pGame->GetConsole()->DbgPrint("Failed to play sound %s", pszFilename);
         return false;
     }
-        
     
     // TODO: Set sound parameters
     pSound->setIsPaused(false);

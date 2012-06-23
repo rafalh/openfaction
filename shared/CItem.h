@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CItem.h
-*  PURPOSE:     
+*  PURPOSE:     Item (pickup) representation, e. g. life, armor, CTF flags
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/

@@ -13,12 +13,38 @@
 #include "CVirtualFileSystem.h"
 #include "CConsole.h"
 #include "CGame.h"
+#include "CException.h"
+#include "utils.h"
 
 using namespace std;
 
 CMeshMgr::~CMeshMgr()
 {
     assert(m_Meshes.size() == 0);
+}
+
+std::string CMeshMgr::FixFilename(const char *pszFilename)
+{
+    if(CVirtualFileSystem::GetInst().DoesFileExists(pszFilename))
+        return pszFilename;
+    
+    // Try other supported extension
+    const char *ExtList[] = {".v3m", ".v3c"};
+    string strFilename = pszFilename;
+    
+    for(unsigned i = 0; i < COUNTOF(ExtList); ++i)
+    {
+        size_t ExtPos = strFilename.rfind('.');
+        if(ExtPos != string::npos)
+            strFilename.erase(ExtPos);
+        strFilename += ExtList[i];
+        
+        if(CVirtualFileSystem::GetInst().DoesFileExists(strFilename.c_str()))
+            return strFilename;
+    }
+    
+    // Failed
+    return pszFilename;
 }
 
 CMesh *CMeshMgr::Load(const char *pszFilename)
@@ -34,12 +60,17 @@ CMesh *CMeshMgr::Load(const char *pszFilename)
     m_Meshes[pszFilename] = pMesh;
     
     //m_pGame->GetConsole()->DbgPrint("Loading mesh: %s\n", pszFilename);
-    CVfsFileStream File(pszFilename);
-    if(pMesh->Load(File) < 0)
+    
+    try
     {
-        m_pGame->GetConsole()->DbgPrint("Failed to load mesh: %s\n", pszFilename);
+        string strFilename = FixFilename(pszFilename);
+        CVfsFileStream File(strFilename.c_str());
+        pMesh->Load(File);
+    }
+    catch(const exception &e)
+    {
         pMesh->Release();
-        return NULL;
+        THROW_EXCEPTION("Failed to load %s:\n%s", pszFilename, e.what());
     }
     
     return pMesh;

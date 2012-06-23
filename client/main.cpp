@@ -34,7 +34,7 @@ int main(int argc, char **argv)
     {
         CClientApp *pApp = new CClientApp;
         pApp->Init();
-        pApp->LoadLevel("l1s1.rfl");
+        pApp->LoadLevel("l1s2.rfl");
         //CClientApp::GetInst().LoadLevel("test.rfl");
         pApp->Run();
         delete pApp;

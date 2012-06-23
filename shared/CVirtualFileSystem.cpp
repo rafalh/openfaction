@@ -151,6 +151,17 @@ std::vector<std::string> CVirtualFileSystem::FindFiles(const char *pStr, const c
     return Result;
 }
 
+bool CVirtualFileSystem::DoesFileExists(const char *pStr) const
+{
+    string strFilenameLower;
+    while(*pStr)
+        strFilenameLower += tolower(*(pStr++));
+    
+    std::map<std::string, std::string>::const_iterator it;
+    it = m_FileNameToArchive.find(strFilenameLower);
+    return it != m_FileNameToArchive.end();
+}
+
 streampos CVfsFileBuf::seekpos(streampos nPos, ios_base::openmode Which)
 {
     if(!m_pFile || Which != ios_base::in || nPos > m_nSize || nPos < 0)

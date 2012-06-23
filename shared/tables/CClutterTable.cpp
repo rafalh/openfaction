@@ -41,14 +41,7 @@ int CClutterTable::Load(istream &Stream)
         else if(!m_Clutter.empty())
         {
             if(!StrCmpI(pName, "$V3D Filename"))
-            {
                 Reader.GetString(m_Clutter.back().strMeshFilename);
-                
-                // Change extension to .v3m (static mesh)
-                size_t Pos = m_Clutter.back().strMeshFilename.rfind(".");
-                if(Pos != string::npos)
-                    m_Clutter.back().strMeshFilename.replace(Pos, 4, ".v3m");
-            }
             else if(!StrCmpI(pName, "$Life"))
                 Reader.GetFloat(m_Clutter.back().fHealth);
         }

@@ -46,14 +46,7 @@ int CEntitiesTable::Load(istream &Stream)
         else if(!m_Entities.empty())
         {
             if(!StrCmpI(pName, "$V3D Filename"))
-            {
                 Reader.GetString(m_Entities.back().strMeshFilename);
-                
-                // Change extension to .v3c
-                size_t Pos = m_Entities.back().strMeshFilename.rfind(".");
-                if(Pos != string::npos)
-                    m_Entities.back().strMeshFilename.replace(Pos, 4, ".v3c");
-            }
             else if(!StrCmpI(pName, "$Mass"))
                 Reader.GetFloat(m_Entities.back().fMass);
             else if(!StrCmpI(pName, "$Collision Radius"))

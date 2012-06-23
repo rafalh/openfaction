@@ -16,6 +16,7 @@
 #include "CMaterialsMgr.h"
 #include "CGame.h"
 #include "CObject.h"
+#include "CException.h"
 #ifdef OF_CLIENT
 # include "irr/CReadFile.h"
 # include "CLevel.h"
@@ -38,7 +39,7 @@ CMesh::~CMesh()
         m_pMeshMgr->Remove(this);
 }
 
-int CMesh::Load(CInputBinaryStream &Stream)
+void CMesh::Load(CInputBinaryStream &Stream)
 {
     Unload();
     
@@ -46,10 +47,7 @@ int CMesh::Load(CInputBinaryStream &Stream)
     Stream.ReadBinary(&Hdr, sizeof(Hdr));
     
     if(Hdr.signature != V3M_SIGNATURE && Hdr.signature != V3C_SIGNATURE)
-    {
-        m_pMeshMgr->GetGame()->GetConsole()->DbgPrint("Wrong V3D signature: 0x%x\n", Hdr.signature);
-        return -1;
-    }
+        THROW_EXCEPTION("Wrong V3D signature: 0x%x\n", Hdr.signature);
     
     if(Hdr.version != V3D_VERSION)
         m_pMeshMgr->GetGame()->GetConsole()->DbgPrint("Unknown V3D version: 0x%x\n", Hdr.version);
@@ -73,6 +71,7 @@ int CMesh::Load(CInputBinaryStream &Stream)
             {
                 CSubMesh *pSubMesh = new CSubMesh(m_pMeshMgr);
                 pSubMesh->Load(Stream);
+                assert(m_SubMeshes.empty());
                 m_SubMeshes.push_back(pSubMesh);
                 break;
             }
@@ -89,7 +88,6 @@ int CMesh::Load(CInputBinaryStream &Stream)
     }
     
     assert(Stream);
-    return 0;
 }
 
 void CMesh::Unload()
@@ -112,7 +110,7 @@ btMultiSphereShape *CMesh::GetMultiColSphere()
 
 void CMesh::LoadColSphere(CInputBinaryStream &Stream)
 {
-    // Read colsphere frm stream
+    // Read colsphere from stream
     Stream.ignore(24); // name
     Stream.ReadInt32(); // unknown
     btVector3 vPos = Stream.ReadVector();
@@ -161,8 +159,8 @@ void CMesh::FixBones(int iParent)
     {
         if(m_Bones[i].iParent == iParent)
         {
-            btMatrix3x3 matRot(m_Bones[iParent].qRot);
-            m_Bones[i].vPos = matRot * m_Bones[i].vPos;
+            //btMatrix3x3 matRot(m_Bones[iParent].qRot);
+            //m_Bones[i].vPos = matRot * m_Bones[i].vPos;
             m_Bones[i].vPos += m_Bones[iParent].vPos;
             FixBones(i);
         }
@@ -284,7 +282,7 @@ int CSubMesh::Load(CInputBinaryStream &Stream)
 int CSubMesh::LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrrMesh)
 {
     uint32_t uFlags = Stream.ReadUInt32();
-    assert(uFlags <= 0x23);
+    assert(uFlags <= 0x33);
     
     uint32_t cVertices = Stream.ReadUInt32();
     

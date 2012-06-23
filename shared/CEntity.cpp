@@ -20,6 +20,7 @@
 #include "CMesh.h"
 #include "CMeshMgr.h"
 #include "CEntitiesTable.h"
+#include "CException.h"
 #include "BulletCollision/CollisionDispatch/btGhostObject.h"
 #include "BulletDynamics/Character/btKinematicCharacterController.h"
 
@@ -45,7 +46,14 @@ CEntity::CEntity(CLevel *pLevel, const SEntityClass *pClass, unsigned nUid):
     m_fLife = m_pClass->fLife;
     m_Handle = CHandleManager::GetInst().AllocHandle();
     
-    m_pMesh = m_pLevel->GetGame()->GetMeshMgr()->Load(m_pClass->strMeshFilename.c_str());
+    try
+    {
+        m_pMesh = m_pLevel->GetGame()->GetMeshMgr()->Load(m_pClass->strMeshFilename.c_str());
+    }
+    catch(const exception &e)
+    {
+        THROW_EXCEPTION("Failed to load entity %u:\n%s", m_nUid, e.what());
+    }
     
     btConvexShape *pColShape = m_pMesh->GetMultiColSphere();
     if(!pColShape)
@@ -109,9 +117,17 @@ CEntity::CEntity(CLevel *pLevel, CInputBinaryStream &Stream):
     
     string strClassName = Stream.ReadString2();
     m_pClass = m_pLevel->GetGame()->GetEntitiesTbl()->Get(strClassName.c_str());
-    assert(m_pClass);
+    if(!m_pClass)
+        THROW_EXCEPTION("Unknown class %s", strClassName.c_str());
     
-    m_pMesh = m_pLevel->GetGame()->GetMeshMgr()->Load(m_pClass->strMeshFilename.c_str());
+    try
+    {
+        m_pMesh = m_pLevel->GetGame()->GetMeshMgr()->Load(m_pClass->strMeshFilename.c_str());
+    }
+    catch(const exception &e)
+    {
+        THROW_EXCEPTION("Failed to load entity (uid %u, class %s):\n%s", m_nUid, strClassName.c_str(), e.what());
+    }
     assert(m_pMesh->GetSubMeshCount() > 0);
     
     btConvexShape *pColShape = m_pMesh->GetMultiColSphere();

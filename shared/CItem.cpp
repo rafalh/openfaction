@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CItem.cpp
-*  PURPOSE:     
+*  PURPOSE:     Item (pickup) representation, e. g. life, armor, CTF flags
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/
@@ -17,14 +17,15 @@
 #include "CLevel.h"
 #include "CMesh.h"
 #include "CMeshMgr.h"
+#include "CException.h"
 #ifdef OF_CLIENT
 # include "CSoundManager.h"
-#endif
+#endif // OF_CLIENT
 
 using namespace std;
 #ifdef OF_CLIENT
 using namespace irr;
-#endif
+#endif // OF_CLIENT
 
 btSphereShape CItem::m_ColShape(1.0f);
 
@@ -64,7 +65,8 @@ CItem::CItem(CLevel *pLevel, CInputBinaryStream &Stream, unsigned nBit):
     
     string strClassName = Stream.ReadString2();
     m_pClass = m_pLevel->GetGame()->GetItemsTbl()->Get(strClassName.c_str());
-    assert(m_pClass);
+    if(!m_pClass)
+        THROW_EXCEPTION("Unknown class %s", strClassName.c_str());
     
     SetPos(Stream.ReadVector());
     

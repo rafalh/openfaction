@@ -24,6 +24,7 @@ class CMeshMgr
             m_pGame(pGame) {}
         
         ~CMeshMgr();
+        std::string FixFilename(const char *pszFilename);
         CMesh *Load(const char *pszFilename);
         void Remove(CMesh *pMesh);
         

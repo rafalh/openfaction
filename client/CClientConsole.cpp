@@ -36,13 +36,18 @@ void CClientConsole::VPrint(const char *pszFormat, va_list ap)
 {
     char szBuf[256];
     
-    vsnprintf(szBuf, sizeof(szBuf), pszFormat, ap);
+    vsnprintf(szBuf, sizeof(szBuf) - 1, pszFormat, ap);
+    szBuf[sizeof(szBuf) - 1] = 0;
     
     core::stringw strLine;
     for(const char *Ptr = szBuf; *Ptr; ++Ptr)
         strLine += (wchar_t)*Ptr;
     
     AddLine(strLine);
+    
+#ifdef DEBUG
+    printf("%s", szBuf);
+#endif // DEBUG
 }
 
 void CClientConsole::Render()

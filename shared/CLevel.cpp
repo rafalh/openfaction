@@ -129,7 +129,14 @@ void CLevel::Load(CInputBinaryStream &Stream)
                     if(!Stream.good())
                         break;
                     
-                    CClutter *pClutter = new CClutter(this, Stream);
+                    try
+                    {
+                        CClutter *pClutter = new CClutter(this, Stream);
+                    }
+                    catch(const exception &e)
+                    {
+                        m_pGame->GetConsole()->Print("Warning! Failed to load clutter: %s\n", e.what());
+                    }
                 }
                 m_pGame->GetConsole()->DbgPrint("Loaded %u/%u clutter\n", i, cClutter);
                 break;
@@ -143,11 +150,14 @@ void CLevel::Load(CInputBinaryStream &Stream)
                     if(!Stream.good())
                         break;
                     
-                    CEntity *pEntity = new CEntity(this, Stream);
-                    if(!pEntity->GetClass())
-                        delete pEntity;
-                    
-                    if(i!=34 && i > 10) delete pEntity;
+                    try
+                    {
+                        CEntity *pEntity = new CEntity(this, Stream);
+                    }
+                    catch(const exception &e)
+                    {
+                        m_pGame->GetConsole()->Print("Warning! Failed to load entity: %s\n", e.what());
+                    }
                 }
                 m_pGame->GetConsole()->DbgPrint("Loaded %u/%u entities\n", i, cEntities);
                 break;
@@ -177,8 +187,6 @@ void CLevel::Load(CInputBinaryStream &Stream)
                         break;
                     
                     CItem *pItem = new CItem(this, Stream, i);
-                    if(!pItem->GetClass())
-                        delete pItem;
                 }
                 
                 m_pGame->GetConsole()->DbgPrint("Loaded %u/%u items\n", i, cItems);
