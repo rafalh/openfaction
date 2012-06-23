@@ -15,6 +15,7 @@ project "OfClient"
 		"../vendor/bullet/src",
 		"../vendor/irrlicht/include",
 		"../vendor/irrklang/include",
+		"../vendor/freetype/include",
 	}
 	links {
 		"BulletDynamics",

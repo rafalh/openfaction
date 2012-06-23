@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CEntity.h
-*  PURPOSE:     
+*  PURPOSE:     Entity representation e.g. humans, animals and vehicles
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/
@@ -180,7 +180,9 @@ class CEntity: public CKillableObject
         bool ReloadWeapon(const SWeaponClass *pClass = NULL, bool bWait = true);
 		bool Shoot(bool bAltFire = false, bool bWait = true);
 		bool Shoot(const btVector3 &vPos, const btVector3 &vDir, bool bAltFire = false, bool bWait = true);
+#if defined(DEBUG) && defined(OF_CLIENT)
 		void DbgDraw() const;
+#endif // defined(DEBUG) && defined(OF_CLIENT)
         
         bool IsWeaponChanged() const
         {

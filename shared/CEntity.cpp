@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CEntity.cpp
-*  PURPOSE:     
+*  PURPOSE:     Entity representation e.g. humans, animals and vehicles
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/
@@ -422,8 +422,10 @@ bool CEntity::Shoot(const btVector3 &vPos, const btVector3 &vDir, bool bAltFire,
     return m_pWeapon->Shoot(bAltFire, vPos, vDir, bWait);
 }
 
+#if defined(DEBUG) && defined(OF_CLIENT)
 void CEntity::DbgDraw() const
 {
     if(m_pMesh)
         m_pMesh->DbgDraw(this);
 }
+#endif // defined(DEBUG) && defined(OF_CLIENT)
