@@ -38,7 +38,7 @@ class COfDebugDrawer: public btIDebugDraw
         {
             m_DebugMode =
                 //DBG_DrawAabb |
-                //DBG_DrawWireframe |
+                DBG_DrawWireframe |
                 //DBG_DrawFeaturesText |
                 //DBG_DrawContactPoints |
                 //DBG_NoDeactivation | 

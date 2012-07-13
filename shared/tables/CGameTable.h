@@ -11,7 +11,6 @@
 #ifndef CGAMETABLE_H
 #define CGAMETABLE_H
 
-#include <iostream>
 #include <string>
 
 class CGameTable

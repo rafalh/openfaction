@@ -11,7 +11,6 @@
 #ifndef CTBLREADER_H
 #define CTBLREADER_H
 
-#include <iostream>
 #include <string>
 
 class CStringsTable;

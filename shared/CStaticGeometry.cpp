@@ -23,7 +23,6 @@
 # include "irr/CVbmAnimator.h"
 #endif // OF_CLIENT
 #include <utils.h>
-#include <iostream>
 #include <cmath>
 
 using namespace std;

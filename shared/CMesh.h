@@ -82,18 +82,28 @@ class CMesh: public CSharedObject
             btQuaternion qRot;
             btVector3 vPos;
             int iParent;
+            
+            btTransform BoneToModelTransform;
+            btTransform ModelToBoneTransform;
+            //btTransform ModelToBindPoseBoneTransform;
+        };
+        
+        struct SColSphere
+        {
+            btVector3 vPos;
+            float fRadius;
+            int iBone;
         };
         
         std::vector<CSubMesh*> m_SubMeshes;
-        std::vector<float> m_ColSpheresRadius;
-        std::vector<btVector3> m_ColSpheresPos;
+        std::vector<SColSphere> m_ColSpheres;
         std::vector<SBone> m_Bones;
         btMultiSphereShape *m_pMultiColSphere;
         CMeshMgr *m_pMeshMgr;
         
         void LoadColSphere(CInputBinaryStream &Stream);
         void LoadBones(CInputBinaryStream &Stream);
-        void FixBones(int iParent);
+        void PrepareBones(int iParent);
 };
 
 #endif // CMESH_H

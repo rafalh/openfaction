@@ -8,7 +8,6 @@
 *
 *****************************************************************************/
 
-#include <iostream>
 #include <ctime>
 #include <Irrlicht.h>
 #include "CClientApp.h"
@@ -34,15 +33,14 @@ int main(int argc, char **argv)
     {
         CClientApp *pApp = new CClientApp;
         pApp->Init();
-        pApp->LoadLevel("l1s2.rfl");
-        //CClientApp::GetInst().LoadLevel("test.rfl");
+        pApp->LoadLevel("l1s1.rfl");
+        //pApp->LoadLevel("test.rfl");
         pApp->Run();
         delete pApp;
     }
     catch(const exception &Exception)
     {
         CLogger::GetInst().PrintError("Fatal error! %s\n", Exception.what());
-        cout << Exception.what() << "\n";
         return -1;
     }
     

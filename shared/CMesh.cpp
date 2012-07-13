@@ -102,8 +102,25 @@ void CMesh::Unload()
 
 btMultiSphereShape *CMesh::GetMultiColSphere()
 {
-    if(!m_pMultiColSphere && !m_ColSpheresPos.empty())
-        m_pMultiColSphere = new btMultiSphereShape(&m_ColSpheresPos.front(), &m_ColSpheresRadius.front(), m_ColSpheresPos.size());
+    if(!m_pMultiColSphere && !m_ColSpheres.empty())
+    {
+        btVector3 Pos[m_ColSpheres.size()];
+        float Radius[m_ColSpheres.size()];
+        
+        for(unsigned i = 0; i < m_ColSpheres.size(); ++i)
+        {
+            Pos[i] = m_ColSpheres[i].vPos;
+            Radius[i] = m_ColSpheres[i].fRadius;
+            
+            if(m_ColSpheres[i].iBone >= 0)
+            {
+                assert(m_ColSpheres[i].iBone < m_Bones.size());
+                Pos[i] -= m_Bones[m_ColSpheres[i].iBone].vPos;
+            }
+        }
+        
+        m_pMultiColSphere = new btMultiSphereShape(Pos, Radius, m_ColSpheres.size());
+    }
     
     return m_pMultiColSphere;
 }
@@ -111,15 +128,17 @@ btMultiSphereShape *CMesh::GetMultiColSphere()
 void CMesh::LoadColSphere(CInputBinaryStream &Stream)
 {
     // Read colsphere from stream
+    SColSphere ColSphere;
     Stream.ignore(24); // name
-    Stream.ReadInt32(); // unknown
-    btVector3 vPos = Stream.ReadVector();
-    float fRadius = Stream.ReadFloat();
-    assert(fRadius >= 0.0f);
+    
+    ColSphere.iBone = Stream.ReadInt32();
+    assert(ColSphere.iBone >= -1);
+    ColSphere.vPos = Stream.ReadVector();
+    ColSphere.fRadius = Stream.ReadFloat();
+    assert(ColSphere.fRadius >= 0.0f);
     
     // Add colsphere to internal arrays
-    m_ColSpheresPos.push_back(vPos);
-    m_ColSpheresRadius.push_back(fRadius);
+    m_ColSpheres.push_back(ColSphere);
 }
 
 void CMesh::LoadBones(CInputBinaryStream &Stream)
@@ -139,6 +158,9 @@ void CMesh::LoadBones(CInputBinaryStream &Stream)
         Bone.vPos = Stream.ReadVector();
         Bone.iParent = Stream.ReadInt32();
         
+        printf("%s (parent %d)\n\tpos: %.1f %.1f %.1f\n", Bone.strName.c_str(), Bone.iParent, Bone.vPos[0], Bone.vPos[1], Bone.vPos[2]);
+        printf("\trot: %.1f %.1f %.1f %.1f\n", Bone.qRot[0], Bone.qRot[1], Bone.qRot[2], Bone.qRot[3]);
+        
         if(Bone.iParent == -1)
             Root = i;
         
@@ -150,19 +172,53 @@ void CMesh::LoadBones(CInputBinaryStream &Stream)
     for(unsigned i = 0; i < m_Bones.size(); ++i)
         assert(m_Bones[i].iParent == -1 || (m_Bones[i].iParent >= 0 && m_Bones[i].iParent < m_Bones.size()));
     
-    //FixBones(Root);
+    PrepareBones(Root);
 }
 
-void CMesh::FixBones(int iParent)
+// Funkcja rekurencyjna
+/*void CMesh::PrepareBindPoseToModelTransforms(unsigned BoneIndex, const btTransform &ParentTransform)
+{
+    SBone &Bone = m_Bones[BoneIndex];
+    // Macierz przekształcająca ze wsp. lokalnych tej kości w jej Bind Pose do wsp. kości nadrzędnej
+    btTransform BoneToParentTransform(Bone.qRot, Bone.vPos);
+    // Jej odwrotność przekształca ze wsp. kości nadrzędnej do lokalnych tej kości w jej Bind Pose
+    btTransform ParentToBoneTransform = BoneToParentTransform.inverse();
+    // Transformacja ze wsp. modelu do lokalnych tej kości
+    Bone.ModelToBindPoseBoneTransform = ParentTransform * ParentToBoneTransform;
+    // Kości podrzędne
+    for(unsigned i = 0; i < m_Bones.size(); ++i)
+    {
+        if(m_Bones[i].iParent == BoneIndex)
+            PrepareBindPoseToModelTransforms(i, Bone.ModelToBindPoseBoneTransform);
+    }
+}*/
+
+void CMesh::PrepareBones(int iParent)
 {
     for(unsigned i = 0; i < m_Bones.size(); ++i)
     {
         if(m_Bones[i].iParent == iParent)
         {
-            //btMatrix3x3 matRot(m_Bones[iParent].qRot);
-            //m_Bones[i].vPos = matRot * m_Bones[i].vPos;
-            m_Bones[i].vPos += m_Bones[iParent].vPos;
-            FixBones(i);
+            SBone &Bone = m_Bones[i];
+            
+            if(iParent < 0 || 1) // root
+                Bone.ModelToBoneTransform = btTransform(Bone.qRot.inverse(), Bone.vPos);
+            else
+            {
+                //Bone.ModelToBoneTransform = btTransform(Bone.qRot, Bone.vPos);
+                SBone &ParentBone = m_Bones[Bone.iParent];
+                btVector3 vPos = Bone.vPos - ParentBone.vPos;
+                vPos = btMatrix3x3(ParentBone.qRot) * vPos;
+                vPos += ParentBone.vPos;
+                printf("%s: %.1f %.1f %.1f -> %.1f %.1f %.1f\n", Bone.strName.c_str(), Bone.vPos[0], Bone.vPos[1], Bone.vPos[2], vPos[0], vPos[1], vPos[2]);
+                printf("%s rot: %.1f %.1f %.1f %.1f\n", Bone.strName.c_str(), Bone.qRot[0], Bone.qRot[1], Bone.qRot[2], Bone.qRot[3]);
+                Bone.ModelToBoneTransform = btTransform(Bone.qRot, vPos);
+                //vPos = ParentBone.BoneToModelTransform(vPos);
+                //Bone.ModelToBoneTransform = btTransform(m_Bones[i].qRot, -vPos);
+            }
+            Bone.BoneToModelTransform = Bone.ModelToBoneTransform.inverse();
+            
+            PrepareBones(i);
         }
     }
 }
@@ -177,24 +233,36 @@ void CMesh::DbgDraw(const CObject *pObj) const
     if((m_pMeshMgr->GetGame()->GetCamera()->getPosition() - vIrrPos).getLengthSQ() > 1000.0f)
         return;
     
-    //pVideoDrv->draw3DLine(vIrrPos, core::vector3df(0, 0, 0));
     pVideoDrv->draw3DBox(core::aabbox3df(vIrrPos - core::vector3df(1, 1, 1), vIrrPos + core::vector3df(1, 1, 1)));
     for(unsigned i = 0; i < m_Bones.size(); ++i)
     {
+        // Compute bone center position
         const SBone &Bone = m_Bones[i];
-        core::vector3df vBonePos(Bone.vPos[0], Bone.vPos[1], Bone.vPos[2]);
-        vBonePos += vIrrPos;
-        pVideoDrv->draw3DBox(core::aabbox3df(vBonePos - core::vector3df(0.01, 0.01, 0.01), vBonePos + core::vector3df(0.01, 0.01, 0.01)), video::SColor(128, 255, 255, 0));
+        btVector3 vBonePos(0.0f, 0.0f, 0.0f);
+        vBonePos = Bone.BoneToModelTransform(vBonePos);
+        
+        core::vector3df vIrrBonePos(vBonePos[0], vBonePos[1], vBonePos[2]);
+        vIrrBonePos += vIrrPos;
+        
+        // Draw box in center of each bone
+        pVideoDrv->draw3DBox(core::aabbox3df(vIrrBonePos - core::vector3df(0.01, 0.01, 0.01), vIrrBonePos + core::vector3df(0.01, 0.01, 0.01)), video::SColor(128, 255, 255, 0));
         
         if(Bone.iParent >= 0)
         {
+            // Compute bone parent center position
             const SBone &ParentBone = m_Bones[Bone.iParent];
-            core::vector3df vParentPos(ParentBone.vPos[0], ParentBone.vPos[1], ParentBone.vPos[2]);
-            vParentPos += vIrrPos;
-            pVideoDrv->draw3DLine(vBonePos, vParentPos, video::SColor(128, 0, 255, 0));
+            btVector3 vParentPos(0.0f, 0.0f, 0.0f);
+            vParentPos = ParentBone.BoneToModelTransform(vParentPos);
+            
+            core::vector3df vIrrParentPos(vParentPos[0], vParentPos[1], vParentPos[2]);
+            vIrrParentPos += vIrrPos;
+            
+            // Draw line from bone to parent
+            pVideoDrv->draw3DLine(vIrrBonePos, vIrrParentPos, video::SColor(128, 0, 255, 0));
         }
         
-        core::position2di vPosScr = m_pMeshMgr->GetGame()->GetSceneMgr()->getSceneCollisionManager()->getScreenCoordinatesFrom3DPosition(vBonePos, m_pMeshMgr->GetGame()->GetCamera());
+        // Draw bone name
+        core::position2di vPosScr = m_pMeshMgr->GetGame()->GetSceneMgr()->getSceneCollisionManager()->getScreenCoordinatesFrom3DPosition(vIrrBonePos, m_pMeshMgr->GetGame()->GetCamera());
         wchar_t wszBuf[32];
         swprintf(wszBuf, sizeof(wszBuf), L"%hs", Bone.strName.c_str());
         m_pMeshMgr->GetGame()->GetGuiEnv()->getBuiltInFont()->draw(wszBuf, core::recti(vPosScr, vPosScr), video::SColor(255, 255, 255, 255), true, true);

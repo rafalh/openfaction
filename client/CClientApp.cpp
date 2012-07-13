@@ -92,7 +92,7 @@ void CClientApp::Init()
     m_pFontFace = new gui::CGUITTFace;
     if(!m_pFontFace->load("arial.ttf"))
     {
-        CLogger::GetInst().PrintError("Failed to load font. Using built in font...");
+        CLogger::GetInst().PrintError("Failed to load font. Using built in font...\n");
         delete m_pFontFace;
         m_pFontFace = NULL;
     }
@@ -210,7 +210,7 @@ void CClientApp::Run()
         DbgLabels[1]->setText(wszDbgBuf);
         
         // Update local entity position
-        if(m_pEntityController)
+        if(m_pEntityController && m_pDevice->isWindowActive())
             m_pEntityController->Update(uDeltaTime);
         
         // Update camera
@@ -288,7 +288,7 @@ void CClientApp::LoadLevel(const char *pszName)
     m_pHud->SetEntity(m_pLocalEntity);
     m_pWeaponSel->SetEntity(m_pLocalEntity);
     
-    m_pConsole->Print("Level %s loaded.", pszName);
+    m_pConsole->Print("Level %s has been loaded.\n", pszName);
 }
 
 void CClientApp::SetCameraType(bool bFreeCamera)

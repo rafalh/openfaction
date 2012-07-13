@@ -219,7 +219,7 @@ void CLevel::Load(CInputBinaryStream &Stream)
                 m_pGame->GetConsole()->DbgPrint("Start position: %f %f %f\n", m_vPlayerStartPos.x(), m_vPlayerStartPos.y(), m_vPlayerStartPos.z());
                 break;
             
-            /*case RFL_TRIGGERS:
+            case RFL_TRIGGERS:
             {
                 unsigned i, cTriggers = Stream.ReadUInt32();
                 for(i = 0; i < cTriggers; ++i)
@@ -231,7 +231,7 @@ void CLevel::Load(CInputBinaryStream &Stream)
                 }
                 m_pGame->GetConsole()->DbgPrint("Loaded %u/%u triggers\n", i, cTriggers);
                 break;
-            }*/
+            }
             
             case RFL_STATIC_GEOMETRY:
                 assert(!m_pStaticGeometry);
@@ -372,7 +372,8 @@ void CLevel::DbgDraw() const
     for(it = Elements.begin(); it != Elements.end(); ++it)
     {
         CEntity *pEntity = static_cast<CEntity*>(*it);
-        pEntity->DbgDraw();
+        if(pEntity->GetUid() != OFE_INVALID_UID)
+            pEntity->DbgDraw();
     }
         
 #endif // DEBUG

@@ -152,7 +152,7 @@ bool CEntityController::OnEvent(const SEvent &Event)
             case 'R':
                 if(Event.KeyInput.PressedDown)
                     if(!m_pEntity->ReloadWeapon())
-                        m_pEntity->GetLevel()->GetGame()->GetConsole()->DbgPrint("Failed to reload");
+                        m_pEntity->GetLevel()->GetGame()->GetConsole()->DbgPrint("Failed to reload\n");
                 break;
             case KEY_SPACE:
                 if(Event.KeyInput.PressedDown)
@@ -173,7 +173,7 @@ bool CEntityController::OnEvent(const SEvent &Event)
     else if(Event.EventType == EET_MOUSE_INPUT_EVENT && Event.MouseInput.Event == EMIE_LMOUSE_PRESSED_DOWN)
     {
         if(!m_pEntity->Shoot(false, false))
-            m_pEntity->GetLevel()->GetGame()->GetConsole()->DbgPrint("Failed to shoot");
+            m_pEntity->GetLevel()->GetGame()->GetConsole()->DbgPrint("Failed to shoot\n");
     }
         
     

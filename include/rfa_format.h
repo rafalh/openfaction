@@ -50,8 +50,8 @@ struct rfa_header_t
     uint32_t cBones;
     uint32_t cMorphVertices;
     uint32_t cMorphKeyframes;
-    uint32_t unk3; // some time value
-    uint32_t unk4; // some time value
+    uint32_t unk3; // some time value (ramp in * 160)
+    uint32_t unk4; // some time value (ramp out * 160)
     float unk5[4];
     float unk6[3];
 };

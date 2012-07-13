@@ -16,6 +16,7 @@
 #include "CException.h"
 #include "utils.h"
 #include "CEventsHandler.h"
+#include "CConsole.h"
 #include <sstream>
 
 #include "CStringsTable.h"
@@ -83,16 +84,20 @@ void CGame::InitVfs()
         "meshes.vpp", "motions.vpp",
 #ifdef OF_CLIENT
         "music.vpp",
-#endif
+#endif // OF_CLIENT
         "tables.vpp",
 #ifdef OF_CLIENT
         "ui.vpp",
-#endif
+#endif // OF_CLIENT
     };
     
     /* Add VPP files to virtual file system */
     for(unsigned i = 0; i < COUNTOF(pGameArchives); ++i)
+    {
         m_pVfs->AddArchive(pGameArchives[i]);
+        m_pConsole->DbgPrint("Loaded %s\n", pGameArchives[i]);
+    }
+        
 }
 
 void CGame::LoadTables()

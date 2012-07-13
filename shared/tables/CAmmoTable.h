@@ -11,7 +11,6 @@
 #ifndef CAMMOTABLE_H
 #define CAMMOTABLE_H
 
-#include <iostream>
 #include <string>
 #include <vector>
 

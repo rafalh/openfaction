@@ -11,7 +11,6 @@
 #ifndef CSTRINGSTABLE_H
 #define CSTRINGSTABLE_H
 
-#include <iostream>
 #include <map>
 #include <string>
 

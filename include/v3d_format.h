@@ -76,7 +76,7 @@ struct v3d_batch_info_t // batch info?
     uint16_t positions_size;
     uint16_t indices_size;
     uint16_t unknown_size;
-    uint16_t unknown2_size;
+    uint16_t bone_links_size;
     uint16_t tex_coords_size;
     uint32_t unknown3;
 };
@@ -94,7 +94,7 @@ struct v3d_material_t
 
 #if 0
 
-v3d_batch_header_t
+v3d_batch_header_t // size: 56 (0x38)
 { // this is not used by RF - only read and then over-written
     char unknown[56];
   /*char unknown[40];
@@ -109,7 +109,14 @@ v3d_batch_header_t
 v3d_triangle_t
 {
     uint16_t indices[3];
-    uint16_t unknown; // 0x20 (flags?)
+    uint16_t unknown; // 0x20 (flags or padding?)
+}
+
+v3d_vertex_bones_t
+{
+    // One vertex can be linked maximaly to 4 bones
+    uint8_t weights[4]; // in range 0-255, 0 if slot is unused
+    uint8_t bones[4]; // bone indexes, 0xFF if slot is unused
 }
 
 v3d_batch_data_t
@@ -120,7 +127,7 @@ v3d_batch_data_t
     // padding to 0x10 (to data section begin)
     float tex_coords[v3d_batch_info_t::vertices_count * 2];
     // padding to 0x10 (to data section begin)
-    triangle_t triangles[v3d_batch_info_t::triangles_count];
+    v3d_triangle_t triangles[v3d_batch_info_t::triangles_count];
     // padding to 0x10 (to data section begin)
     if(v3d_submesh_lod_t::flags & 0x20)
     {
@@ -129,9 +136,9 @@ v3d_batch_data_t
     }
     char unknown[v3d_batch_info_t::unknown_size];
     // padding to 0x10 (to data section begin)
-    if(v3d_batch_info_t::unknown2_size)
+    if(v3d_batch_info_t::bone_links_size)
     {
-        char unknown[v3d_batch_info_t::unknown2_size];
+        v3d_vertex_bones_t bone_links[v3d_batch_info_t::vertices_count];
         // padding to 0x10 (to data section begin)
     }
     if(v3d_submesh_lod_t::flags & 0x1)
@@ -160,7 +167,7 @@ v3d_submesh_lod_t
     uint32_t vertices; // not sure
     uint16_t batches_count;
     uint32_t data_size;
-    char data[data_size]; // see v3m_model_data_t
+    char data[data_size]; // see v3d_model_data_t
     int32_t unknown; // -1, sometimes 0
     v3d_batch_info_t batch_info[batches_count];
     uint32_t unknown2; // 0, 1
@@ -195,8 +202,8 @@ v3d_submesh_t
 v3d_col_sphere_t
 {
     char name[24];
-    int32_t unknown; // -1, 10, 18
-    float x, y, x; // position
+    int32_t bone; // bone index or -1
+    float x, y, x; // position relative to bone
     float r; // radius
 }
 
@@ -204,8 +211,8 @@ v3d_bone_t
 {
     char name[24];
     float rot[4]; // quaternion
-    float pos[3]; // vector
-    int32_t parent; // -1 -> root
+    float pos[3]; // bone to model translation
+    int32_t parent; // bone index (root has -1)
 }
 
 v3d_bones_t
