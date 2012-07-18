@@ -12,6 +12,7 @@
 #include "CLevel.h"
 #include "CMeshMgr.h"
 #include "CMaterialsMgr.h"
+#include "CAnimMgr.h"
 #include "CVirtualFileSystem.h"
 #include "CException.h"
 #include "utils.h"
@@ -41,6 +42,7 @@ CGame::CGame(CConsole *pConsole, irr::IrrlichtDevice *pIrrDevice):
 {
     m_pMaterialsMgr = new CMaterialsMgr(this);
     m_pMeshMgr = new CMeshMgr(this);
+    m_pAnimMgr = new CAnimMgr(this);
 #ifdef OF_CLIENT
     m_pSoundMgr = new CSoundManager(this);
 #endif // OF_CLIENT
@@ -57,6 +59,7 @@ CGame::~CGame()
     delete m_pLevel;
     delete m_pMeshMgr;
     delete m_pMaterialsMgr;
+    delete m_pAnimMgr;
     
 #ifdef OF_CLIENT
     delete m_pSoundMgr;

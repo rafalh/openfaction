@@ -372,7 +372,12 @@ void CLevel::DbgDraw() const
     for(it = Elements.begin(); it != Elements.end(); ++it)
     {
         CEntity *pEntity = static_cast<CEntity*>(*it);
-        if(pEntity->GetUid() != OFE_INVALID_UID)
+        if(pEntity->GetUid() == OFE_INVALID_UID)
+            continue;
+        
+        irr::core::vector3df vCamPos = m_pGame->GetCamera()->getPosition();
+        btVector3 vDist = btVector3(vCamPos.X, vCamPos.Y, vCamPos.Z) - pEntity->GetPos();
+        if(vDist.length2() < 100.0f)
             pEntity->DbgDraw();
     }
         

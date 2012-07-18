@@ -21,6 +21,7 @@
 #include "CMeshMgr.h"
 #include "CEntitiesTable.h"
 #include "CException.h"
+#include "CAnimMgr.h"
 #include "BulletCollision/CollisionDispatch/btGhostObject.h"
 #include "BulletDynamics/Character/btKinematicCharacterController.h"
 
@@ -94,6 +95,9 @@ CEntity::CEntity(CLevel *pLevel, const SEntityClass *pClass, unsigned nUid):
     assert(pIrrMesh);
     m_pSceneNode = m_pLevel->GetGame()->GetSceneMgr()->addMeshSceneNode(pIrrMesh);
 #endif // OF_CLIENT
+    
+    CAnimation *pAnim = m_pLevel->GetGame()->GetAnimMgr()->Load("masa_sar_stand.mvf");
+    pAnim->Release();
     
     AddToWorld();
 }
@@ -213,6 +217,8 @@ CEntity::CEntity(CLevel *pLevel, CInputBinaryStream &Stream):
     assert(pIrrMesh);
     m_pSceneNode = m_pLevel->GetGame()->GetSceneMgr()->addMeshSceneNode(pIrrMesh);
 #endif // OF_CLIENT
+    
+    
     
     AddToWorld();
 }

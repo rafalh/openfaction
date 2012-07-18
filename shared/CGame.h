@@ -18,6 +18,7 @@
 class CLevel;
 class CMeshMgr;
 class CMaterialsMgr;
+class CAnimMgr;
 class CSoundManager;
 class CConsole;
 class CVirtualFileSystem;
@@ -87,6 +88,11 @@ class CGame
         CMaterialsMgr *GetMaterialsMgr() const
         {
             return m_pMaterialsMgr;
+        }
+        
+        CAnimMgr *GetAnimMgr() const
+        {
+            return m_pAnimMgr;
         }
         
         CSoundManager *GetSoundMgr() const
@@ -209,6 +215,7 @@ class CGame
         CLevel *m_pLevel;
         CMeshMgr *m_pMeshMgr;
         CMaterialsMgr *m_pMaterialsMgr;
+        CAnimMgr *m_pAnimMgr;
         CSoundManager *m_pSoundMgr;
         CVirtualFileSystem *m_pVfs;
         CEventsHandler *m_pEventsHandler;

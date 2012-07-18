@@ -158,8 +158,8 @@ void CMesh::LoadBones(CInputBinaryStream &Stream)
         Bone.vPos = Stream.ReadVector();
         Bone.iParent = Stream.ReadInt32();
         
-        printf("%s (parent %d)\n\tpos: %.1f %.1f %.1f\n", Bone.strName.c_str(), Bone.iParent, Bone.vPos[0], Bone.vPos[1], Bone.vPos[2]);
-        printf("\trot: %.1f %.1f %.1f %.1f\n", Bone.qRot[0], Bone.qRot[1], Bone.qRot[2], Bone.qRot[3]);
+        //printf("%s (parent %d)\n\tpos: %.1f %.1f %.1f\n", Bone.strName.c_str(), Bone.iParent, Bone.vPos[0], Bone.vPos[1], Bone.vPos[2]);
+        //printf("\trot: %.1f %.1f %.1f %.1f\n", Bone.qRot[0], Bone.qRot[1], Bone.qRot[2], Bone.qRot[3]);
         
         if(Bone.iParent == -1)
             Root = i;
@@ -175,24 +175,6 @@ void CMesh::LoadBones(CInputBinaryStream &Stream)
     PrepareBones(Root);
 }
 
-// Funkcja rekurencyjna
-/*void CMesh::PrepareBindPoseToModelTransforms(unsigned BoneIndex, const btTransform &ParentTransform)
-{
-    SBone &Bone = m_Bones[BoneIndex];
-    // Macierz przekształcająca ze wsp. lokalnych tej kości w jej Bind Pose do wsp. kości nadrzędnej
-    btTransform BoneToParentTransform(Bone.qRot, Bone.vPos);
-    // Jej odwrotność przekształca ze wsp. kości nadrzędnej do lokalnych tej kości w jej Bind Pose
-    btTransform ParentToBoneTransform = BoneToParentTransform.inverse();
-    // Transformacja ze wsp. modelu do lokalnych tej kości
-    Bone.ModelToBindPoseBoneTransform = ParentTransform * ParentToBoneTransform;
-    // Kości podrzędne
-    for(unsigned i = 0; i < m_Bones.size(); ++i)
-    {
-        if(m_Bones[i].iParent == BoneIndex)
-            PrepareBindPoseToModelTransforms(i, Bone.ModelToBindPoseBoneTransform);
-    }
-}*/
-
 void CMesh::PrepareBones(int iParent)
 {
     for(unsigned i = 0; i < m_Bones.size(); ++i)
@@ -201,21 +183,7 @@ void CMesh::PrepareBones(int iParent)
         {
             SBone &Bone = m_Bones[i];
             
-            if(iParent < 0 || 1) // root
-                Bone.ModelToBoneTransform = btTransform(Bone.qRot.inverse(), Bone.vPos);
-            else
-            {
-                //Bone.ModelToBoneTransform = btTransform(Bone.qRot, Bone.vPos);
-                SBone &ParentBone = m_Bones[Bone.iParent];
-                btVector3 vPos = Bone.vPos - ParentBone.vPos;
-                vPos = btMatrix3x3(ParentBone.qRot) * vPos;
-                vPos += ParentBone.vPos;
-                printf("%s: %.1f %.1f %.1f -> %.1f %.1f %.1f\n", Bone.strName.c_str(), Bone.vPos[0], Bone.vPos[1], Bone.vPos[2], vPos[0], vPos[1], vPos[2]);
-                printf("%s rot: %.1f %.1f %.1f %.1f\n", Bone.strName.c_str(), Bone.qRot[0], Bone.qRot[1], Bone.qRot[2], Bone.qRot[3]);
-                Bone.ModelToBoneTransform = btTransform(Bone.qRot, vPos);
-                //vPos = ParentBone.BoneToModelTransform(vPos);
-                //Bone.ModelToBoneTransform = btTransform(m_Bones[i].qRot, -vPos);
-            }
+            Bone.ModelToBoneTransform = btTransform(Bone.qRot.inverse(), Bone.vPos);
             Bone.BoneToModelTransform = Bone.ModelToBoneTransform.inverse();
             
             PrepareBones(i);
@@ -229,9 +197,6 @@ void CMesh::DbgDraw(const CObject *pObj) const
     video::IVideoDriver *pVideoDrv = m_pMeshMgr->GetGame()->GetVideoDriver();
     const btVector3 &vPos = pObj->GetPos();
     core::vector3df vIrrPos(vPos[0], vPos[1], vPos[2]);
-    
-    if((m_pMeshMgr->GetGame()->GetCamera()->getPosition() - vIrrPos).getLengthSQ() > 1000.0f)
-        return;
     
     pVideoDrv->draw3DBox(core::aabbox3df(vIrrPos - core::vector3df(1, 1, 1), vIrrPos + core::vector3df(1, 1, 1)));
     for(unsigned i = 0; i < m_Bones.size(); ++i)
@@ -481,8 +446,8 @@ int CSubMesh::LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrrM
             //m_pMeshMgr->GetGame()->GetConsole()->DbgPrint("Unknown offset 0x%x\n", uDataOffset + uOffset);
             uOffset = ALIGN(uOffset + Batches[i].unknown_size, V3D_ALIGNMENT);
             
-            //m_pMeshMgr->GetGame()->GetConsole()->DbgPrint("Unknown2 offset 0x%x\n", uDataOffset + uOffset);
-            uOffset = ALIGN(uOffset + Batches[i].unknown2_size, V3D_ALIGNMENT);
+            //m_pMeshMgr->GetGame()->GetConsole()->DbgPrint("Bone links offset 0x%x\n", uDataOffset + uOffset);
+            uOffset = ALIGN(uOffset + Batches[i].bone_links_size, V3D_ALIGNMENT);
             
             //m_pMeshMgr->GetGame()->GetConsole()->DbgPrint("Unknown3 offset 0x%x\n", uDataOffset + uOffset);
             if(uFlags & 0x1)
