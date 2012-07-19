@@ -46,6 +46,9 @@ class CAnimation: public CSharedObject
         
         std::vector<SBone> m_Bones;
         CAnimMgr *m_pAnimMgr;
+        
+        void LoadVer8(CInputBinaryStream &Stream);
+        void LoadVer7(CInputBinaryStream &Stream);
 };
 
 #endif // CANIMATION_H

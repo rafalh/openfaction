@@ -51,10 +51,15 @@ struct rfa_quaternion_t
     float x, y, z, w;
 };
 
-struct rfa_header8_t
+struct rfa_header_t
 {
     uint32_t signature; // RFA_SIGNATURE
-    uint32_t version; // RFA_VERSION8
+    uint32_t version; // RFA_VERSION8 / RFA_VERSION7
+};
+
+struct rfa_header8_t
+{
+    // rfa_header_t hdr;
     float unk; // delta
     float unk2; // epsilon
     uint32_t StartTime;
@@ -70,8 +75,7 @@ struct rfa_header8_t
 
 struct rfa_header7_part1_t
 {
-    uint32_t signature; // RFA_SIGNATURE
-    uint32_t version; // RFA_VERSION7
+    // rfa_header_t hdr;
     uint32_t StartTime;
     uint32_t EndTime;
     rfa_quaternion_t unk;
