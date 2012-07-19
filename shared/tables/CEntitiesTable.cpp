@@ -32,6 +32,8 @@ int CEntitiesTable::Load(istream &Stream)
     if(!Reader.IsSectionFound())
         return -1;
     
+    string strWeapon = "";
+    
     while(Reader.LoadNextElement() == 0)
     {
         const char *pName = Reader.GetName();
@@ -57,6 +59,28 @@ int CEntitiesTable::Load(istream &Stream)
                 Reader.GetFloat(m_Entities.back().fEnvirosuit);
             else if(!StrCmpI(pName, "$Life"))
                 Reader.GetFloat(m_Entities.back().fLife);
+            else if(!StrCmpI(pName, "+Weapon Specific"))
+                Reader.GetString(strWeapon);
+            else if(!StrCmpI(pName, "+State"))
+            {
+                string strState;
+                Reader.GetString(strState);
+                CEntityState State(strState.c_str());
+                
+                string strFilename;
+                Reader.GetString(strFilename);
+                m_Entities.back().States[strWeapon][State] = strFilename;
+            }
+            else if(!StrCmpI(pName, "+Action"))
+            {
+                string strAction;
+                Reader.GetString(strAction);
+                CEntityAction Action(strAction.c_str());
+                
+                string strFilename;
+                Reader.GetString(strFilename);
+                m_Entities.back().Actions[strWeapon][Action] = strFilename;
+            }  
         }
     }
     

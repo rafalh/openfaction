@@ -13,6 +13,9 @@
 
 #include <vector>
 #include <string>
+#include <map>
+#include "CEntityState.h"
+#include "CEntityAction.h"
 
 struct SEntityClass
 {
@@ -26,6 +29,8 @@ struct SEntityClass
     float fMovementRadius;
     float fEnvirosuit;
     float fLife;
+    std::map<std::string, std::map<CEntityState, std::string> > States;
+    std::map<std::string, std::map<CEntityAction, std::string> > Actions;
 };
 
 class CEntitiesTable

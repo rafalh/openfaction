@@ -70,7 +70,25 @@ class CEntityAction
         CEntityAction(EAction Action):
             m_Action(Action) {}
         
+        CEntityAction(const char *pszAction)
+        {
+            m_Action = GetActionFromName(pszAction);
+        }
+        
         const char *GetName() const
+        {
+            return GetName(m_Action);
+        }
+        
+        bool operator<(const CEntityAction &Action) const
+        {
+            return m_Action < Action.m_Action;
+        }
+        
+    private:
+        EAction m_Action;
+        
+        static const char *GetName(EAction Action)
         {
             const char *ActionNames[] = {
                 "corpse_drop",
@@ -121,12 +139,17 @@ class CEntityAction
             };
             
             //assert(EA_COUNT == COUNTOF(ActionNames));
-            assert((int)m_Action < COUNTOF(ActionNames));
-            return ActionNames[(int)m_Action];
+            assert((int)Action < COUNTOF(ActionNames));
+            return ActionNames[(int)Action];
         }
-    
-    private:
-        EAction m_Action;
+        
+        static EAction GetActionFromName(const char *pszAction)
+        {
+            for(unsigned i = 0; i < EA_COUNT; ++i)
+                if(!strcmp(GetName((EAction)i), pszAction))
+                    return (EAction)i;
+            return EA_IDLE_1;
+        }
 };
 
 #endif // CENTITYACTION_H

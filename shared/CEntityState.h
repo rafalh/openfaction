@@ -51,11 +51,24 @@ class CEntityState
         
         CEntityState(const char *pszState)
         {
-            // TODO
-            m_State = ES_STAND;
+            m_State = GetStateFromName(pszState);
         }
         
         const char *GetName() const
+        {
+            //assert(ES_COUNT == COUNTOF(StateNames));
+            return GetName(m_State);
+        }
+    
+        bool operator<(const CEntityState &State) const
+        {
+            return m_State < State.m_State;
+        }
+    
+    private:
+        EState m_State;
+        
+        static const char *GetName(EState State)
         {
             static const char *StateNames[] = {
                 "stand",
@@ -83,13 +96,17 @@ class CEntityState
                 "custom",
             };
             
-            //assert(ES_COUNT == COUNTOF(StateNames));
-            assert((int)m_State < COUNTOF(StateNames));
-            return StateNames[(int)m_State];
+            assert((int)State < COUNTOF(StateNames));
+            return StateNames[(int)State];
         }
-    
-    private:
-        EState m_State;
+        
+        static EState GetStateFromName(const char *pszState)
+        {
+            for(unsigned i = 0; i < ES_COUNT; ++i)
+                if(!strcmp(GetName((EState)i), pszState))
+                    return (EState)i;
+            return ES_STAND;
+        }
 };
 
 #endif // EENTITYSTATE_H_INCLUDED
