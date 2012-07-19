@@ -103,6 +103,7 @@ void CStaticGeometry::Load(CLevel *pLevel, CInputBinaryStream &Stream, unsigned 
     
     unsigned cTextures = Stream.ReadUInt32();
     assert(m_Materials.empty());
+    
     for(unsigned i = 0; i < cTextures; ++i)
     {
         string strFilename = Stream.ReadString2();

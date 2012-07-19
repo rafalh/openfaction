@@ -203,7 +203,11 @@ int CVfsFileBuf::underflow()
     setg(m_Buf, m_Buf, m_Buf + cBytes);
     
     if(!cBytes)
+    {
+        printf("EOF!!!!!!!!\n");
         return EOF;
+    }
+        
     
     return (unsigned char)*gptr();
 }

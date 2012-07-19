@@ -96,8 +96,7 @@ CEntity::CEntity(CLevel *pLevel, const SEntityClass *pClass, unsigned nUid):
     m_pSceneNode = m_pLevel->GetGame()->GetSceneMgr()->addMeshSceneNode(pIrrMesh);
 #endif // OF_CLIENT
     
-    //CAnimation *pAnim = m_pLevel->GetGame()->GetAnimMgr()->Load("ult2_stand.mvf");
-    //pAnim->Release();
+    LoadAnimations();
     
     AddToWorld();
 }
@@ -218,7 +217,7 @@ CEntity::CEntity(CLevel *pLevel, CInputBinaryStream &Stream):
     m_pSceneNode = m_pLevel->GetGame()->GetSceneMgr()->addMeshSceneNode(pIrrMesh);
 #endif // OF_CLIENT
     
-    
+    LoadAnimations();
     
     AddToWorld();
 }
@@ -226,6 +225,7 @@ CEntity::CEntity(CLevel *pLevel, CInputBinaryStream &Stream):
 CEntity::~CEntity()
 {
     RemoveWeapons();
+    FreeAnimations();
     
     if(m_pCharacter)
     {
@@ -451,3 +451,63 @@ void CEntity::DbgDraw() const
         m_pMesh->DbgDraw(this);
 }
 #endif // defined(DEBUG) && defined(OF_CLIENT)
+
+void CEntity::LoadAnimations()
+{
+    map<string, map<CEntityState, string> >::const_iterator itWeapon;
+    for(itWeapon = m_pClass->States.begin(); itWeapon != m_pClass->States.end(); ++itWeapon)
+    {
+        const SWeaponClass *pWeaponCls = 0;
+        if(!itWeapon->first.empty())
+            pWeaponCls = m_pLevel->GetGame()->GetWeaponsTbl()->Get(itWeapon->first.c_str());
+        int WeaponClsId = pWeaponCls ? pWeaponCls->nId : -1;
+        
+        map<CEntityState, string>::const_iterator itState;
+        for(itState = itWeapon->second.begin(); itState != itWeapon->second.end(); ++itState)
+        {
+            CAnimation *pAnim = m_pLevel->GetGame()->GetAnimMgr()->Load(itState->second);
+            m_States[WeaponClsId][itState->first] = pAnim;
+        }
+    }
+    
+    map<string, map<CEntityAction, string> >::const_iterator itWeapon2;
+    for(itWeapon2 = m_pClass->Actions.begin(); itWeapon2 != m_pClass->Actions.end(); ++itWeapon2)
+    {
+        const SWeaponClass *pWeaponCls = 0;
+        if(!itWeapon2->first.empty())
+            pWeaponCls = m_pLevel->GetGame()->GetWeaponsTbl()->Get(itWeapon2->first.c_str());
+        int WeaponClsId = pWeaponCls ? pWeaponCls->nId : -1;
+        
+        map<CEntityAction, string>::const_iterator itAction;
+        for(itAction = itWeapon2->second.begin(); itAction != itWeapon2->second.end(); ++itAction)
+        {
+            CAnimation *pAnim = m_pLevel->GetGame()->GetAnimMgr()->Load(itAction->second);
+            m_Actions[WeaponClsId][itAction->first] = pAnim;
+        }
+    }
+}
+
+void CEntity::FreeAnimations()
+{
+    map<int, map<CEntityState, CAnimation*> >::const_iterator itWeapon;
+    for(itWeapon = m_States.begin(); itWeapon != m_States.end(); ++itWeapon)
+    {
+        map<CEntityState, CAnimation*>::const_iterator itState;
+        for(itState = itWeapon->second.begin(); itState != itWeapon->second.end(); ++itState)
+        {
+            CAnimation *pAnim = itState->second;
+            pAnim->Release();
+        }
+    }
+    
+    map<int, map<CEntityAction, CAnimation*> >::const_iterator itWeapon2;
+    for(itWeapon2 = m_Actions.begin(); itWeapon2 != m_Actions.end(); ++itWeapon2)
+    {
+        map<CEntityAction, CAnimation*>::const_iterator itAction;
+        for(itAction = itWeapon2->second.begin(); itAction != itWeapon2->second.end(); ++itAction)
+        {
+            CAnimation *pAnim = itAction->second;
+            pAnim->Release();
+        }
+    }
+}

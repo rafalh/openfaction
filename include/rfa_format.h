@@ -55,11 +55,6 @@ struct rfa_header_t
 {
     uint32_t signature; // RFA_SIGNATURE
     uint32_t version; // RFA_VERSION8 / RFA_VERSION7
-};
-
-struct rfa_header8_t
-{
-    // rfa_header_t hdr;
     float unk; // delta
     float unk2; // epsilon
     uint32_t StartTime;
@@ -71,26 +66,6 @@ struct rfa_header8_t
     uint32_t RampOutTime; // ramp out * 160
     rfa_quaternion_t unk3;
     rfa_vector_t unk4;
-};
-
-struct rfa_header7_part1_t
-{
-    // rfa_header_t hdr;
-    uint32_t StartTime;
-    uint32_t EndTime;
-    rfa_quaternion_t unk;
-    rfa_vector_t unk2;
-    uint32_t cBones;
-    uint32_t cTotalRotKeys;
-    uint32_t cTotalPosKeys;
-};
-
-struct rfa_header7_part2_t
-{
-    uint32_t RampInTime; // ramp in * 160
-    uint32_t RampOutTime; // ramp out * 160
-    uint32_t cMorphVertices;
-    uint32_t cMorphKeyframes;
 };
 
 struct rfa_vector8_t
@@ -116,65 +91,39 @@ struct rfa_aabb_t
 
 #if 0
 
-/** File layout (version 8):
-    rfa_header8_t;
-    rfa_offsets8_t;
-    rfa_bone8_t Bones[cBones];
-    rfa_morph_vertices8_t;
+/** File layout
+    rfa_header_t;
+    rfa_offsets_t;
+    rfa_bone_t Bones[cBones];
+    rfa_morph_vertices_t;
     // alignment to 4
-    rfa_morph_keyframes8_t;
+    rfa_morph_keyframes_t;
 **/
 
-/** File layout (version 7):
-    rfa_header7_part1_t;
-    rfa_bone7_t Bones[cBones];
-    rfa_header7_part2_t;
-    rfa_morph_keyframes7_t;
-**/
-
-struct rfa_offsets8_t
+struct rfa_offsets_t
 {
     // Offsets are from file begin
-    uint32_t MorphVerticesOffset; // offset to rfa_morph_vertices8_t
-    uint32_t MorphKeyframesOffset; // offset to rfa_morph_keyframes8_t
-    uint32_t BoneOffsets[cBones]; // offsets to rfa_bone8_t
+    uint32_t MorphVerticesOffset; // offset to rfa_morph_vertices_t
+    uint32_t MorphKeyframesOffset; // offset to rfa_morph_keyframes_t
+    uint32_t BoneOffsets[cBones]; // offsets to rfa_bone_t
 };
 
-struct rfa_bone8_t
+struct rfa_bone_t
 {
     float unk; // 0-255?
     uint16_t cRotKeys;
     uint16_t cPosKeys;
-    rfa_rot_key8_t RotKeys[cRotKeys];
+    rfa_rot_key_t RotKeys[cRotKeys];
     rfa_pos_key_t PosKeys[cPosKeys];
 };
 
-struct rfa_bone7_t
-{
-    uint8_t unk; // 0-255, == rfa_bone8_t::unk
-    uint16_t cRotKeys;
-    rfa_rot_key7_t RotKeys[cRotKeys];
-    uint16_t cPosKeys;
-    rfa_pos_key_t PosKeys[cPosKeys];
-};
-
-struct rfa_rot_key8_t // size = 4+4*2+4=16
+struct rfa_rot_key_t // size = 4+4*2+4=16
 {
     uint32_t Time;
     rfa_quaternion16_t qRot;
     int8_t NextInterp; // some interpolation factors
     int8_t PrevInterp; // some interpolation factors
     int8_t unk3[2]; // always 0?
-};
-
-struct rfa_rot_key7_t
-{
-    uint32_t Time;
-    rfa_quaternion16_t qRot;
-    rfa_vector16_t vUnk;
-    rfa_vector16_t vUnk2;
-    int8_t NextInterp; // some interpolation factors
-    int8_t PrevInterp; // some interpolation factors
 };
 
 struct rfa_pos_key_t // size = 4+9*4=40
@@ -185,27 +134,16 @@ struct rfa_pos_key_t // size = 4+9*4=40
     rfa_vector_t vNextInterp; // used for interpolation after Time
 };
 
-struct rfa_morph_vertices8_t
+struct rfa_morph_vertices_t
 {
     uint16_t VertexIndices[cMorphVertices];
 };
 
-struct rfa_morph_keyframes8_t
+struct rfa_morph_keyframes_t
 {
     uint32_t Times[cMorphKeyframes];
-    rfa_aabb_t Aabb;
+    rfa_aabb_t Aabb; // exists if cMorphKeyframes*cMorphVertices > 0
     rfa_vector8_t Positions[cMorphKeyframes][cMorphVertices];
-};
-
-struct rfa_morph_vertex_keyframes7_t
-{
-    uint32_t VertexIndex;
-    rfa_vector_t Positions[cMorphKeyframes];
-}
-
-struct rfa_morph_keyframes7_t
-{
-    rfa_morph_vertex_keyframes7_t Vertices[cMorphVertices];
 };
 
 #endif // 0

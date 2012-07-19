@@ -129,7 +129,7 @@ void CClientApp::Init()
     
     m_pWeaponSel = new CWeaponSelection(m_pGame);
     
-    m_pConsole->Print("Game initialized!");
+    m_pConsole->Print("Game initialized!\n");
 }
 
 bool CClientApp::OnEvent(const SEvent &Event)

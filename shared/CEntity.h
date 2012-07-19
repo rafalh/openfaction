@@ -22,6 +22,7 @@
 class CPlayer;
 class CMesh;
 class CWeapon;
+class CAnimation;
 struct SEntityClass;
 struct SAmmoType;
 class btKinematicCharacterController;
@@ -281,6 +282,12 @@ class CEntity: public CKillableObject
         btKinematicCharacterController *m_pCharacter;
         
         CMesh *m_pMesh;
+        
+        std::map<int, std::map<CEntityState, CAnimation*> > m_States;
+        std::map<int, std::map<CEntityAction, CAnimation*> > m_Actions;
+        
+        void LoadAnimations();
+        void FreeAnimations();
 };
 
 #endif // CENTITY_H
