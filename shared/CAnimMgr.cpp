@@ -3,12 +3,14 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CAnimMgr.cpp
-*  PURPOSE:     
+*  PURPOSE:     Animations manager
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/
 
 #include "CAnimMgr.h"
+#include "CVirtualFileSystem.h"
+#include "CException.h"
 
 using namespace std;
 
@@ -17,7 +19,16 @@ CAnimMgr::~CAnimMgr()
     assert(m_Animations.empty());
 }
 
-CAnimation *CAnimMgr::Load(std::string strFilename)
+string CAnimMgr::FixFilename(const string &strFilename)
+{
+    size_t ExtPos = strFilename.rfind('.');
+    if(ExtPos != string::npos)
+        return strFilename.substr(0, ExtPos) + ".rfa";
+    
+    return strFilename;
+}
+
+CAnimation *CAnimMgr::Load(const string &strFilename)
 {
     map<string, CAnimation*>::iterator it = m_Animations.find(strFilename);
     if(it != m_Animations.end())
@@ -28,6 +39,19 @@ CAnimation *CAnimMgr::Load(std::string strFilename)
     
     CAnimation *pAnim = new CAnimation(this);
     m_Animations.insert(pair<string, CAnimation*>(strFilename, pAnim));
+    
+    try
+    {
+        string strNewFilename = FixFilename(strFilename);
+        CVfsFileStream File(strNewFilename.c_str());
+        pAnim->Load(File);
+    }
+    catch(const exception &e)
+    {
+        pAnim->Release();
+        THROW_EXCEPTION("Failed to load %s:\n%s", strFilename.c_str(), e.what());
+    }
+    
     return pAnim;
 }
 

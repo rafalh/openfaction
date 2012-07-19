@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CAnimMgr.h
-*  PURPOSE:     
+*  PURPOSE:     Animations manager
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/
@@ -24,7 +24,8 @@ class CAnimMgr
             m_pGame(pGame) {}
         
         ~CAnimMgr();
-        CAnimation *Load(std::string strFilename);
+        std::string FixFilename(const std::string &strFilename);
+        CAnimation *Load(const std::string &strFilename);
         void Remove(CAnimation *pAnim);
         
         CGame *GetGame() const

@@ -96,8 +96,8 @@ CEntity::CEntity(CLevel *pLevel, const SEntityClass *pClass, unsigned nUid):
     m_pSceneNode = m_pLevel->GetGame()->GetSceneMgr()->addMeshSceneNode(pIrrMesh);
 #endif // OF_CLIENT
     
-    CAnimation *pAnim = m_pLevel->GetGame()->GetAnimMgr()->Load("masa_sar_stand.mvf");
-    pAnim->Release();
+    //CAnimation *pAnim = m_pLevel->GetGame()->GetAnimMgr()->Load("ult2_stand.mvf");
+    //pAnim->Release();
     
     AddToWorld();
 }
