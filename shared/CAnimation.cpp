@@ -22,13 +22,13 @@ CAnimation::~CAnimation()
 
 void CAnimation::Load(CInputBinaryStream &Stream)
 {
-    rfa_header_t Hdr;
+    rfa_header8_t Hdr;
     Stream.ReadBinary(&Hdr, sizeof(Hdr));
     
     if(Hdr.signature != RFA_SIGNATURE)
         THROW_EXCEPTION("Invalid RFA signature");
     
-    if(Hdr.version != RFA_VERSION)
+    if(Hdr.version != RFA_VERSION8)
         THROW_EXCEPTION("Unknown RFA version: %u", Hdr.version);
     
     Stream.ignore(8 + Hdr.cBones * 4); // offsets
@@ -83,5 +83,5 @@ void CAnimation::Load(CInputBinaryStream &Stream)
 
 void CAnimation::Unload()
 {
-    
+    m_Bones.clear();
 }
