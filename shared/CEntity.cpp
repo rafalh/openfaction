@@ -49,7 +49,7 @@ CEntity::CEntity(CLevel *pLevel, const SEntityClass *pClass, unsigned nUid):
     
     try
     {
-        m_pMesh = m_pLevel->GetGame()->GetMeshMgr()->Load(m_pClass->strMeshFilename.c_str());
+        m_pMesh = m_pLevel->GetGame()->GetMeshMgr()->Load(m_pClass->strMeshFilename);
     }
     catch(const exception &e)
     {
@@ -125,7 +125,7 @@ CEntity::CEntity(CLevel *pLevel, CInputBinaryStream &Stream):
     
     try
     {
-        m_pMesh = m_pLevel->GetGame()->GetMeshMgr()->Load(m_pClass->strMeshFilename.c_str());
+        m_pMesh = m_pLevel->GetGame()->GetMeshMgr()->Load(m_pClass->strMeshFilename);
     }
     catch(const exception &e)
     {

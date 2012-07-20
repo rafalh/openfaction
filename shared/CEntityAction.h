@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CEntityAction.h
-*  PURPOSE:     
+*  PURPOSE:     Entity actions list
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/

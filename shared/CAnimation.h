@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CAnimation.h
-*  PURPOSE:     
+*  PURPOSE:     Skeletal animation
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/

@@ -24,8 +24,7 @@ class CMaterialsMgr
             m_pGame(pGame) {}
         
         ~CMaterialsMgr();
-        CMaterial *Load(std::string strFilename);
-        void Remove(CMaterial *pMaterial);
+        CMaterial *Load(const std::string &strFilename);
         
         CGame *GetGame() const
         {
@@ -35,6 +34,10 @@ class CMaterialsMgr
     private:
         std::map<std::string, CMaterial*> m_Materials;
         CGame *m_pGame;
+        
+        void Remove(CMaterial *pMaterial);
+        
+    friend class CMaterial;
 };
 
 #endif // CMATERIALSMGR_H

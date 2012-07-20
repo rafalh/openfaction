@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CObject.cpp
-*  PURPOSE:     
+*  PURPOSE:     Base class for all physical objects (level objects with known position)
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/

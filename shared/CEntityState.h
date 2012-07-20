@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CEntityState.h
-*  PURPOSE:     
+*  PURPOSE:     Entity states list
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/

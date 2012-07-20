@@ -26,7 +26,6 @@ class CAnimMgr
         ~CAnimMgr();
         std::string FixFilename(const std::string &strFilename);
         CAnimation *Load(const std::string &strFilename);
-        void Remove(CAnimation *pAnim);
         
         CGame *GetGame() const
         {
@@ -36,6 +35,10 @@ class CAnimMgr
     private:
         std::map<std::string, CAnimation*> m_Animations;
         CGame *m_pGame;
+        
+        void Remove(CAnimation *pAnim);
+        
+    friend class CAnimation;
 };
 
 #endif // CANIMMGR_H

@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CLevel.cpp
-*  PURPOSE:     
+*  PURPOSE:     Level handling
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/

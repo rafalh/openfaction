@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CMeshMgr.cpp
-*  PURPOSE:     
+*  PURPOSE:     Mesh manager
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/
@@ -23,33 +23,33 @@ CMeshMgr::~CMeshMgr()
     assert(m_Meshes.size() == 0);
 }
 
-std::string CMeshMgr::FixFilename(const char *pszFilename)
+string CMeshMgr::FixFilename(const string &strFilename)
 {
-    if(CVirtualFileSystem::GetInst().DoesFileExists(pszFilename))
-        return pszFilename;
+    if(CVirtualFileSystem::GetInst().DoesFileExists(strFilename.c_str()))
+        return strFilename;
+    
+    size_t ExtPos = strFilename.rfind('.');
+    if(ExtPos == string::npos)
+        return strFilename;
     
     // Try other supported extension
     const char *ExtList[] = {".v3m", ".v3c"};
-    string strFilename = pszFilename;
-    
     for(unsigned i = 0; i < COUNTOF(ExtList); ++i)
     {
-        size_t ExtPos = strFilename.rfind('.');
-        if(ExtPos != string::npos)
-            strFilename.erase(ExtPos);
-        strFilename += ExtList[i];
+        string strNewFilename = strFilename.substr(0, ExtPos);
+        strNewFilename += ExtList[i];
         
-        if(CVirtualFileSystem::GetInst().DoesFileExists(strFilename.c_str()))
-            return strFilename;
+        if(CVirtualFileSystem::GetInst().DoesFileExists(strNewFilename.c_str()))
+            return strNewFilename;
     }
     
     // Failed
-    return pszFilename;
+    return strFilename;
 }
 
-CMesh *CMeshMgr::Load(const char *pszFilename)
+CMesh *CMeshMgr::Load(const string &strFilename)
 {
-    map<string, CMesh*>::iterator it = m_Meshes.find(pszFilename);
+    map<string, CMesh*>::iterator it = m_Meshes.find(strFilename);
     if(it != m_Meshes.end())
     {
         it->second->AddRef();
@@ -57,20 +57,20 @@ CMesh *CMeshMgr::Load(const char *pszFilename)
     }
     
     CMesh *pMesh = new CMesh(this);
-    m_Meshes[pszFilename] = pMesh;
+    m_Meshes[strFilename] = pMesh;
     
-    //m_pGame->GetConsole()->DbgPrint("Loading mesh: %s\n", pszFilename);
+    //m_pGame->GetConsole()->DbgPrint("Loading mesh: %s\n", strFilename.c_str());
     
     try
     {
-        string strFilename = FixFilename(pszFilename);
-        CVfsFileStream File(strFilename.c_str());
+        string strNewFilename = FixFilename(strFilename);
+        CVfsFileStream File(strNewFilename.c_str());
         pMesh->Load(File);
     }
     catch(const exception &e)
     {
         pMesh->Release();
-        THROW_EXCEPTION("Failed to load %s:\n%s", pszFilename, e.what());
+        THROW_EXCEPTION("Failed to load %s:\n%s", strFilename.c_str(), e.what());
     }
     
     return pMesh;

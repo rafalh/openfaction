@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CWeapon.cpp
-*  PURPOSE:     
+*  PURPOSE:     Entity weapon
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/

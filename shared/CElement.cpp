@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CElement.cpp
-*  PURPOSE:     
+*  PURPOSE:     Base class for all elements (level objects)
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/

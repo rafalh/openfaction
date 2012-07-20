@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CGame.h
-*  PURPOSE:     
+*  PURPOSE:     Main class containing references to all useful objects
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/

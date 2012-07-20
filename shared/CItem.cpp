@@ -88,7 +88,7 @@ CItem::CItem(CLevel *pLevel, CInputBinaryStream &Stream, unsigned nBit):
     m_nRespawnTime = Stream.ReadUInt32();
     Stream.ignore(4); // team id
     
-    m_pMesh = m_pLevel->GetGame()->GetMeshMgr()->Load(m_pClass->strMeshFilename.c_str());
+    m_pMesh = m_pLevel->GetGame()->GetMeshMgr()->Load(m_pClass->strMeshFilename);
     if(m_pMesh)
     {
         assert(m_pMesh->GetSubMeshCount() > 0);

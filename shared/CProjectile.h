@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CProjectile.h
-*  PURPOSE:     
+*  PURPOSE:     Projectile element
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/

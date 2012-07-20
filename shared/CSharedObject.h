@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CSharedObject.h
-*  PURPOSE:     
+*  PURPOSE:     Base class for reference-counted objects
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/

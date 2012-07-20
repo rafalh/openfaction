@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CTrigger.h
-*  PURPOSE:     
+*  PURPOSE:     Trigger element
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/

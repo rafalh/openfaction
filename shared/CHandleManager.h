@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CHandleManager.h
-*  PURPOSE:     
+*  PURPOSE:     Allocates handles for objects
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/

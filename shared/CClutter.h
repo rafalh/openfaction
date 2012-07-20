@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CClutter.h
-*  PURPOSE:     
+*  PURPOSE:     Clutter element
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/

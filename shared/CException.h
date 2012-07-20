@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CException.h
-*  PURPOSE:     
+*  PURPOSE:     Exception handling helpers
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/

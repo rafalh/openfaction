@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CClutter.cpp
-*  PURPOSE:     
+*  PURPOSE:     Clutter element
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/
@@ -56,7 +56,7 @@ CClutter::CClutter(CLevel *pLevel, CInputBinaryStream &Stream):
     
     m_fLife = m_pClass ? m_pClass->fHealth : -1.0f;
     
-    m_pMesh = m_pClass ? m_pLevel->GetGame()->GetMeshMgr()->Load(m_pClass->strMeshFilename.c_str()) : NULL;
+    m_pMesh = m_pClass ? m_pLevel->GetGame()->GetMeshMgr()->Load(m_pClass->strMeshFilename) : NULL;
     if(m_pMesh)
     {
         assert(m_pMesh->GetSubMeshCount() > 0);

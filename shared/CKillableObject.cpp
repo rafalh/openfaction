@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CKillableObject.cpp
-*  PURPOSE:     
+*  PURPOSE:     Base class for all objects with life
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/

@@ -17,7 +17,7 @@ CMaterialsMgr::~CMaterialsMgr()
     assert(m_Materials.empty());
 }
 
-CMaterial *CMaterialsMgr::Load(std::string strFilename)
+CMaterial *CMaterialsMgr::Load(const string &strFilename)
 {
     map<string, CMaterial*>::iterator it = m_Materials.find(strFilename);
     if(it != m_Materials.end())

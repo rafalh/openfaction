@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CMeshMgr.h
-*  PURPOSE:     
+*  PURPOSE:     Mesh manager
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/
@@ -24,9 +24,7 @@ class CMeshMgr
             m_pGame(pGame) {}
         
         ~CMeshMgr();
-        std::string FixFilename(const char *pszFilename);
-        CMesh *Load(const char *pszFilename);
-        void Remove(CMesh *pMesh);
+        CMesh *Load(const std::string &strFilename);
         
         CGame *GetGame() const
         {
@@ -36,6 +34,11 @@ class CMeshMgr
     private:
         CGame *m_pGame;
         std::map<std::string, CMesh*> m_Meshes;
+        
+        std::string FixFilename(const std::string &strFilename);
+        void Remove(CMesh *pMesh);
+        
+    friend class CMesh;
 };
 
 #endif // CMESHMGR_H

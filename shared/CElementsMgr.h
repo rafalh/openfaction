@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CElementsMgr.h
-*  PURPOSE:     
+*  PURPOSE:     Keeps list of all elements
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/

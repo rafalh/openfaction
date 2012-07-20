@@ -131,12 +131,12 @@ void CVirtualFileSystem::AddArchivesDirectory(const char *pPath)
     }
 }
 
-std::vector<std::string> CVirtualFileSystem::FindFiles(const char *pStr, const char *pExt) const
+vector<string> CVirtualFileSystem::FindFiles(const char *pStr, const char *pExt) const
 {
-    std::vector<std::string> Result;
+    vector<string> Result;
     unsigned cchExt = pExt ? strlen(pExt) : 0;
     
-    for(std::map<std::string, std::string>::const_iterator it = m_FileNameToArchive.begin();
+    for(map<string, string>::const_iterator it = m_FileNameToArchive.begin();
         it != m_FileNameToArchive.end();
         ++it)
     {
@@ -157,7 +157,7 @@ bool CVirtualFileSystem::DoesFileExists(const char *pStr) const
     while(*pStr)
         strFilenameLower += tolower(*(pStr++));
     
-    std::map<std::string, std::string>::const_iterator it;
+    map<string, string>::const_iterator it;
     it = m_FileNameToArchive.find(strFilenameLower);
     return it != m_FileNameToArchive.end();
 }
