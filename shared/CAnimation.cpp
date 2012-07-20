@@ -43,7 +43,7 @@ void CAnimation::Load(CInputBinaryStream &Stream)
     for(unsigned i = 0; i < Hdr.cBones; ++i)
     {
         SBone Bone;
-        assert(Stream.tellg() == BoneOffsets[i]);
+        assert(Stream && Stream.tellg() == BoneOffsets[i]);
         
         Stream.ignore(4);
         uint16_t cRotKeys = Stream.ReadUInt16();
@@ -76,7 +76,11 @@ void CAnimation::Load(CInputBinaryStream &Stream)
     }
     
     // rfa_morph_vertices_t
-    Stream.ignore(Hdr.cMorphVertices * 2);
+    if(Hdr.cMorphVertices)
+    {
+        assert(Stream && Stream.tellg() == MorphVerticesOffset);
+        Stream.ignore(Hdr.cMorphVertices * 2);
+    }
     
     // align to 4
     if(Stream.tellg() % 4)
@@ -84,17 +88,26 @@ void CAnimation::Load(CInputBinaryStream &Stream)
     
     if(Hdr.cMorphKeyframes * Hdr.cMorphVertices > 0)
     {
-        assert(Stream);
-        // rfa_morph_keyframes_t::Times
-        Stream.ignore(Hdr.cMorphKeyframes * 4);
+        assert(Stream && Stream.tellg() == MorphKeyframesOffset);
         
-        // rfa_morph_keyframes_t::Aabb
-        btVector3 vAabbMin = Stream.ReadVector();
-        btVector3 vAabbMax = Stream.ReadVector();
-        assert(vAabbMin[0] <= vAabbMax[0] && vAabbMin[1] <= vAabbMax[1] && vAabbMin[2] <= vAabbMax[2]);
-        
-        // rfa_morph_keyframes_t::Positions
-        Stream.ignore(Hdr.cMorphKeyframes * Hdr.cMorphVertices * 3);
+        if(Hdr.version == RFA_VERSION8)
+        {
+            // rfa_morph_keyframes8_t::Times
+            Stream.ignore(Hdr.cMorphKeyframes * 4);
+            
+            // rfa_morph_keyframes8_t::Aabb
+            btVector3 vAabbMin = Stream.ReadVector();
+            btVector3 vAabbMax = Stream.ReadVector();
+            assert(vAabbMin[0] <= vAabbMax[0] && vAabbMin[1] <= vAabbMax[1] && vAabbMin[2] <= vAabbMax[2]);
+            
+            // rfa_morph_keyframes8_t::Positions
+            Stream.ignore(Hdr.cMorphKeyframes * Hdr.cMorphVertices * 3);
+        }
+        else // RFA_VERSION7
+        {
+            // rfa_morph_keyframes7_t::Positions
+            Stream.ignore(Hdr.cMorphKeyframes * Hdr.cMorphVertices * 12);
+        }
     }
 }
 

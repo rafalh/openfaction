@@ -23,8 +23,6 @@ class CMaterialsMgr;
 class CMaterial: public CSharedObject
 {
     public:
-        CMaterial(CMaterialsMgr *pMaterialsMgr, const std::string &strFilename);
-        ~CMaterial();
 #ifdef OF_CLIENT
         irr::scene::ISceneNodeAnimator *CreateAnimator(unsigned iNodeMaterial);
 #endif // OF_CLIENT
@@ -72,9 +70,13 @@ class CMaterial: public CSharedObject
         
         static unsigned m_UniqueId;
         
+        CMaterial(CMaterialsMgr *pMaterialsMgr, const std::string &strFilename);
+        ~CMaterial();
 #ifdef OF_CLIENT
         bool LoadVbm(CInputBinaryStream &Stream);
 #endif // OF_CLIENT
+    
+    friend class CMaterialsMgr;
 };
 
 #endif // CVBM_H

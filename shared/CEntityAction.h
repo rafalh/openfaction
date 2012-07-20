@@ -80,9 +80,19 @@ class CEntityAction
             return GetName(m_Action);
         }
         
+        bool operator==(const CEntityAction &Action) const
+        {
+            return m_Action == Action.m_Action;
+        }
+        
         bool operator<(const CEntityAction &Action) const
         {
             return m_Action < Action.m_Action;
+        }
+        
+        bool operator>(const CEntityAction &Action) const
+        {
+            return m_Action > Action.m_Action;
         }
         
     private:

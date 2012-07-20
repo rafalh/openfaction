@@ -38,6 +38,8 @@ void CMaterialsMgr::Remove(CMaterial *pMaterial)
         if(it->second == pMaterial)
         {
             m_Materials.erase(it);
-            break;
+            return;
         }
+    
+    assert(false);
 }

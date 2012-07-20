@@ -60,9 +60,19 @@ class CEntityState
             return GetName(m_State);
         }
     
+        bool operator==(const CEntityState &State) const
+        {
+            return m_State == State.m_State;
+        }
+        
         bool operator<(const CEntityState &State) const
         {
             return m_State < State.m_State;
+        }
+        
+        bool operator>(const CEntityState &State) const
+        {
+            return m_State > State.m_State;
         }
     
     private:

@@ -11,6 +11,8 @@
 #include "CAnimMgr.h"
 #include "CVirtualFileSystem.h"
 #include "CException.h"
+#include "CGame.h"
+#include "CConsole.h"
 
 using namespace std;
 
@@ -33,12 +35,15 @@ CAnimation *CAnimMgr::Load(const string &strFilename)
     map<string, CAnimation*>::iterator it = m_Animations.find(strFilename);
     if(it != m_Animations.end())
     {
-        it->second->AddRef();
-        return it->second;
+        CAnimation *pAnim = it->second;
+        pAnim->AddRef();
+        return pAnim;
     }
     
     CAnimation *pAnim = new CAnimation(this);
     m_Animations.insert(pair<string, CAnimation*>(strFilename, pAnim));
+    
+    //m_pGame->GetConsole()->DbgPrint("Loading animation %s\n", strFilename.c_str());
     
     try
     {
@@ -62,6 +67,8 @@ void CAnimMgr::Remove(CAnimation *pAnim)
         if(it->second == pAnim)
         {
             m_Animations.erase(it);
-            break;
+            return;
         }
+    
+    assert(false);
 }

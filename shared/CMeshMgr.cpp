@@ -85,5 +85,6 @@ void CMeshMgr::Remove(CMesh *pMesh)
             m_Meshes.erase(it);
             return;
         }
+    
     assert(false);
 }

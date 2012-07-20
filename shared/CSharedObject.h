@@ -11,6 +11,8 @@
 #ifndef CSHAREDOBJECT_H
 #define CSHAREDOBJECT_H
 
+#include <cassert>
+
 class CSharedObject
 {
     public:
@@ -20,17 +22,24 @@ class CSharedObject
         
         unsigned AddRef()
         {
+            assert(m_cRefs > 0);
             ++m_cRefs;
         }
         
         unsigned Release()
         {
+            assert(m_cRefs > 0);
             --m_cRefs;
             if(m_cRefs == 0)
             {
                 delete this;
                 return 0;
             }
+            return m_cRefs;
+        }
+        
+        unsigned GetRefCount() const
+        {
             return m_cRefs;
         }
         

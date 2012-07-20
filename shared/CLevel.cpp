@@ -13,10 +13,10 @@
 # include "CSpawnpoint.h"
 # include "CSpawnpointsManager.h"
 # include "CPlayer.h"
-#else
+#else // !OF_SERVER
 # include "CLightmaps.h"
 # include <irrlicht.h>
-#endif
+#endif // OF_SERVER
 #include "rfl_format.h"
 #include "utils.h"
 #include "errors.h"
@@ -47,7 +47,7 @@ CLevel::CLevel(CGame *pGame):
     m_strName(""),
 #ifdef OF_SERVER
     m_pSpawnpointsMgr(NULL),
-#endif
+#endif // OF_SERVER
 #ifdef OF_CLIENT
     m_pLightmaps(NULL),
 #endif // OF_CLIENT

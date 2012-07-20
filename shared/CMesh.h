@@ -28,7 +28,7 @@ class CSubMesh
     public:
         CSubMesh(CMeshMgr *pMeshMgr);
         ~CSubMesh();
-        int Load(CInputBinaryStream &Stream);
+        void Load(CInputBinaryStream &Stream);
         
         btBvhTriangleMeshShape *GetColShape()
         {
@@ -50,16 +50,12 @@ class CSubMesh
 #endif
         std::vector<CMaterial*> m_Materials;
         
-        int LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrrMesh);
+        void LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrrMesh);
 };
 
 class CMesh: public CSharedObject
 {
     public:
-        CMesh(CMeshMgr *pMeshMgr = NULL);
-        ~CMesh();
-        void Load(CInputBinaryStream &Stream);
-        void Unload();
         btMultiSphereShape *GetMultiColSphere();
 #ifdef OF_CLIENT
         void DbgDraw(const CObject *pObj) const;
@@ -101,9 +97,15 @@ class CMesh: public CSharedObject
         btMultiSphereShape *m_pMultiColSphere;
         CMeshMgr *m_pMeshMgr;
         
+        CMesh(CMeshMgr *pMeshMgr = NULL);
+        ~CMesh();
+        void Load(CInputBinaryStream &Stream);
+        void Unload();
         void LoadColSphere(CInputBinaryStream &Stream);
         void LoadBones(CInputBinaryStream &Stream);
         void PrepareBones(int iParent);
+    
+    friend class CMeshMgr;
 };
 
 #endif // CMESH_H

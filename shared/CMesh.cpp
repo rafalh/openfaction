@@ -71,7 +71,8 @@ void CMesh::Load(CInputBinaryStream &Stream)
             {
                 CSubMesh *pSubMesh = new CSubMesh(m_pMeshMgr);
                 pSubMesh->Load(Stream);
-                assert(m_SubMeshes.empty());
+                // Some models have more than one submesh, see APC.v3m
+                // FIXME: properly support submeshes
                 m_SubMeshes.push_back(pSubMesh);
                 break;
             }
@@ -88,6 +89,7 @@ void CMesh::Load(CInputBinaryStream &Stream)
     }
     
     assert(Stream);
+    assert(!m_SubMeshes.empty());
 }
 
 void CMesh::Unload()
@@ -267,7 +269,7 @@ CSubMesh::~CSubMesh()
     m_Materials.clear();
 }
 
-int CSubMesh::Load(CInputBinaryStream &Stream)
+void CSubMesh::Load(CInputBinaryStream &Stream)
 {
     Stream.ignore(24 + 24); // name, unknown
     
@@ -290,9 +292,9 @@ int CSubMesh::Load(CInputBinaryStream &Stream)
     float fRadius = Stream.ReadFloat();
     assert(fRadius > 0.0f);
     
-    btVector3 vAabb1 = Stream.ReadVector();
-    btVector3 vAabb2 = Stream.ReadVector();
-    assert(vAabb1.x() < vAabb2.x() && vAabb1.y() < vAabb2.y() && vAabb1.z() < vAabb2.z());
+    btVector3 vAabbMin = Stream.ReadVector();
+    btVector3 vAabbMax = Stream.ReadVector();
+    assert(vAabbMin.x() <= vAabbMax.x() && vAabbMin.y() <= vAabbMax.y() && vAabbMin.z() <= vAabbMax.z());
     
     for(unsigned i = 0; i < cLodModels; ++i)
     {
@@ -309,10 +311,9 @@ int CSubMesh::Load(CInputBinaryStream &Stream)
     Stream.ignore(cUnknown * 28); // unknown4
     
     assert(Stream);
-    return 0;
 }
 
-int CSubMesh::LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrrMesh)
+void CSubMesh::LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrrMesh)
 {
     uint32_t uFlags = Stream.ReadUInt32();
     assert(uFlags <= 0x33);
@@ -527,5 +528,4 @@ int CSubMesh::LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrrM
     delete[] pData;
     
     assert(Stream);
-    return 0;
 }

@@ -224,8 +224,7 @@ void CStaticGeometry::Load(CLevel *pLevel, CInputBinaryStream &Stream, unsigned 
         
         uint16_t Unk6 = Stream.ReadUInt16();
         uint32_t Unk6_2 = Stream.ReadUInt32();
-        //pLevel->GetGame()->GetConsole()->DbgPrint("%u %u\n", Unk6, Unk6_2);
-        assert(Unk6 == 0 && Unk6_2 <= 2);
+        assert(Unk6 == 0);
         
         Face.iRoom = Stream.ReadUInt32();
         assert(Face.iRoom < cRooms);

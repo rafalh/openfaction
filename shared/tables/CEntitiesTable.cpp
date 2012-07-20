@@ -32,7 +32,7 @@ int CEntitiesTable::Load(istream &Stream)
     if(!Reader.IsSectionFound())
         return -1;
     
-    string strWeapon = "";
+    string strWeapon;
     
     while(Reader.LoadNextElement() == 0)
     {
@@ -44,6 +44,8 @@ int CEntitiesTable::Load(istream &Stream)
             Reader.GetString(Entity.strName);
             
             m_Entities.push_back(Entity);
+            
+            strWeapon.clear();
         }
         else if(!m_Entities.empty())
         {
@@ -76,7 +78,6 @@ int CEntitiesTable::Load(istream &Stream)
                 string strAction;
                 Reader.GetString(strAction);
                 CEntityAction Action(strAction.c_str());
-                
                 string strFilename;
                 Reader.GetString(strFilename);
                 m_Entities.back().Actions[strWeapon][Action] = strFilename;

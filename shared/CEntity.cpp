@@ -119,6 +119,44 @@ CEntity::CEntity(CLevel *pLevel, CInputBinaryStream &Stream):
     m_nUid = Stream.ReadUInt32();
     
     string strClassName = Stream.ReadString2();
+    btVector3 vPos = Stream.ReadVector();
+    
+    btMatrix3x3 matRot;
+    matRot[2] = Stream.ReadVector();
+    matRot[0] = Stream.ReadVector();
+    matRot[1] = Stream.ReadVector();
+    m_CamRotMatrix = matRot.transpose();
+    
+    Stream.ReadString2(); // script name
+    Stream.ignore(13); // unknown, cooperation, friendliness, team_id
+    Stream.ReadString2(); // waypoint list
+    Stream.ReadString2(); // waypoint method
+    Stream.ignore(17); // unknown2, boarded, ready_to_fire_state, only_attack_player, weapon_is_holstered,
+                       // deaf, sweep_min_angle, sweep_max_angle, ignore_terrain_when_firing, unknown3, start_crouched
+    
+    m_fLife = Stream.ReadFloat();
+    m_fArmor = Stream.ReadFloat();
+    
+    Stream.ignore(4); // fov
+    
+    string strPrimaryWeapon = Stream.ReadString2();
+    
+    Stream.ReadString2(); // secondary weapon
+    Stream.ReadString2(); // item drop
+    Stream.ReadString2(); // state anim
+    Stream.ReadString2(); // corpse pose
+    Stream.ReadString2(); // skin
+    Stream.ReadString2(); // death anim
+    Stream.ignore(34); // ai_mode, ai_attack_style, unknown4, turret_uid, alert_camera_uid, alarm_event_uid, run,
+                       // start_hidden, wear_helmet, end_game_if_killed, cower_from_weapon, question_unarmed_player,
+                       // dont_hum, no_shadow, always_simulate, perfect_aim, permanent_corpse, never_fly, never_leave,
+                       // no_persona_messages, fade_corpse_immediately, never_collide_with_player
+    bool bUseCustomAttackRange = Stream.ReadUInt8() ? true : false;
+    if(bUseCustomAttackRange)
+        Stream.ignore(4); // custom attack range
+    Stream.ReadString2(); // left hand holding
+    Stream.ReadString2(); // right hand holding
+    
     m_pClass = m_pLevel->GetGame()->GetEntitiesTbl()->Get(strClassName.c_str());
     if(!m_pClass)
         THROW_EXCEPTION("Unknown class %s", strClassName.c_str());
@@ -160,30 +198,13 @@ CEntity::CEntity(CLevel *pLevel, CInputBinaryStream &Stream):
     m_pColObj->setFriction(1.0f);
     m_pColObj->setRestitution(0.0f);
     
-    SetPos(Stream.ReadVector());
-    
-    btMatrix3x3 matRot;
-    matRot[2] = Stream.ReadVector();
-    matRot[0] = Stream.ReadVector();
-    matRot[1] = Stream.ReadVector();
-    m_CamRotMatrix = matRot.transpose();
-    
-    Stream.ReadString2(); // script name
-    Stream.ignore(13); // unknown, cooperation, friendliness, team_id
-    Stream.ReadString2(); // waypoint list
-    Stream.ReadString2(); // waypoint method
-    Stream.ignore(17); // unknown2, boarded, ready_to_fire_state, only_attack_player, weapon_is_holstered,
-                       // deaf, sweep_min_angle, sweep_max_angle, ignore_terrain_when_firing, unknown3, start_crouched
-    m_fLife = Stream.ReadFloat();
-    m_fArmor = Stream.ReadFloat();
-    Stream.ignore(4); // fov
+    SetPos(vPos);
     
     CAmmoTable *pAmmoTbl = m_pLevel->GetGame()->GetAmmoTbl();
     m_Ammo = new unsigned[pAmmoTbl->GetCount()];
     for(unsigned i = 0; i < pAmmoTbl->GetCount(); ++i)
         m_Ammo[i] = 0;
     
-    string strPrimaryWeapon = Stream.ReadString2();
     unsigned cAmmo;
     const SWeaponClass *pWeaponCls = m_pLevel->GetGame()->GetWeaponsTbl()->Get(strPrimaryWeapon.c_str());
     if(!pWeaponCls)
@@ -194,22 +215,6 @@ CEntity::CEntity(CLevel *pLevel, CInputBinaryStream &Stream):
         cAmmo = (pWeaponCls->nId == RF_PISTOL ? 64 : pWeaponCls->nClipSize);
     
     m_pWeapon = AddWeapon(pWeaponCls, cAmmo);
-    
-    Stream.ReadString2(); // secondary weapon
-    Stream.ReadString2(); // item drop
-    Stream.ReadString2(); // state anim
-    Stream.ReadString2(); // corpse pose
-    Stream.ReadString2(); // skin
-    Stream.ReadString2(); // death anim
-    Stream.ignore(34); // ai_mode, ai_attack_style, unknown4, turret_uid, alert_camera_uid, alarm_event_uid, run,
-                       // start_hidden, wear_helmet, end_game_if_killed, cower_from_weapon, question_unarmed_player,
-                       // dont_hum, no_shadow, always_simulate, perfect_aim, permanent_corpse, never_fly, never_leave,
-                       // no_persona_messages, fade_corpse_immediately, never_collide_with_player
-    bool bUseCustomAttackRange = Stream.ReadUInt8() ? true : false;
-    if(bUseCustomAttackRange)
-        Stream.ignore(4); // custom attack range
-    Stream.ReadString2(); // left hand holding
-    Stream.ReadString2(); // right hand holding
     
 #ifdef OF_CLIENT
     scene::IMesh *pIrrMesh = m_pMesh->GetSubMesh(0)->GetIrrMesh();
@@ -459,13 +464,19 @@ void CEntity::LoadAnimations()
     {
         const SWeaponClass *pWeaponCls = 0;
         if(!itWeapon->first.empty())
+        {
             pWeaponCls = m_pLevel->GetGame()->GetWeaponsTbl()->Get(itWeapon->first.c_str());
+            assert(pWeaponCls);
+        }
+            
         int WeaponClsId = pWeaponCls ? pWeaponCls->nId : -1;
         
         map<CEntityState, string>::const_iterator itState;
         for(itState = itWeapon->second.begin(); itState != itWeapon->second.end(); ++itState)
         {
             CAnimation *pAnim = m_pLevel->GetGame()->GetAnimMgr()->Load(itState->second);
+            
+            assert(!m_States[WeaponClsId][itState->first]);
             m_States[WeaponClsId][itState->first] = pAnim;
         }
     }
@@ -482,6 +493,8 @@ void CEntity::LoadAnimations()
         for(itAction = itWeapon2->second.begin(); itAction != itWeapon2->second.end(); ++itAction)
         {
             CAnimation *pAnim = m_pLevel->GetGame()->GetAnimMgr()->Load(itAction->second);
+            
+            assert(!m_Actions[WeaponClsId][itAction->first]);
             m_Actions[WeaponClsId][itAction->first] = pAnim;
         }
     }
@@ -499,6 +512,7 @@ void CEntity::FreeAnimations()
             pAnim->Release();
         }
     }
+    m_States.clear();
     
     map<int, map<CEntityAction, CAnimation*> >::const_iterator itWeapon2;
     for(itWeapon2 = m_Actions.begin(); itWeapon2 != m_Actions.end(); ++itWeapon2)
@@ -510,4 +524,5 @@ void CEntity::FreeAnimations()
             pAnim->Release();
         }
     }
+    m_Actions.clear();
 }

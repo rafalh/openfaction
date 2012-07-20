@@ -97,14 +97,14 @@ struct rfa_aabb_t
     rfa_bone_t Bones[cBones];
     rfa_morph_vertices_t;
     // alignment to 4
-    rfa_morph_keyframes_t;
+    rfa_morph_keyframes8_t or rfa_morph_keyframes7_t;
 **/
 
 struct rfa_offsets_t
 {
     // Offsets are from file begin
     uint32_t MorphVerticesOffset; // offset to rfa_morph_vertices_t
-    uint32_t MorphKeyframesOffset; // offset to rfa_morph_keyframes_t
+    uint32_t MorphKeyframesOffset; // offset to rfa_morph_keyframes8_t or rfa_morph_keyframes7_t
     uint32_t BoneOffsets[cBones]; // offsets to rfa_bone_t
 };
 
@@ -139,11 +139,16 @@ struct rfa_morph_vertices_t
     uint16_t VertexIndices[cMorphVertices];
 };
 
-struct rfa_morph_keyframes_t
+struct rfa_morph_keyframes8_t // version 8
 {
     uint32_t Times[cMorphKeyframes];
     rfa_aabb_t Aabb; // exists if cMorphKeyframes*cMorphVertices > 0
     rfa_vector8_t Positions[cMorphKeyframes][cMorphVertices];
+};
+
+struct rfa_morph_keyframes7_t // version 7
+{
+    rfa_vector_t Positions[cMorphKeyframes][cMorphVertices];
 };
 
 #endif // 0

@@ -19,14 +19,6 @@ class CAnimMgr;
 
 class CAnimation: public CSharedObject
 {
-    public:
-        CAnimation(CAnimMgr *pAnimMgr):
-            m_pAnimMgr(pAnimMgr) {}
-        
-        ~CAnimation();
-        void Load(CInputBinaryStream &Stream);
-        void Unload();
-    
     private:
         struct SPosKey
         {
@@ -46,6 +38,14 @@ class CAnimation: public CSharedObject
         
         std::vector<SBone> m_Bones;
         CAnimMgr *m_pAnimMgr;
+        
+        CAnimation(CAnimMgr *pAnimMgr):
+            m_pAnimMgr(pAnimMgr) {}
+        ~CAnimation();
+        void Load(CInputBinaryStream &Stream);
+        void Unload();
+        
+    friend class CAnimMgr;
 };
 
 #endif // CANIMATION_H
