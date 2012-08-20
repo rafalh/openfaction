@@ -22,6 +22,7 @@
 #include "CEntitiesTable.h"
 #include "CException.h"
 #include "CAnimMgr.h"
+#include "CAnimatedMesh.h"
 #include "BulletCollision/CollisionDispatch/btGhostObject.h"
 #include "BulletDynamics/Character/btKinematicCharacterController.h"
 
@@ -49,7 +50,8 @@ CEntity::CEntity(CLevel *pLevel, const SEntityClass *pClass, unsigned nUid):
     
     try
     {
-        m_pMesh = m_pLevel->GetGame()->GetMeshMgr()->Load(m_pClass->strMeshFilename);
+        CMesh *pMesh = m_pLevel->GetGame()->GetMeshMgr()->Load(m_pClass->strMeshFilename);
+        m_pMesh = new CAnimatedMesh(pMesh);
     }
     catch(const exception &e)
     {
@@ -91,7 +93,7 @@ CEntity::CEntity(CLevel *pLevel, const SEntityClass *pClass, unsigned nUid):
     m_pWeapon = AddWeapon(pWeaponCls, 0);
     
 #ifdef OF_CLIENT
-    scene::IMesh *pIrrMesh = m_pMesh->GetSubMesh(0)->GetIrrMesh();
+    scene::IMesh *pIrrMesh = m_pMesh->GetIrrMesh();
     assert(pIrrMesh);
     m_pSceneNode = m_pLevel->GetGame()->GetSceneMgr()->addMeshSceneNode(pIrrMesh);
 #endif // OF_CLIENT
@@ -163,13 +165,13 @@ CEntity::CEntity(CLevel *pLevel, CInputBinaryStream &Stream):
     
     try
     {
-        m_pMesh = m_pLevel->GetGame()->GetMeshMgr()->Load(m_pClass->strMeshFilename);
+        CMesh *pMesh = m_pLevel->GetGame()->GetMeshMgr()->Load(m_pClass->strMeshFilename);
+        m_pMesh = new CAnimatedMesh(pMesh);
     }
     catch(const exception &e)
     {
         THROW_EXCEPTION("Failed to load entity (uid %u, class %s):\n%s", m_nUid, strClassName.c_str(), e.what());
     }
-    assert(m_pMesh->GetSubMeshCount() > 0);
     
     btConvexShape *pColShape = m_pMesh->GetMultiColSphere();
     if(!pColShape)
@@ -183,7 +185,7 @@ CEntity::CEntity(CLevel *pLevel, CInputBinaryStream &Stream):
     btRigidBody::upcast(m_pColObj)->setAngularFactor(0.0f);
 #else // kinematic character
     m_pColObj = new btPairCachingGhostObject();
-    m_pColObj->setCollisionShape(m_pColShape);
+    m_pColObj->setCollisionShape(pColShape);
     
     const float fStepHeight = 0.35f;
 	m_pCharacter = new btKinematicCharacterController((btPairCachingGhostObject*)m_pColObj, pColShape, fStepHeight);
@@ -217,7 +219,7 @@ CEntity::CEntity(CLevel *pLevel, CInputBinaryStream &Stream):
     m_pWeapon = AddWeapon(pWeaponCls, cAmmo);
     
 #ifdef OF_CLIENT
-    scene::IMesh *pIrrMesh = m_pMesh->GetSubMesh(0)->GetIrrMesh();
+    scene::IMesh *pIrrMesh = m_pMesh->GetIrrMesh();
     assert(pIrrMesh);
     m_pSceneNode = m_pLevel->GetGame()->GetSceneMgr()->addMeshSceneNode(pIrrMesh);
 #endif // OF_CLIENT
@@ -239,8 +241,7 @@ CEntity::~CEntity()
         m_pCharacter = NULL;
     }
     
-    if(m_pMesh)
-        m_pMesh->Release();
+    delete m_pMesh;
     m_pMesh = NULL;
     
     delete[] m_Ammo;

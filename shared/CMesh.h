@@ -39,7 +39,7 @@ class CSubMesh
         {
             return m_pIrrMesh;
         }
-#endif
+#endif // OF_CLIENT
     
     private:
         CMeshMgr *m_pMeshMgr;
@@ -47,7 +47,7 @@ class CSubMesh
         btBvhTriangleMeshShape *m_pColShape;
 #ifdef OF_CLIENT
         irr::scene::IMesh *m_pIrrMesh;
-#endif
+#endif // OF_CLIENT
         std::vector<CMaterial*> m_Materials;
         
         void LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrrMesh);

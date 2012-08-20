@@ -57,10 +57,12 @@ CClientApp::~CClientApp()
     delete m_pGame;
     m_pGame = NULL;
     
-    m_pFont->drop();
+    if(m_pFont)
+        m_pFont->drop();
     m_pFont = NULL;
     
-    m_pFontFace->drop();
+    if(m_pFontFace)
+        m_pFontFace->drop();
     m_pFontFace = NULL;
     
     delete m_pConsole;
@@ -70,7 +72,8 @@ CClientApp::~CClientApp()
     delete m_pCamera;
     m_pCamera = NULL;
     
-    m_pDevice->drop();
+    if(m_pDevice)
+        m_pDevice->drop();
     m_pDevice = NULL;
 }
 
@@ -259,9 +262,9 @@ void CClientApp::Run()
             DbgLabels[7]->setText(wszDbgBuf);
         }
 	}
-	
+	m_pGame->GetConsole()->Print("wtf\n");
 	// Unload level
-	m_pGame->GetLevel()->Unload();
+	m_pGame->GetLevel()->Unload();m_pGame->GetConsole()->Print("wtf2\n");
 }
 
 void CClientApp::LoadLevel(const char *pszName)

@@ -1,4 +1,4 @@
-	project "Irrlicht"
+project "Irrlicht"
 	kind "SharedLib"
 	
 	includedirs {

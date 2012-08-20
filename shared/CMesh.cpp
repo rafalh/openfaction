@@ -234,6 +234,11 @@ void CMesh::DbgDraw(const CObject *pObj) const
         swprintf(wszBuf, sizeof(wszBuf), L"%hs", Bone.strName.c_str());
         m_pMeshMgr->GetGame()->GetGuiEnv()->getBuiltInFont()->draw(wszBuf, core::recti(vPosScr, vPosScr), video::SColor(255, 255, 255, 255), true, true);
     }
+    
+    core::vector3df vTestPos = vIrrPos + core::vector3df(0.0f, 2.0f, 0.0f);
+    irr::core::quaternion q;
+    vTestPos = q * vTestPos;
+    pVideoDrv->draw3DBox(core::aabbox3df(vTestPos - core::vector3df(0.01, 0.01, 0.01), vTestPos + core::vector3df(0.01, 0.01, 0.01)), video::SColor(255, 0, 255, 0));
 }
 #endif // OF_CLIENT
 

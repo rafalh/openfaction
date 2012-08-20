@@ -20,7 +20,7 @@
 #include <map>
 
 class CPlayer;
-class CMesh;
+class CAnimatedMesh;
 class CWeapon;
 class CAnimation;
 struct SEntityClass;
@@ -281,7 +281,7 @@ class CEntity: public CKillableObject
         btDefaultMotionState m_MotionState;
         btKinematicCharacterController *m_pCharacter;
         
-        CMesh *m_pMesh;
+        CAnimatedMesh *m_pMesh;
         
         std::map<int, std::map<CEntityState, CAnimation*> > m_States;
         std::map<int, std::map<CEntityAction, CAnimation*> > m_Actions;

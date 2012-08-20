@@ -1,4 +1,4 @@
-	project "jpeglib"
+project "jpeglib"
 	kind "StaticLib"
 	
 	includedirs {

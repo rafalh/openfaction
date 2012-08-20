@@ -64,9 +64,6 @@ CItem::CItem(CLevel *pLevel, CInputBinaryStream &Stream, unsigned nBit):
     m_nUid = Stream.ReadUInt32();
     
     string strClassName = Stream.ReadString2();
-    m_pClass = m_pLevel->GetGame()->GetItemsTbl()->Get(strClassName.c_str());
-    if(!m_pClass)
-        THROW_EXCEPTION("Unknown class %s", strClassName.c_str());
     
     SetPos(Stream.ReadVector());
     
@@ -83,10 +80,15 @@ CItem::CItem(CLevel *pLevel, CInputBinaryStream &Stream, unsigned nBit):
        Values in map are only for single player mode */
     //Item.SetCount(Stream.ReadUInt32());
     Stream.ignore(4); // count
-    m_nCount = m_pClass->nCount;
     
     m_nRespawnTime = Stream.ReadUInt32();
     Stream.ignore(4); // team id
+    
+    m_pClass = m_pLevel->GetGame()->GetItemsTbl()->Get(strClassName.c_str());
+    if(!m_pClass)
+        THROW_EXCEPTION("Unknown class %s", strClassName.c_str());
+    
+    m_nCount = m_pClass->nCount;
     
     m_pMesh = m_pLevel->GetGame()->GetMeshMgr()->Load(m_pClass->strMeshFilename);
     if(m_pMesh)
