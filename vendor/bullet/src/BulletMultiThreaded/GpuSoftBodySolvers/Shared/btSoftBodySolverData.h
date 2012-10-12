@@ -1,13 +1,3 @@
-/*****************************************************************************
-*
-*  PROJECT:     Open
-*  LICENSE:     See LICENSE in the top level directory
-*  FILE:        vendor/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/Shared/btSoftBodySolverData.h
-*  PURPOSE:     
-*  DEVELOPERS:  Rafal
-*
-*****************************************************************************/
-
 /*
 Bullet Continuous Collision Detection and Physics Library
 Copyright (c) 2003-2006 Erwin Coumans  http://continuousphysics.com/Bullet/

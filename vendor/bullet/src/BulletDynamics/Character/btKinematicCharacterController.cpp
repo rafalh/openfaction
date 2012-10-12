@@ -160,7 +160,21 @@ btPairCachingGhostObject* btKinematicCharacterController::getGhostObject()
 
 bool btKinematicCharacterController::recoverFromPenetration ( btCollisionWorld* collisionWorld)
 {
+	// Here we must refresh the overlapping paircache as the penetrating movement itself or the
+	// previous recovery iteration might have used setWorldTransform and pushed us into an object
+	// that is not in the previous cache contents from the last timestep, as will happen if we
+	// are pushed into a new AABB overlap. Unhandled this means the next convex sweep gets stuck.
+	//
+	// Do this by calling the broadphase's setAabb with the moved AABB, this will update the broadphase
+	// paircache and the ghostobject's internal paircache at the same time.    /BW
 
+	btVector3 minAabb, maxAabb;
+	m_convexShape->getAabb(m_ghostObject->getWorldTransform(), minAabb,maxAabb);
+	collisionWorld->getBroadphase()->setAabb(m_ghostObject->getBroadphaseHandle(), 
+						 minAabb, 
+						 maxAabb, 
+						 collisionWorld->getDispatcher());
+						 
 	bool penetration = false;
 
 	collisionWorld->getDispatcher()->dispatchAllCollisionPairs(m_ghostObject->getOverlappingPairCache(), collisionWorld->getDispatchInfo(), collisionWorld->getDispatcher());
@@ -479,7 +493,7 @@ void btKinematicCharacterController::warp (const btVector3& origin)
 	m_ghostObject->setWorldTransform (xform);
 }
 
-#include <stdio.h>
+
 void btKinematicCharacterController::preStep (  btCollisionWorld* collisionWorld)
 {
 	
@@ -491,7 +505,7 @@ void btKinematicCharacterController::preStep (  btCollisionWorld* collisionWorld
 		m_touchingContact = true;
 		if (numPenetrationLoops > 4)
 		{
-			printf("character could not recover from penetration = %d\n", numPenetrationLoops);
+			//printf("character could not recover from penetration = %d\n", numPenetrationLoops);
 			break;
 		}
 	}

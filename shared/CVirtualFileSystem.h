@@ -20,8 +20,8 @@
 class CVirtualFileSystem
 {
     public:
-        void AddArchive(const char *lpPath);
-        void AddArchivesDirectory(const char *pPath);
+        void AddArchive(const std::string &strPath);
+        void AddArchivesDirectory(const std::string &strPath);
         std::vector<std::string> FindFiles(const char *pStr = NULL, const char *pExt = NULL) const;
         bool DoesFileExists(const char *pStr) const;
         

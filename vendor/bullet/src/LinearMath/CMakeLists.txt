@@ -8,8 +8,10 @@ SET(LinearMath_SRCS
 	btConvexHull.cpp
 	btConvexHullComputer.cpp
 	btGeometryUtil.cpp
+	btPolarDecomposition.cpp
 	btQuickprof.cpp
 	btSerializer.cpp
+	btVector3.cpp
 )
 
 SET(LinearMath_HDRS
@@ -27,6 +29,7 @@ SET(LinearMath_HDRS
 	btMatrix3x3.h
 	btMinMax.h
 	btMotionState.h
+	btPolarDecomposition.h
 	btPoolAllocator.h
 	btQuadWord.h
 	btQuaternion.h

@@ -1,6 +1,7 @@
 project "libpng"
 	kind "StaticLib"
 	targetdir "lib"
+	targetprefix ""
 	includedirs { "../zlib" }
 	files {
 		"png.c",

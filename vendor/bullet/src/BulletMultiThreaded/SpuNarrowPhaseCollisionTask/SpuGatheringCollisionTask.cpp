@@ -190,10 +190,27 @@ void* createCollisionLocalStoreMemory()
 {
 	return &gLocalStoreMemory;
 }
+void deleteCollisionLocalStoreMemory()
+{
+}
 #else
+
+btAlignedObjectArray<CollisionTask_LocalStoreMemory*> sLocalStorePointers;
+
 void* createCollisionLocalStoreMemory()
 {
-        return new CollisionTask_LocalStoreMemory;
+    CollisionTask_LocalStoreMemory* localStore = new CollisionTask_LocalStoreMemory;
+    sLocalStorePointers.push_back(localStore);
+    return localStore;
+}
+
+void deleteCollisionLocalStoreMemory()
+{
+    for (int i=0;i<sLocalStorePointers.size();i++)
+    {
+        delete sLocalStorePointers[i];
+    }
+    sLocalStorePointers.clear();
 }
 
 #endif
@@ -1364,8 +1381,8 @@ void	processCollisionTask(void* userPtr, void* lsMemPtr)
 											)
 										{
 											handleCollisionPair(collisionPairInput, lsMem, spuContacts,
-												(ppu_address_t)lsMem.getColObj0()->getRootCollisionShape(), &lsMem.gCollisionShapes[0].collisionShape,
-												(ppu_address_t)lsMem.getColObj1()->getRootCollisionShape(), &lsMem.gCollisionShapes[1].collisionShape);
+												(ppu_address_t)lsMem.getColObj0()->getCollisionShape(), &lsMem.gCollisionShapes[0].collisionShape,
+												(ppu_address_t)lsMem.getColObj1()->getCollisionShape(), &lsMem.gCollisionShapes[1].collisionShape);
 										} else
 										{
 												//spu_printf("boxbox dist = %f\n",distance);

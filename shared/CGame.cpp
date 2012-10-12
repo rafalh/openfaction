@@ -71,11 +71,17 @@ CGame::~CGame()
 
 void CGame::InitVfs()
 {
+#ifndef LINUX
+    const string strRootDir = "C:/games/RedFaction/";
+#else
+    const string strRootDir = ""; // current directory
+#endif
+    
     m_pVfs = &CVirtualFileSystem::GetInst();
     
     /* Add custom maps first */
-    m_pVfs->AddArchivesDirectory("user_maps/multi/");
-    m_pVfs->AddArchivesDirectory("user_maps/single/");
+    m_pVfs->AddArchivesDirectory(strRootDir + "user_maps/multi/");
+    m_pVfs->AddArchivesDirectory(strRootDir + "user_maps/single/");
     
     /* Add game archives */
     const char *pGameArchives[] = {
@@ -97,7 +103,7 @@ void CGame::InitVfs()
     /* Add VPP files to virtual file system */
     for(unsigned i = 0; i < COUNTOF(pGameArchives); ++i)
     {
-        m_pVfs->AddArchive(pGameArchives[i]);
+        m_pVfs->AddArchive(strRootDir + pGameArchives[i]);
         m_pConsole->DbgPrint("Loaded %s\n", pGameArchives[i]);
     }
         

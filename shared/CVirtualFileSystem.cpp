@@ -18,27 +18,27 @@
 
 using namespace std;
 
-void CVirtualFileSystem::AddArchive(const char *pszPath)
+void CVirtualFileSystem::AddArchive(const std::string &strPath)
 {
-    FILE *pFile = fopen(pszPath, "rb");
+    FILE *pFile = fopen(strPath.c_str(), "rb");
     if(!pFile)
-        THROW_EXCEPTION("Failed to open file %s", pszPath);
+        THROW_EXCEPTION("Failed to open file %s", strPath.c_str());
     
     vpp_header_t Header;
     if(fread(&Header, sizeof(Header), 1, pFile) != 1)
     {
         fclose(pFile);
-        THROW_EXCEPTION("Failed to read archive %s header", pszPath);
+        THROW_EXCEPTION("Failed to read archive %s header", strPath.c_str());
     }
     else if(Header.signature != VPP_SIGNATURE)
     {
         fclose(pFile);
-        THROW_EXCEPTION("Archive %s has invalid signature", pszPath);
+        THROW_EXCEPTION("Archive %s has invalid signature", strPath.c_str());
     }
     else if(Header.version != 1)
     {
         fclose(pFile);
-        THROW_EXCEPTION("Archive %s has unknown version", pszPath);
+        THROW_EXCEPTION("Archive %s has unknown version", strPath.c_str());
     }
     else if(fseek(pFile, VPP_ALIGNMENT, SEEK_SET) != 0)
     {
@@ -56,7 +56,7 @@ void CVirtualFileSystem::AddArchive(const char *pszPath)
         for(const char *Ptr = FileEntry.file_name; *Ptr; ++Ptr)
             strFileName += tolower(*Ptr);
         
-        m_FileNameToArchive[strFileName] = pszPath;
+        m_FileNameToArchive[strFileName] = strPath;
     }
     
     fclose(pFile);
@@ -112,9 +112,9 @@ void CVirtualFileSystem::OpenFile(const char *pFileName, FILE *&pFile, std::stre
     THROW_EXCEPTION("File not found");
 }
 
-void CVirtualFileSystem::AddArchivesDirectory(const char *pPath)
+void CVirtualFileSystem::AddArchivesDirectory(const std::string &strPath)
 {
-    std::string strPattern = string(pPath) + "*.vpp";
+    std::string strPattern = strPath + "*.vpp";
     CFileList FileList(strPattern.c_str());
     while(true)
     {
@@ -125,8 +125,8 @@ void CVirtualFileSystem::AddArchivesDirectory(const char *pPath)
         
         if(iStatus == 0) // file
         {
-            string strPath = string(pPath) + strName;
-            AddArchive(strPath.c_str());
+            string strPath2 = strPath + strName;
+            AddArchive(strPath2.c_str());
         }
     }
 }
