@@ -11,7 +11,7 @@
 #ifndef CPLAYERCONNECTION_H
 #define CPLAYERCONNECTION_H
 
-#include <string>
+#include "CString.h"
 #include "CSocket.h"
 #include "COutputBinaryStream.h"
 #include "main.h"
@@ -23,8 +23,8 @@ class CPlayerConnection
     public:
         CPlayerConnection(CPlayer *pPlayer, const CSocketAddress &Addr);
         ~CPlayerConnection();
-        void AddSpecialReliablePacket(unsigned nType, std::string strData = "", unsigned nId = 0, unsigned nTicks = g_AppTimer.GetValue());
-        void AddPacket(unsigned nType, std::string strData, bool bReliable);
+        void AddSpecialReliablePacket(unsigned nType, CString strData = "", unsigned nId = 0, unsigned nTicks = g_AppTimer.GetValue());
+        void AddPacket(unsigned nType, CString strData, bool bReliable);
         void FlushPackets();
         void AcceptReliablePacket(unsigned nPacketId);
         
@@ -37,7 +37,7 @@ class CPlayerConnection
         struct SReliablePacketDesc
         {
             unsigned nTicks;
-            std::string strData;
+            CString strData;
         };
         
         void SendReliablePacket(unsigned nId, SReliablePacketDesc *pDesc);

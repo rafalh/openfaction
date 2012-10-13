@@ -12,7 +12,7 @@
 #define CENTITIESTABLE_H
 
 #include <vector>
-#include <string>
+#include "CString.h"
 #include <map>
 #include "CEntityState.h"
 #include "CEntityAction.h"
@@ -22,22 +22,22 @@ struct SEntityClass
     SEntityClass(unsigned nId);
     
     unsigned nId;
-    std::string strName;
-    std::string strMeshFilename;
+    CString strName;
+    CString strMeshFilename;
     float fMass;
     float fCollisionRadius;
     float fMovementRadius;
     float fEnvirosuit;
     float fLife;
-    std::map<std::string, std::map<CEntityState, std::string> > States;
-    std::map<std::string, std::map<CEntityAction, std::string> > Actions;
+    std::map<CString, std::map<CEntityState, CString> > States;
+    std::map<CString, std::map<CEntityAction, CString> > Actions;
 };
 
 class CEntitiesTable
 {
     public:
         int Load(std::istream &Stream);
-        const SEntityClass *Get(const char *pClassName) const;
+        const SEntityClass *Get(const CString &strClassName) const;
         
         inline const SEntityClass *Get(unsigned nId) const
         {

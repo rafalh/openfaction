@@ -20,7 +20,7 @@ void CItemsUpdatePacket::Send(CPlayer *pPlayer) const
 {
     const set<CElement*> Items = pPlayer->GetServer()->GetLevel()->GetElementsMgr()->GetByType(OFET_ITEM);
     set<CElement*>::iterator it;
-    string ItemsBitmap;
+    CString ItemsBitmap;
     
     for(it = Items.begin(); it != Items.end(); ++it)
     {

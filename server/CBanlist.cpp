@@ -55,7 +55,7 @@ int CBanlist::Ban(const char *pIpRange)
     
     if(pIp2)
     {
-        string strIp1(pIpRange, pIp2 - pIpRange);
+        CString strIp1(pIpRange, pIp2 - pIpRange);
         uint32_t nIp1 = CSocketAddress::StrToIp(strIp1.c_str());
         uint32_t nIp2 = CSocketAddress::StrToIp(pIp2 + 1);
         
@@ -80,7 +80,7 @@ int CBanlist::Unban(const char *pIpRange)
     
     if(pIp2)
     {
-        string strIp1(pIpRange, pIp2 - pIpRange);
+        CString strIp1(pIpRange, pIp2 - pIpRange);
         uint32_t nIp1 = CSocketAddress::StrToIp(strIp1.c_str());
         uint32_t nIp2 = CSocketAddress::StrToIp(pIp2 + 1);
         if(!nIp1 || !nIp2)

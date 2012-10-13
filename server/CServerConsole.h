@@ -11,7 +11,7 @@
 #ifndef CSERVERCONSOLE_H
 #define CSERVERCONSOLE_H
 
-#include <string>
+#include "CString.h"
 #include <cstdarg>
 #include <cstdio>
 #include "CConsole.h"

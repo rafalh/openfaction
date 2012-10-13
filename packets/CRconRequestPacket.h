@@ -28,7 +28,7 @@ class CRconRequestPacket
         }
     
     private:
-        std::string m_strPassword;
+        CString m_strPassword;
 };
 
 #endif // CRCONREQUESTPACKET_H

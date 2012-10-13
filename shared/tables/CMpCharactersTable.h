@@ -12,7 +12,7 @@
 #define CMPCHARACTERSTABLE_H
 
 #include <vector>
-#include <string>
+#include "CString.h"
 #include "CEntitiesTable.h"
 
 class CGame;
@@ -22,7 +22,7 @@ struct SMpCharacter
     SMpCharacter(unsigned nId);
     
     unsigned nId;
-    std::string strName;
+    CString strName;
     const SEntityClass *pEntityClass, *pEntityAnimClass;
 };
 

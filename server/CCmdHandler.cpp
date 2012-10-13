@@ -171,7 +171,7 @@ bool CCmdHandler::HandleCmd(const char *pCommand, const char *pArg, CConsole::TU
     {
         if(pArg[0])
         {
-            string strLevel = pArg;
+            CString strLevel = pArg;
             strLevel += ".rfl";
             bool bFailed = false;
             try
@@ -184,7 +184,7 @@ bool CCmdHandler::HandleCmd(const char *pCommand, const char *pArg, CConsole::TU
             }
             if(bFailed)
             {
-                vector<string> Files = CVirtualFileSystem::GetInst().FindFiles(pArg, ".rfl");
+                vector<CString> Files = CVirtualFileSystem::GetInst().FindFiles(pArg, ".rfl");
                 
                 if(Files.size() > 1)
                 {
@@ -222,7 +222,7 @@ bool CCmdHandler::HandleCmd(const char *pCommand, const char *pArg, CConsole::TU
     }
     else if(!StrCmpI(pCommand, "level_restart"))
     {
-        string strLevelNameCopy = m_pServer->GetLevelFileName();
+        CString strLevelNameCopy = m_pServer->GetLevelFileName();
         try
         {
             m_pServer->LoadLevel(strLevelNameCopy.c_str());

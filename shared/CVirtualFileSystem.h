@@ -14,16 +14,16 @@
 #include "vpp_format.h"
 #include "CInputBinaryStream.h"
 #include <vector>
-#include <string>
+#include "CString.h"
 #include <map>
 
 class CVirtualFileSystem
 {
     public:
-        void AddArchive(const std::string &strPath);
-        void AddArchivesDirectory(const std::string &strPath);
-        std::vector<std::string> FindFiles(const char *pStr = NULL, const char *pExt = NULL) const;
-        bool DoesFileExists(const char *pStr) const;
+        void AddArchive(const CString &strPath);
+        void AddArchivesDirectory(const CString &strPath);
+        std::vector<CString> FindFiles(const char *pStr = NULL, const char *pExt = NULL) const;
+        bool DoesFileExists(const CString &strFilename) const;
         
         static inline CVirtualFileSystem &GetInst()
         {
@@ -32,9 +32,9 @@ class CVirtualFileSystem
         }
     
     private:
-        std::map<std::string, std::string> m_FileNameToArchive;
+        std::map<CString, CString> m_FileNameToArchive;
         
-        void OpenFile(const char *pFileName, FILE *&pFile, std::streamsize &cbFileSize);
+        void OpenFile(const CString &strFilename, FILE *&pFile, std::streamsize &cbFileSize);
     
     friend class CVfsFileBuf;
 };
@@ -50,11 +50,11 @@ class CVfsFileBuf: public std::streambuf
             Close();
         }
         
-        inline int Open(const char *pFileName)
+        inline int Open(const CString &strFilename)
         {
             Close();
             
-            CVirtualFileSystem::GetInst().OpenFile(pFileName, m_pFile, m_nSize);
+            CVirtualFileSystem::GetInst().OpenFile(strFilename, m_pFile, m_nSize);
         }
         
         inline bool IsOpen() const

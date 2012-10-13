@@ -36,8 +36,8 @@ CClutter::CClutter(CLevel *pLevel, CInputBinaryStream &Stream):
     
     m_nUid = Stream.ReadUInt32();
     
-    string strClassName = Stream.ReadString2();
-    m_pClass = m_pLevel->GetGame()->GetClutterTbl()->Get(strClassName.c_str());
+    CString strClassName = Stream.ReadString2();
+    m_pClass = m_pLevel->GetGame()->GetClutterTbl()->Get(strClassName);
     
     SetPos(Stream.ReadVector());
     

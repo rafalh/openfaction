@@ -205,11 +205,11 @@ class CServerConfig
         static rfGameType StrToGameType(const char *pGameType);
         
         // Standard options
-        std::string m_strName;
+        CString m_strName;
         rfGameType m_nGameType;
         unsigned m_nMaxPlayers;
-        std::string m_strPassword;
-        std::string m_strRconPassword;
+        CString m_strPassword;
+        CString m_strRconPassword;
         unsigned m_nTimeLimit;
         unsigned m_nKillsLimit;
         unsigned m_nCapturesLimit;
@@ -219,15 +219,15 @@ class CServerConfig
         bool m_bWeaponsStay;
         bool m_bForceRespawn;
         bool m_bBalanceTeams;
-        std::vector<std::string> m_Levels;
+        std::vector<CString> m_Levels;
         
         // Aditional options
         unsigned m_nPort;
         bool m_bMaskIp;
-        std::string m_strDefaultWeapon;
-        std::string m_strLogFile;
+        CString m_strDefaultWeapon;
+        CString m_strLogFile;
         unsigned m_nNetFps;
-        std::string m_strMod;
+        CString m_strMod;
 };
 
 #endif // CSERVERCONFIG_H

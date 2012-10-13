@@ -18,9 +18,9 @@
 
 using namespace std;
 
-void CVirtualFileSystem::AddArchive(const std::string &strPath)
+void CVirtualFileSystem::AddArchive(const CString &strPath)
 {
-    FILE *pFile = fopen(strPath.c_str(), "rb");
+    FILE *pFile = fopen(strPath, "rb");
     if(!pFile)
         THROW_EXCEPTION("Failed to open file %s", strPath.c_str());
     
@@ -52,9 +52,9 @@ void CVirtualFileSystem::AddArchive(const std::string &strPath)
         if(fread(&FileEntry, sizeof(FileEntry), 1, pFile) != 1)
             break;
         
-        string strFileName;
+        CString strFileName;
         for(const char *Ptr = FileEntry.file_name; *Ptr; ++Ptr)
-            strFileName += tolower(*Ptr);
+            strFileName += (char)tolower(*Ptr);
         
         m_FileNameToArchive[strFileName] = strPath;
     }
@@ -62,17 +62,15 @@ void CVirtualFileSystem::AddArchive(const std::string &strPath)
     fclose(pFile);
 }
 
-void CVirtualFileSystem::OpenFile(const char *pFileName, FILE *&pFile, std::streamsize &cbFileSize)
+void CVirtualFileSystem::OpenFile(const CString &strFilename, FILE *&pFile, std::streamsize &cbFileSize)
 {
-    string strFileName;
-        for(const char *Ptr = pFileName; *Ptr; ++Ptr)
-            strFileName += tolower(*Ptr);
+    CString strFilenameLower = strFilename.lower();
     
-    map<string, string>::iterator it = m_FileNameToArchive.find(strFileName);
+    map<CString, CString>::iterator it = m_FileNameToArchive.find(strFilenameLower);
     if(it == m_FileNameToArchive.end())
-        THROW_EXCEPTION("File %s not found", pFileName);
+        THROW_EXCEPTION("File %s not found", strFilename.c_str());
     
-    pFile = fopen(it->second.c_str(), "rb");
+    pFile = fopen(it->second, "rb");
     if(!pFile)
         THROW_EXCEPTION("Archive %s not found", it->second.c_str());
     
@@ -95,7 +93,7 @@ void CVirtualFileSystem::OpenFile(const char *pFileName, FILE *&pFile, std::stre
         if(fread(&FileEntry, sizeof(FileEntry), 1, pFile) != 1)
             break;
         
-        if(StrCmpI(FileEntry.file_name, pFileName) == 0)
+        if(strFilenameLower.comparei(FileEntry.file_name) == 0)
         {
             if(fseek(pFile, nOffset, SEEK_SET) != 0)
                 break;
@@ -109,38 +107,38 @@ void CVirtualFileSystem::OpenFile(const char *pFileName, FILE *&pFile, std::stre
     
     fclose(pFile);
     pFile = NULL;
-    THROW_EXCEPTION("File not found");
+    THROW_EXCEPTION("File %s not found", strFilename.c_str());
 }
 
-void CVirtualFileSystem::AddArchivesDirectory(const std::string &strPath)
+void CVirtualFileSystem::AddArchivesDirectory(const CString &strPath)
 {
-    std::string strPattern = strPath + "*.vpp";
-    CFileList FileList(strPattern.c_str());
+    CString strPattern = strPath + "*.vpp";
+    CFileList FileList(strPattern);
     while(true)
     {
-        string strName;
+        CString strName;
         int iStatus = FileList.GetNextFile(strName);
         if(iStatus < 0)
             break;
         
         if(iStatus == 0) // file
         {
-            string strPath2 = strPath + strName;
-            AddArchive(strPath2.c_str());
+            CString strPath2 = strPath + strName;
+            AddArchive(strPath2);
         }
     }
 }
 
-vector<string> CVirtualFileSystem::FindFiles(const char *pStr, const char *pExt) const
+vector<CString> CVirtualFileSystem::FindFiles(const char *pStr, const char *pExt) const
 {
-    vector<string> Result;
+    vector<CString> Result;
     unsigned cchExt = pExt ? strlen(pExt) : 0;
     
-    for(map<string, string>::const_iterator it = m_FileNameToArchive.begin();
+    for(map<CString, CString>::const_iterator it = m_FileNameToArchive.begin();
         it != m_FileNameToArchive.end();
         ++it)
     {
-        if(pStr && !StrStrI(it->first.c_str(), pStr))
+        if(pStr && !StrStrI(it->first, pStr))
             continue;
         if(pExt && (it->first.size() < cchExt || StrCmpI(it->first.c_str() + it->first.size() - cchExt, pExt) != 0))
             continue;
@@ -151,13 +149,11 @@ vector<string> CVirtualFileSystem::FindFiles(const char *pStr, const char *pExt)
     return Result;
 }
 
-bool CVirtualFileSystem::DoesFileExists(const char *pStr) const
+bool CVirtualFileSystem::DoesFileExists(const CString &strFilename) const
 {
-    string strFilenameLower;
-    while(*pStr)
-        strFilenameLower += tolower(*(pStr++));
+    CString strFilenameLower = strFilename.lower();
     
-    map<string, string>::const_iterator it;
+    map<CString, CString>::const_iterator it;
     it = m_FileNameToArchive.find(strFilenameLower);
     return it != m_FileNameToArchive.end();
 }

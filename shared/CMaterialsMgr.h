@@ -11,7 +11,7 @@
 #ifndef CMATERIALSMGR_H
 #define CMATERIALSMGR_H
 
-#include <string>
+#include "CString.h"
 #include <map>
 #include "CMaterial.h"
 
@@ -24,7 +24,7 @@ class CMaterialsMgr
             m_pGame(pGame) {}
         
         ~CMaterialsMgr();
-        CMaterial *Load(const std::string &strFilename);
+        CMaterial *Load(const CString &strFilename);
         
         CGame *GetGame() const
         {
@@ -32,7 +32,7 @@ class CMaterialsMgr
         }
         
     private:
-        std::map<std::string, CMaterial*> m_Materials;
+        std::map<CString, CMaterial*> m_Materials;
         CGame *m_pGame;
         
         void Remove(CMaterial *pMaterial);

@@ -63,7 +63,7 @@ CItem::CItem(CLevel *pLevel, CInputBinaryStream &Stream, unsigned nBit):
     
     m_nUid = Stream.ReadUInt32();
     
-    string strClassName = Stream.ReadString2();
+    CString strClassName = Stream.ReadString2();
     
     SetPos(Stream.ReadVector());
     
@@ -84,7 +84,7 @@ CItem::CItem(CLevel *pLevel, CInputBinaryStream &Stream, unsigned nBit):
     m_nRespawnTime = Stream.ReadUInt32();
     Stream.ignore(4); // team id
     
-    m_pClass = m_pLevel->GetGame()->GetItemsTbl()->Get(strClassName.c_str());
+    m_pClass = m_pLevel->GetGame()->GetItemsTbl()->Get(strClassName);
     if(!m_pClass)
         THROW_EXCEPTION("Unknown class %s", strClassName.c_str());
     

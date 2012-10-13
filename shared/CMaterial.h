@@ -70,7 +70,7 @@ class CMaterial: public CSharedObject
         
         static unsigned m_UniqueId;
         
-        CMaterial(CMaterialsMgr *pMaterialsMgr, const std::string &strFilename);
+        CMaterial(CMaterialsMgr *pMaterialsMgr, const CString &strFilename);
         ~CMaterial();
 #ifdef OF_CLIENT
         bool LoadVbm(CInputBinaryStream &Stream);

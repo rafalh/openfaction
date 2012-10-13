@@ -47,8 +47,8 @@ CEvent::CEvent(CLevel *pLevel, CInputBinaryStream &Stream):
     for(unsigned i = 0; i < cLinks; ++i)
         m_Links.push_back(Stream.ReadUInt32());
     
-    if(!StrCmpI(m_strClass.c_str(), "Alarm") || !StrCmpI(m_strClass.c_str(), "Teleport") ||
-       !StrCmpI(m_strClass.c_str(), "Play_Vclip") || !StrCmpI(m_strClass.c_str(), "Teleport_Player"))
+    if(!m_strClass.comparei("Alarm") || !m_strClass.comparei("Teleport") ||
+       !m_strClass.comparei("Play_Vclip") || !m_strClass.comparei("Teleport_Player"))
     {
         Stream.ignore(9 * sizeof(float)); // rotation matrix
     }
@@ -86,7 +86,7 @@ void CEvent::Update(unsigned nDeltaTime)
 
 void CEvent::Execute()
 {
-    if(!StrCmpI(m_strClass.c_str(), "Continuous_Damage"))
+    if(!m_strClass.comparei("Continuous_Damage"))
     {
         if(m_pEntity && m_pEntity->IsAlive())
         {
@@ -100,13 +100,13 @@ void CEvent::Execute()
         }
     }
 #ifdef OF_SERVER // FIXME
-    else if(!StrCmpI(m_strClass.c_str(), "Load_Level"))
+    else if(!m_strClass.comparei("Load_Level"))
     {
-        if(m_String1.size() < 4 || StrCmpI(m_String1.c_str() + m_String1.size() - 4, ".rfl") != 0)
+        if(m_String1.size() < 4 || m_String1.comparei(".rfl", m_String1.size() - 4) != 0)
             m_String1 += ".rfl";
         
-        //if(StrCmpI(CServer::GetInst().GetLevelFileName(), m_String1.c_str()) != 0)
-        //    CServer::GetInst().QueueLevelChange(m_String1.c_str());
+        //if(CServer::GetInst().GetLevelFileName().comparei(m_String1) != 0)
+        //    CServer::GetInst().QueueLevelChange(m_String1);
     }
 #endif // OF_SERVER
     

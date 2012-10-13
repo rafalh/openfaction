@@ -35,7 +35,7 @@ class CNameChangePacket
         
     private:
         CPlayer *m_pPlayer;
-        std::string m_strName;
+        CString m_strName;
 };
 
 #endif // CNAMECHANGEPACKET_H

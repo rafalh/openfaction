@@ -23,7 +23,7 @@ CPlayerConnection::~CPlayerConnection()
     FlushPackets();
 }
 
-void CPlayerConnection::AddPacket(unsigned nType, std::string strData, bool bReliable)
+void CPlayerConnection::AddPacket(unsigned nType, CString strData, bool bReliable)
 {
     /* Flush packets if packet type changes or packet size reach limit */
     if(m_bReliablePackets != bReliable ||
@@ -91,7 +91,7 @@ void CPlayerConnection::FlushPackets()
     }
 }
 
-void CPlayerConnection::AddSpecialReliablePacket(unsigned nType, std::string strData, unsigned nId, unsigned nTicks)
+void CPlayerConnection::AddSpecialReliablePacket(unsigned nType, CString strData, unsigned nId, unsigned nTicks)
 {
     FlushPackets();
     

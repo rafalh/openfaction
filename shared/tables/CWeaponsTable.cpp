@@ -104,7 +104,7 @@ int CWeaponsTable::Load(istream &Stream)
                 Reader.GetEnum((int&)m_Weapons.back().DmgType, g_DmgTypes, COUNTOF(g_DmgTypes));
             else if(!StrCmpI(pName, "+Action"))
             {
-                std::string strName;
+                CString strName;
                 SWeaponClass::SAction Action;
                 Reader.GetString(strName);
                 Reader.GetString(Action.strAnim);
@@ -117,10 +117,10 @@ int CWeaponsTable::Load(istream &Stream)
             }
             else if(!StrCmpI(pName, "$Ammo Type"))
             {
-                string strAmmoType;
+                CString strAmmoType;
                 Reader.GetString(strAmmoType);
                 if(!strAmmoType.empty())
-                    m_Weapons.back().pAmmoType = m_pGame->GetAmmoTbl()->Get(strAmmoType.c_str());
+                    m_Weapons.back().pAmmoType = m_pGame->GetAmmoTbl()->Get(strAmmoType);
             }
             else if(!StrCmpI(pName, "$Max Ammo"))
             {
@@ -209,10 +209,10 @@ int CWeaponsTable::Load(istream &Stream)
     return 0;
 }
 
-const SWeaponClass *CWeaponsTable::Get(const char *pName) const
+const SWeaponClass *CWeaponsTable::Get(const CString &strName) const
 {
     for(unsigned i = 0; i < m_Weapons.size(); ++i)
-        if(!StrCmpI(m_Weapons[i].strName.c_str(), pName))
+        if(!m_Weapons[i].strName.comparei(strName))
             return &m_Weapons[i];
     
     return NULL;

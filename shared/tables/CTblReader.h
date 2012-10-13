@@ -11,7 +11,7 @@
 #ifndef CTBLREADER_H
 #define CTBLREADER_H
 
-#include <string>
+#include "CString.h"
 
 class CStringsTable;
 
@@ -32,7 +32,7 @@ class CTblReader
         
         int LoadNextElement();
         int LoadNextLine();
-        void GetString(std::string &strRet, const CStringsTable *pStrTbl = NULL);
+        void GetString(CString &strRet, const CStringsTable *pStrTbl = NULL);
         void GetInt(int &iRet);
         void GetUInt(unsigned &nRet);
         void GetFloat(float &fRet);
@@ -49,10 +49,10 @@ class CTblReader
         
         std::istream &m_Stream;
         bool m_bSectionFound;
-        std::string m_strSection;
+        CString m_strSection;
         unsigned m_iLine;
         size_t m_nPos, m_nNamePos;
-        std::string m_strBuf;
+        CString m_strBuf;
 };
 
 #endif // CTBLREADER_H

@@ -18,7 +18,7 @@ using namespace std;
 
 void CGlassStatePacket::Send(CPlayer *pPlayer) const
 {
-    string RoomsBitmap;
+    CString RoomsBitmap;
     
     const set<CElement*> Rooms = pPlayer->GetServer()->GetLevel()->GetElementsMgr()->GetByType(OFET_LEVEL);
     set<CElement*>::iterator it;

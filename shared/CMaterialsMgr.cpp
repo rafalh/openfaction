@@ -17,9 +17,9 @@ CMaterialsMgr::~CMaterialsMgr()
     assert(m_Materials.empty());
 }
 
-CMaterial *CMaterialsMgr::Load(const string &strFilename)
+CMaterial *CMaterialsMgr::Load(const CString &strFilename)
 {
-    map<string, CMaterial*>::iterator it = m_Materials.find(strFilename);
+    map<CString, CMaterial*>::iterator it = m_Materials.find(strFilename);
     if(it != m_Materials.end())
     {
         it->second->AddRef();
@@ -27,13 +27,13 @@ CMaterial *CMaterialsMgr::Load(const string &strFilename)
     }
     
     CMaterial *pMaterial = new CMaterial(this, strFilename);
-    m_Materials.insert(pair<string, CMaterial*>(strFilename, pMaterial));
+    m_Materials.insert(pair<CString, CMaterial*>(strFilename, pMaterial));
     return pMaterial;
 }
 
 void CMaterialsMgr::Remove(CMaterial *pMaterial)
 {
-    map<string, CMaterial*>::iterator it;
+    map<CString, CMaterial*>::iterator it;
     for(it = m_Materials.begin(); it != m_Materials.end(); ++it)
         if(it->second == pMaterial)
         {

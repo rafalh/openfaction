@@ -11,7 +11,7 @@
 #ifndef CAMMOTABLE_H
 #define CAMMOTABLE_H
 
-#include <string>
+#include "CString.h"
 #include <vector>
 
 struct SAmmoType
@@ -19,14 +19,14 @@ struct SAmmoType
     SAmmoType(unsigned nId);
     
     unsigned nId;
-    std::string strName;
+    CString strName;
 };
 
 class CAmmoTable
 {
     public:
         int Load(std::istream &Stream);
-        const SAmmoType *Get(const char *pAmmoType) const;
+        const SAmmoType *Get(const CString &strAmmoType) const;
         
         inline const SAmmoType *Get(unsigned nId) const
         {

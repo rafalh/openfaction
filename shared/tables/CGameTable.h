@@ -11,7 +11,7 @@
 #ifndef CGAMETABLE_H
 #define CGAMETABLE_H
 
-#include <string>
+#include "CString.h"
 
 class CGameTable
 {
@@ -20,7 +20,7 @@ class CGameTable
         
         inline const char *GetDefaultWeapon() const
         {
-            return strDefaultWeapon.c_str();
+            return strDefaultWeapon;
         }
         
         inline void SetDefaultWeapon(const char *pWeapon)
@@ -29,7 +29,7 @@ class CGameTable
         }
         
     private:
-        std::string strDefaultWeapon;
+        CString strDefaultWeapon;
 };
 
 #endif // CGAMETABLE_H

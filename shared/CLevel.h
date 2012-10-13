@@ -46,7 +46,7 @@ class CLevel
         
         const char *GetName() const
         {
-            return m_strName.c_str();
+            return m_strName;
         }
         
         CColWorld *GetColWorld()
@@ -93,11 +93,11 @@ class CLevel
         void RemoveElement(CElement *pElement);
         
     private:
-        int ReadRflString(std::string &strDest, CInputBinaryStream &Stream);
+        int ReadRflString(CString &strDest, CInputBinaryStream &Stream);
         int IgnoreRflString(CInputBinaryStream &Stream);
         
         CGame *m_pGame;
-        std::string m_strName;
+        CString m_strName;
         CColWorld *m_pColWorld;
         CElementsMgr *m_pElementsMgr;
         std::vector<CElement*> m_DeleteQueue;

@@ -24,7 +24,7 @@
 #include <cmath>
 #include <cassert>
 #include <stdint.h>
-#include <string>
+#include "CString.h"
 #include <vector>
 #include <map>
 #include <set>

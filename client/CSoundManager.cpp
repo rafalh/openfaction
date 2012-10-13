@@ -47,7 +47,7 @@ bool CSoundManager::PlayFoleySound(const char *pszName)
     const SFoleySound::SSound *pSnd = &pSndSet->Sounds[i];
     
     // Create sound object
-    irrklang::ISound *pSound = m_pSoundEngine->play2D(pSnd->strFilename.c_str(), false, true);
+    irrklang::ISound *pSound = m_pSoundEngine->play2D(pSnd->strFilename, false, true);
     if(!pSound)
     {
         m_pGame->GetConsole()->DbgPrint("Failed to play sound %s", pSnd->strFilename.c_str());

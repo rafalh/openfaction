@@ -43,7 +43,7 @@ int CItemsTable::Load(istream &Stream)
         {
             SItemClass Item(m_Items.size());
             Reader.GetString(Item.strName);
-            Item.Type = GetTypeFromClsName(Item.strName.c_str());
+            Item.Type = GetTypeFromClsName(Item.strName);
             
             m_Items.push_back(Item);
         }
@@ -55,22 +55,22 @@ int CItemsTable::Load(istream &Stream)
             }
             else if(!StrCmpI(pName, "$V3D Type"))
             {
-                string strType;
+                CString strType;
                 Reader.GetString(strType);
                 
                 size_t Pos = m_Items.back().strMeshFilename.rfind(".");
-                if(strType == "static" && Pos != string::npos)
+                if(strType == "static" && Pos != CString::npos)
                     m_Items.back().strMeshFilename.replace(Pos, 4, ".v3m");
-                else if(strType == "anim" && Pos != string::npos)
+                else if(strType == "anim" && Pos != CString::npos)
                     m_Items.back().strMeshFilename.replace(Pos, 4, ".vfx");
                 else
                     THROW_EXCEPTION("Invalid V3D Type: %s", strType.c_str());
             }
             else if(!StrCmpI(pName, "$Gives Weapon"))
             {
-                string strWeapon;
+                CString strWeapon;
                 Reader.GetString(strWeapon);
-                const SWeaponClass *pWeaponClasss = m_pGame->GetWeaponsTbl()->Get(strWeapon.c_str());
+                const SWeaponClass *pWeaponClasss = m_pGame->GetWeaponsTbl()->Get(strWeapon);
                 if(pWeaponClasss)
                 {
                     m_Items.back().pWeaponClass = pWeaponClasss;
@@ -79,9 +79,9 @@ int CItemsTable::Load(istream &Stream)
             }
             else if(!StrCmpI(pName, "$Ammo For"))
             {
-                string strWeapon;
+                CString strWeapon;
                 Reader.GetString(strWeapon);
-                m_Items.back().pWeaponClass = m_pGame->GetWeaponsTbl()->Get(strWeapon.c_str());
+                m_Items.back().pWeaponClass = m_pGame->GetWeaponsTbl()->Get(strWeapon);
             }
             else if(!StrCmpI(pName, "$Count"))
             {
@@ -101,13 +101,13 @@ int CItemsTable::Load(istream &Stream)
     return 0;
 }
 
-const SItemClass *CItemsTable::Get(const char *pClassName)
+const SItemClass *CItemsTable::Get(const CString &strClassName)
 {
     for(unsigned i = 0; i < m_Items.size(); ++i)
-        if(!StrCmpI(m_Items[i].strName.c_str(), pClassName))
+        if(!m_Items[i].strName.comparei(strClassName))
             return &m_Items[i];
     
-    CLogger::GetInst().PrintError("Warning! Unknown weapon class name: %s", pClassName);
+    CLogger::GetInst().PrintError("Warning! Unknown weapon class name: %s", strClassName.c_str());
     return NULL;
 }
 
@@ -120,22 +120,22 @@ const SItemClass *CItemsTable::FindWeapon(const SWeaponClass *pClass)
     return NULL;
 }
 
-EItemType CItemsTable::GetTypeFromClsName(const char *pszItemClsName)
+EItemType CItemsTable::GetTypeFromClsName(const CString &strItemClsName)
 {
-    if(!StrCmpI(pszItemClsName, "Medical Kit") ||
-       !StrCmpI(pszItemClsName, "First Aid Kit"))
+    if(!strItemClsName.comparei("Medical Kit") ||
+       !strItemClsName.comparei("First Aid Kit"))
         return IT_MEDICAL_KIT;
-    else if(!StrCmpI(pszItemClsName, "Suit Repair"))
+    else if(!strItemClsName.comparei("Suit Repair"))
         return IT_SUIT_REPAIR;
-    else if(!StrCmpI(pszItemClsName, "Miner Envirosuit"))
+    else if(!strItemClsName.comparei("Miner Envirosuit"))
         return IT_MINER_ENVIROSUIT;
-    else if(!StrCmpI(pszItemClsName, "Multi Invulnerability"))
+    else if(!strItemClsName.comparei("Multi Invulnerability"))
         return IT_MULTI_INVULNERABILITY;
-    else if(!StrCmpI(pszItemClsName, "Multi Damage Amplifier"))
+    else if(!strItemClsName.comparei("Multi Damage Amplifier"))
         return IT_MULTI_DMG_AMP;
-    else if(!StrCmpI(pszItemClsName, "Multi Super Armor"))
+    else if(!strItemClsName.comparei("Multi Super Armor"))
         return IT_MULTI_SUPER_ARMOR;
-    else if(!StrCmpI(pszItemClsName, "Multi Super Health"))
+    else if(!strItemClsName.comparei("Multi Super Health"))
         return IT_MULTI_SUPER_HEALTH;
     else
         return IT_UNKNOWN;

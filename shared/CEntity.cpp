@@ -120,7 +120,7 @@ CEntity::CEntity(CLevel *pLevel, CInputBinaryStream &Stream):
     
     m_nUid = Stream.ReadUInt32();
     
-    string strClassName = Stream.ReadString2();
+    CString strClassName = Stream.ReadString2();
     btVector3 vPos = Stream.ReadVector();
     
     btMatrix3x3 matRot;
@@ -141,7 +141,7 @@ CEntity::CEntity(CLevel *pLevel, CInputBinaryStream &Stream):
     
     Stream.ignore(4); // fov
     
-    string strPrimaryWeapon = Stream.ReadString2();
+    CString strPrimaryWeapon = Stream.ReadString2();
     
     Stream.ReadString2(); // secondary weapon
     Stream.ReadString2(); // item drop
@@ -159,7 +159,7 @@ CEntity::CEntity(CLevel *pLevel, CInputBinaryStream &Stream):
     Stream.ReadString2(); // left hand holding
     Stream.ReadString2(); // right hand holding
     
-    m_pClass = m_pLevel->GetGame()->GetEntitiesTbl()->Get(strClassName.c_str());
+    m_pClass = m_pLevel->GetGame()->GetEntitiesTbl()->Get(strClassName);
     if(!m_pClass)
         THROW_EXCEPTION("Unknown class %s", strClassName.c_str());
     
@@ -208,7 +208,7 @@ CEntity::CEntity(CLevel *pLevel, CInputBinaryStream &Stream):
         m_Ammo[i] = 0;
     
     unsigned cAmmo;
-    const SWeaponClass *pWeaponCls = m_pLevel->GetGame()->GetWeaponsTbl()->Get(strPrimaryWeapon.c_str());
+    const SWeaponClass *pWeaponCls = m_pLevel->GetGame()->GetWeaponsTbl()->Get(strPrimaryWeapon);
     if(!pWeaponCls)
     {
         pWeaponCls = m_pLevel->GetGame()->GetWeaponsTbl()->Get(RF_PISTOL);
@@ -460,19 +460,19 @@ void CEntity::DbgDraw() const
 
 void CEntity::LoadAnimations()
 {
-    map<string, map<CEntityState, string> >::const_iterator itWeapon;
+    map<CString, map<CEntityState, CString> >::const_iterator itWeapon;
     for(itWeapon = m_pClass->States.begin(); itWeapon != m_pClass->States.end(); ++itWeapon)
     {
         const SWeaponClass *pWeaponCls = 0;
         if(!itWeapon->first.empty())
         {
-            pWeaponCls = m_pLevel->GetGame()->GetWeaponsTbl()->Get(itWeapon->first.c_str());
+            pWeaponCls = m_pLevel->GetGame()->GetWeaponsTbl()->Get(itWeapon->first);
             assert(pWeaponCls);
         }
             
         int WeaponClsId = pWeaponCls ? pWeaponCls->nId : -1;
         
-        map<CEntityState, string>::const_iterator itState;
+        map<CEntityState, CString>::const_iterator itState;
         for(itState = itWeapon->second.begin(); itState != itWeapon->second.end(); ++itState)
         {
             CAnimation *pAnim = m_pLevel->GetGame()->GetAnimMgr()->Load(itState->second);
@@ -482,15 +482,15 @@ void CEntity::LoadAnimations()
         }
     }
     
-    map<string, map<CEntityAction, string> >::const_iterator itWeapon2;
+    map<CString, map<CEntityAction, CString> >::const_iterator itWeapon2;
     for(itWeapon2 = m_pClass->Actions.begin(); itWeapon2 != m_pClass->Actions.end(); ++itWeapon2)
     {
         const SWeaponClass *pWeaponCls = 0;
         if(!itWeapon2->first.empty())
-            pWeaponCls = m_pLevel->GetGame()->GetWeaponsTbl()->Get(itWeapon2->first.c_str());
+            pWeaponCls = m_pLevel->GetGame()->GetWeaponsTbl()->Get(itWeapon2->first);
         int WeaponClsId = pWeaponCls ? pWeaponCls->nId : -1;
         
-        map<CEntityAction, string>::const_iterator itAction;
+        map<CEntityAction, CString>::const_iterator itAction;
         for(itAction = itWeapon2->second.begin(); itAction != itWeapon2->second.end(); ++itAction)
         {
             CAnimation *pAnim = m_pLevel->GetGame()->GetAnimMgr()->Load(itAction->second);

@@ -6,7 +6,8 @@ project "OfClient"
 		"camera/*.h", "camera/*.cpp",
 		"irr/*.h", "irr/*.cpp",
 		"../shared/*.h", "../shared/*.cpp",
-		"../shared/tables/*.h", "../shared/tables/*.cpp"
+		"../shared/tables/*.h", "../shared/tables/*.cpp",
+		"../include/*.h",
 	}
 	includedirs {
 		".",

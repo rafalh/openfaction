@@ -181,7 +181,7 @@ void CMeshSkyboxSceneNode::deserializeAttributes(io::IAttributes* in, io::SAttri
 	if (newMeshStr != "" && oldMeshStr != newMeshStr)
 	{
 		IMesh* newMesh = 0;
-		IAnimatedMesh* newAnimatedMesh = SceneManager->getMesh(newMeshStr.c_str());
+		IAnimatedMesh* newAnimatedMesh = SceneManager->getMesh(newMeshStr);
 
 		if (newAnimatedMesh)
 			newMesh = newAnimatedMesh->getMesh(0);

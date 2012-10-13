@@ -31,7 +31,7 @@ CWeapon::CWeapon(const SWeaponClass *pClass, CEntity *pEntity, unsigned nAmmo):
     if(m_cClipAmmo > m_pClass->nClipSize)
         m_cClipAmmo = m_pClass->nClipSize;
     
-    if(!StrCmpI(m_pClass->strName.c_str(), "Shotgun"))
+    if(!m_pClass->strName.comparei("Shotgun"))
         m_bShotgun = true;
 }
 
@@ -61,7 +61,7 @@ bool CWeapon::Shoot(bool bAltFire, const btVector3 &vPos, const btVector3 &vDir,
 #ifdef OF_CLIENT
 	    CSoundManager *pSoundMgr = m_pEntity->GetLevel()->GetGame()->GetSoundMgr();
         if(pSoundMgr)
-            pSoundMgr->PlayFoleySound(m_pClass->strLaunchFail.c_str());
+            pSoundMgr->PlayFoleySound(m_pClass->strLaunchFail);
 #endif // OF_CLIENT
         
 	    DoAction("fire_fail");
@@ -143,7 +143,7 @@ bool CWeapon::Shoot(bool bAltFire, const btVector3 &vPos, const btVector3 &vDir,
 #ifdef OF_CLIENT
     CSoundManager *pSoundMgr = m_pEntity->GetLevel()->GetGame()->GetSoundMgr();
     if(pSoundMgr)
-        pSoundMgr->PlayFoleySound(bAltFire ? m_pClass->strAltLaunch.c_str() : m_pClass->strLaunch.c_str());
+        pSoundMgr->PlayFoleySound(bAltFire ? m_pClass->strAltLaunch : m_pClass->strLaunch);
 #endif // OF_CLIENT
     
     DoAction("fire");
@@ -206,20 +206,21 @@ bool CWeapon::Reload(bool bWait)
     cTotalAmmo -= cClipAmmoAdd;
     m_pEntity->SetAmmo(pAmmoType, cTotalAmmo);
     
+    m_pEntity->SetAction(CEntityAction::EA_RELOAD);
     DoAction("reload");
     
     return true;
 }
 
-void CWeapon::DoAction(const char *pszName)
+void CWeapon::DoAction(const CString &strName)
 {
-    map<string, SWeaponClass::SAction>::const_iterator it = m_pClass->Actions.find(pszName);
+    map<CString, SWeaponClass::SAction>::const_iterator it = m_pClass->Actions.find(strName);
     if(it == m_pClass->Actions.end())
         return;
     
 #ifdef OF_CLIENT
     CSoundManager *pSoundMgr = m_pEntity->GetLevel()->GetGame()->GetSoundMgr();
     if(pSoundMgr)
-        pSoundMgr->PlayFoleySound(it->second.strSound.c_str());
+        pSoundMgr->PlayFoleySound(it->second.strSound);
 #endif // OF_CLIENT
 }

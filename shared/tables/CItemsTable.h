@@ -32,9 +32,9 @@ struct SItemClass
     SItemClass(unsigned nId);
     
     unsigned nId;
-    std::string strName;
+    CString strName;
     EItemType Type;
-    std::string strMeshFilename;
+    CString strMeshFilename;
     const SWeaponClass *pWeaponClass;
     bool bWeapon;
     unsigned nCount;
@@ -47,14 +47,14 @@ class CItemsTable
         CItemsTable(CGame *pGame):
             m_pGame(pGame) {}
         int Load(std::istream &Stream);
-        const SItemClass *Get(const char *pClassName);
+        const SItemClass *Get(const CString &strClassName);
         const SItemClass *FindWeapon(const SWeaponClass *pClass);
     
     private:
         CGame *m_pGame;
         std::vector<SItemClass> m_Items;
         
-        static EItemType GetTypeFromClsName(const char *pszItemClsName);
+        static EItemType GetTypeFromClsName(const CString &strItemClsName);
 };
 
 #endif // CITEMSTABLE_H

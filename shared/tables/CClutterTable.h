@@ -12,15 +12,15 @@
 #define CCLUTTERTABLE_H
 
 #include <vector>
-#include <string>
+#include "CString.h"
 
 struct SClutterClass
 {
     SClutterClass(unsigned nId);
     
     unsigned nId;
-    std::string strName;
-    std::string strMeshFilename;
+    CString strName;
+    CString strMeshFilename;
     float fHealth;
 };
 
@@ -28,7 +28,7 @@ class CClutterTable
 {
     public:
         int Load(std::istream &Stream);
-        const SClutterClass *Get(const char *pClassName) const;
+        const SClutterClass *Get(const CString &strClassName) const;
         
         inline const SClutterClass *Get(unsigned nId) const
         {

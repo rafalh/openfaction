@@ -3,7 +3,7 @@
 *  PROJECT:     Open Faction
 *  LICENSE:     See LICENSE in the top level directory
 *  FILE:        shared/CStaticGeometry.cpp
-*  PURPOSE:     
+*  PURPOSE:     Loading of static geometry in levels
 *  DEVELOPERS:  Rafal Harabien
 *
 *****************************************************************************/
@@ -106,7 +106,7 @@ void CStaticGeometry::Load(CLevel *pLevel, CInputBinaryStream &Stream, unsigned 
     
     for(unsigned i = 0; i < cTextures; ++i)
     {
-        string strFilename = Stream.ReadString2();
+        CString strFilename = Stream.ReadString2();
         CMaterial *pMaterial = pLevel->GetGame()->GetMaterialsMgr()->Load(strFilename);
         m_Materials.push_back(pMaterial);
     }

@@ -18,7 +18,7 @@
 #include "utils.h"
 #include "CEventsHandler.h"
 #include "CConsole.h"
-#include <sstream>
+#include "CString.h"
 
 #include "CStringsTable.h"
 #include "CAmmoTable.h"
@@ -72,9 +72,9 @@ CGame::~CGame()
 void CGame::InitVfs()
 {
 #ifndef LINUX
-    const string strRootDir = "C:/games/RedFaction/";
+    const CString strRootDir = "C:/games/RedFaction/";
 #else
-    const string strRootDir = ""; // current directory
+    const CString strRootDir = ""; // current directory
 #endif
     
     m_pVfs = &CVirtualFileSystem::GetInst();
@@ -188,9 +188,9 @@ void CGame::LoadTables()
 
 void CGame::LoadMod(const char *pszModName)
 {
-    ostringstream ssPath;
-    ssPath << "mods/" << pszModName << "/";
-    m_pVfs->AddArchivesDirectory(ssPath.str().c_str());
+    CString strPath;
+    strPath.Format("mods/%s/", pszModName);
+    m_pVfs->AddArchivesDirectory(strPath);
 }
 
 void CGame::LoadLevel(const char *pszFilename)

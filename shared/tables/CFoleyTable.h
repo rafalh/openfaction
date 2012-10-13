@@ -12,31 +12,31 @@
 #define CFOLEYTABLE_H
 
 #include <vector>
-#include <string>
+#include "CString.h"
 #include <map>
 
 struct SFoleySound
 {
     struct SSound
     {
-        std::string strFilename;
+        CString strFilename;
         float fMinDist;
         float fVolume;
     };
     
-    std::string strName;
+    CString strName;
     std::vector<SSound> Sounds;
-    std::string strMaterial;
+    CString strMaterial;
 };
 
 class CFoleyTable
 {
     public:
         int Load(std::istream &Stream);
-        const SFoleySound *Get(const char *pszName) const;
+        const SFoleySound *Get(const CString &strName) const;
     
     private:
-        std::map<std::string, SFoleySound> m_Sounds;
+        std::map<CString, SFoleySound> m_Sounds;
 };
 
 #endif // CFOLEYTABLE_H

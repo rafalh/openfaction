@@ -11,7 +11,7 @@
 #ifndef CANIMMGR_H
 #define CANIMMGR_H
 
-#include <string>
+#include "CString.h"
 #include <map>
 #include "CAnimation.h"
 
@@ -24,8 +24,8 @@ class CAnimMgr
             m_pGame(pGame) {}
         
         ~CAnimMgr();
-        std::string FixFilename(const std::string &strFilename);
-        CAnimation *Load(const std::string &strFilename);
+        CString FixFilename(const CString &strFilename);
+        CAnimation *Load(const CString &strFilename);
         
         CGame *GetGame() const
         {
@@ -33,7 +33,7 @@ class CAnimMgr
         }
         
     private:
-        std::map<std::string, CAnimation*> m_Animations;
+        std::map<CString, CAnimation*> m_Animations;
         CGame *m_pGame;
         
         void Remove(CAnimation *pAnim);

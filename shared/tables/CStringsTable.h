@@ -12,7 +12,7 @@
 #define CSTRINGSTABLE_H
 
 #include <map>
-#include <string>
+#include "CString.h"
 
 class CStringsTable
 {
@@ -21,12 +21,12 @@ class CStringsTable
         
         inline const char *Get(unsigned nId) const
         {
-            std::map<unsigned, std::string>::const_iterator it = m_Strings.find(nId);
+            std::map<unsigned, CString>::const_iterator it = m_Strings.find(nId);
             
             if(it == m_Strings.end())
                 return "";
             
-            return it->second.c_str();
+            return it->second;
         }
         
         const char *GetFormated(unsigned nId, ...);
@@ -34,7 +34,7 @@ class CStringsTable
     
     private:
         char m_Buffer[256];
-        std::map<unsigned, std::string> m_Strings;
+        std::map<unsigned, CString> m_Strings;
 };
 
 #endif // CSTRINGSTABLE_H

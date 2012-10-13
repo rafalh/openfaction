@@ -23,23 +23,23 @@ CMeshMgr::~CMeshMgr()
     assert(m_Meshes.size() == 0);
 }
 
-string CMeshMgr::FixFilename(const string &strFilename)
+CString CMeshMgr::FixFilename(const CString &strFilename)
 {
-    if(CVirtualFileSystem::GetInst().DoesFileExists(strFilename.c_str()))
+    if(CVirtualFileSystem::GetInst().DoesFileExists(strFilename))
         return strFilename;
     
     size_t ExtPos = strFilename.rfind('.');
-    if(ExtPos == string::npos)
+    if(ExtPos == CString::npos)
         return strFilename;
     
     // Try other supported extension
     const char *ExtList[] = {".v3m", ".v3c"};
     for(unsigned i = 0; i < COUNTOF(ExtList); ++i)
     {
-        string strNewFilename = strFilename.substr(0, ExtPos);
+        CString strNewFilename = strFilename.substr(0, ExtPos);
         strNewFilename += ExtList[i];
         
-        if(CVirtualFileSystem::GetInst().DoesFileExists(strNewFilename.c_str()))
+        if(CVirtualFileSystem::GetInst().DoesFileExists(strNewFilename))
             return strNewFilename;
     }
     
@@ -47,9 +47,9 @@ string CMeshMgr::FixFilename(const string &strFilename)
     return strFilename;
 }
 
-CMesh *CMeshMgr::Load(const string &strFilename)
+CMesh *CMeshMgr::Load(const CString &strFilename)
 {
-    map<string, CMesh*>::iterator it = m_Meshes.find(strFilename);
+    map<CString, CMesh*>::iterator it = m_Meshes.find(strFilename);
     if(it != m_Meshes.end())
     {
         it->second->AddRef();
@@ -63,8 +63,8 @@ CMesh *CMeshMgr::Load(const string &strFilename)
     
     try
     {
-        string strNewFilename = FixFilename(strFilename);
-        CVfsFileStream File(strNewFilename.c_str());
+        CString strNewFilename = FixFilename(strFilename);
+        CVfsFileStream File(strNewFilename);
         pMesh->Load(File);
     }
     catch(const exception &e)
@@ -78,7 +78,7 @@ CMesh *CMeshMgr::Load(const string &strFilename)
 
 void CMeshMgr::Remove(CMesh *pMesh)
 {
-    map<string, CMesh*>::iterator it;
+    map<CString, CMesh*>::iterator it;
     for(it = m_Meshes.begin(); it != m_Meshes.end(); ++it)
         if(it->second == pMesh)
         {

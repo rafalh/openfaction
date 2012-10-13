@@ -38,7 +38,7 @@ int CStringsTable::Load(istream &Stream)
 
 const char *CStringsTable::GetFormated(unsigned nId, ...)
 {
-    std::map<unsigned, std::string>::const_iterator it = m_Strings.find(nId);
+    std::map<unsigned, CString>::const_iterator it = m_Strings.find(nId);
     
     if(it == m_Strings.end())
         return "";
@@ -46,7 +46,7 @@ const char *CStringsTable::GetFormated(unsigned nId, ...)
     va_list pArgList;
     va_start(pArgList, nId);
     
-    vsnprintf(m_Buffer, sizeof(m_Buffer), it->second.c_str(), pArgList);
+    vsnprintf(m_Buffer, sizeof(m_Buffer), it->second, pArgList);
     
     va_end(pArgList);
     
@@ -59,9 +59,9 @@ const char *CStringsTable::ParseXStr(const char *pXStr)
     
     const char *Ptr = NULL;
     unsigned nId = strtoul(pXStr + 5, (char**)&Ptr, 0);
-    std::map<unsigned, std::string>::const_iterator it = m_Strings.find(nId);
+    std::map<unsigned, CString>::const_iterator it = m_Strings.find(nId);
     if(it != m_Strings.end())
-        return it->second.c_str();
+        return it->second;
     
     if(!Ptr || Ptr[0] != ',')
         return "";

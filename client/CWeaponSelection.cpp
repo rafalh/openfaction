@@ -88,7 +88,7 @@ void CWeaponSelection::Render()
         pWeaponCls = pWeapon->GetClass();
         
         if(!m_Textures[pWeaponCls->nId])
-            m_Textures[pWeaponCls->nId] = m_pGame->GetMaterialsMgr()->Load(pWeaponCls->strWeaponIcon.c_str());
+            m_Textures[pWeaponCls->nId] = m_pGame->GetMaterialsMgr()->Load(pWeaponCls->strWeaponIcon);
         
         CMaterial *pTex = m_Textures[pWeaponCls->nId];
         if(pTex)

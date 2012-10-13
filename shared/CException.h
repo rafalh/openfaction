@@ -12,7 +12,7 @@
 #define CEXCEPTION_H
 
 #include <exception>
-#include <string>
+#include "CString.h"
 #include <cstdarg>
 #include <cstdio>
 
@@ -35,11 +35,11 @@ class CException: public std::exception
         
         inline const char *what() const throw()
         {
-            return m_strWhat.c_str();
+            return m_strWhat;
         }
     
     private:
-        std::string m_strWhat;
+        CString m_strWhat;
 };
 
 #endif // CEXCEPTION_H

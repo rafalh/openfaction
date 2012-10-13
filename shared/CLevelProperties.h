@@ -11,7 +11,7 @@
 #ifndef CLEVELPROPERTIES_H
 #define CLEVELPROPERTIES_H
 
-#include <string>
+#include "CString.h"
 #include "CInputBinaryStream.h"
 
 class CLevel;
@@ -29,7 +29,7 @@ class CLevelProperties
         }
         
         CLevel *m_pLevel;
-        std::string strGeomodTexture;
+        CString strGeomodTexture;
         uint32_t uHardness;
         uint32_t AmbientColor;
         uint32_t FogColor;

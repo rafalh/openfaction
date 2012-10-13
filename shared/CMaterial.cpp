@@ -26,7 +26,7 @@ using namespace irr;
 
 unsigned CMaterial::m_UniqueId = 0;
 
-CMaterial::CMaterial(CMaterialsMgr *pMaterialsMgr, const string &strFilename):
+CMaterial::CMaterial(CMaterialsMgr *pMaterialsMgr, const CString &strFilename):
     m_pMaterialsMgr(pMaterialsMgr),
 #ifdef OF_CLIENT
     m_Fps(0), m_bAnimated(false), m_bAlpha(false),
@@ -41,7 +41,7 @@ CMaterial::CMaterial(CMaterialsMgr *pMaterialsMgr, const string &strFilename):
     try
     {
         // Create Irrlicht reader
-        CIrrReadFile IrrReadFile(strFilename.c_str());
+        CIrrReadFile IrrReadFile(strFilename);
         
         // Load standard image
         video::IImage *pImg = m_pMaterialsMgr->GetGame()->GetVideoDriver()->createImageFromFile(&IrrReadFile);
@@ -62,7 +62,7 @@ CMaterial::CMaterial(CMaterialsMgr *pMaterialsMgr, const string &strFilename):
         else
         {
             // Load a VBM animation
-            CVfsFileStream File(strFilename.c_str());
+            CVfsFileStream File(strFilename);
             LoadVbm(File);
             m_bAnimated = true;
         }

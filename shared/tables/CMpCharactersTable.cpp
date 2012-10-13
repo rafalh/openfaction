@@ -43,15 +43,15 @@ int CMpCharactersTable::Load(istream &Stream)
         {
             if(!StrCmpI(pName, "$EntityType"))
             {
-                string strEntityType;
+                CString strEntityType;
                 Reader.GetString(strEntityType);
-                m_MpCharacters.back().pEntityClass = m_pGame->GetEntitiesTbl()->Get(strEntityType.c_str());
+                m_MpCharacters.back().pEntityClass = m_pGame->GetEntitiesTbl()->Get(strEntityType);
             }
             else if(!StrCmpI(pName, "$EntityAnimType"))
             {
-                string strEntityAnimType;
+                CString strEntityAnimType;
                 Reader.GetString(strEntityAnimType);
-                m_MpCharacters.back().pEntityAnimClass = m_pGame->GetEntitiesTbl()->Get(strEntityAnimType.c_str());
+                m_MpCharacters.back().pEntityAnimClass = m_pGame->GetEntitiesTbl()->Get(strEntityAnimType);
             }
         }
     }

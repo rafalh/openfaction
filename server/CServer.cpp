@@ -541,7 +541,7 @@ void CServer::ProcessGamePacket(unsigned nType, CInputBinaryStream &Stream, cons
                 
                 if(pArg)
                 {
-                    string strCmdName(pCmd, pArg - pCmd);
+                    CString strCmdName(pCmd, pArg - pCmd);
                     m_pGame->GetConsole()->ExecuteCommand(strCmdName.c_str(), pArg + 1, pPlayer);
                 }
                 else
@@ -743,7 +743,7 @@ void CServer::RecvThreadProc()
         
         g_Lock.Acquire();
         
-        CInputBinaryStringStream Stream(string(Buf, cbBuf));
+        CInputBinaryStringStream Stream(CString(Buf, cbBuf));
         /* First byte says what type of packet is it */
         switch(Stream.ReadUInt8())
         {
@@ -975,7 +975,7 @@ void CServer::FinishLevelChange()
             
             /* Create bot */
             stringstream NameStream;
-            NameStream << string("Bot") << i;
+            NameStream << CString("Bot") << i;
             CPlayer *pBot = m_PlayersMgr.Add(NameStream.str().c_str(), CSocketAddress());
             
             if(pBot)

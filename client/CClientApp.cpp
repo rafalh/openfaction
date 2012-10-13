@@ -262,9 +262,9 @@ void CClientApp::Run()
             DbgLabels[7]->setText(wszDbgBuf);
         }
 	}
-	m_pGame->GetConsole()->Print("wtf\n");
+	
 	// Unload level
-	m_pGame->GetLevel()->Unload();m_pGame->GetConsole()->Print("wtf2\n");
+	m_pGame->GetLevel()->Unload();
 }
 
 void CClientApp::LoadLevel(const char *pszName)

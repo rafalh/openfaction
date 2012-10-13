@@ -11,7 +11,7 @@
 #ifndef CCMDHANDLER_H
 #define CCMDHANDLER_H
 
-#include <string>
+#include "CString.h"
 #include "CConsole.h"
 
 class CServer;
@@ -26,7 +26,7 @@ class CCmdHandler: public CConsole::CCmdHandler
     private:
         CConsole *m_pConsole;
         CServer *m_pServer;
-        std::string m_strLastBan;
+        CString m_strLastBan;
 };
 
 #endif // CCMDHANDLER_H

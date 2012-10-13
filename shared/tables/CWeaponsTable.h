@@ -12,8 +12,8 @@
 #define CWEAPONSTABLE_H
 
 #include <vector>
-#include <string>
 #include <map>
+#include "CString.h"
 #include "CAmmoTable.h"
 
 class CGame;
@@ -82,22 +82,22 @@ struct SWeaponClass
 {
     struct SAction
     {
-        std::string strAnim;
-        std::string strSound;
+        CString strAnim;
+        CString strSound;
     };
     
     SWeaponClass(unsigned nId);
     
     unsigned nId;
-    std::string strName;
-    std::string strDisplayName;
+    CString strName;
+    CString strDisplayName;
     unsigned nFlags, nFlags2;
     unsigned iCyclePos, iPrefPos;
     EWeaponType WeaponType;
-    std::string strWeaponIcon;
+    CString strWeaponIcon;
     EDamageType DmgType;
-    std::map<std::string, SAction> Actions;
-    std::string strHudReticleFilename;
+    std::map<CString, SAction> Actions;
+    CString strHudReticleFilename;
     const SAmmoType *pAmmoType; // can be NULL
     unsigned nMaxAmmo, nClipSize;
     float fMass, fVelocity, fColRadius;
@@ -109,7 +109,7 @@ struct SWeaponClass
     float fAltDamage, fAltDamageMulti;
     unsigned nBurstCount;
     bool bBurstAltFire;
-    std::string strLaunch, strAltLaunch, strLaunchFail;
+    CString strLaunch, strAltLaunch, strLaunchFail;
     float fDamageRadius, fDamageRadiusMulti;
     unsigned nThrustLifeTime;
 };
@@ -120,7 +120,7 @@ class CWeaponsTable
         CWeaponsTable(CGame *pGame):
             m_pGame(pGame) {}
         int Load(std::istream &Stream);
-        const SWeaponClass *Get(const char *pName) const;
+        const SWeaponClass *Get(const CString &strName) const;
         
         inline const SWeaponClass *Get(unsigned nId) const
         {

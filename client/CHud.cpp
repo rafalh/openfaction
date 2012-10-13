@@ -14,7 +14,7 @@
 #include "CGame.h"
 #include "CEntity.h"
 #include "CWeapon.h"
-#include <sstream>
+#include "CString.h"
 
 using namespace std;
 using namespace irr;
@@ -26,16 +26,16 @@ CHud::CHud(CGame *pGame):
 {
     for(unsigned i = 0; i <= 10; ++i)
     {
-        ostringstream ss;
-        ss << "health" << i * 10 << "_0.tga";
-        m_HealthTextures[i] = m_pGame->GetMaterialsMgr()->Load(ss.str().c_str());
+        CString strFilename;
+        strFilename.Format("health%u_0.tga", i * 10);
+        m_HealthTextures[i] = m_pGame->GetMaterialsMgr()->Load(strFilename);
     }
     
     for(unsigned i = 0; i <= 10; ++i)
     {
-        ostringstream ss;
-        ss << "enviro" << i * 10 << "_0.tga";
-        m_EnviroTextures[i] = m_pGame->GetMaterialsMgr()->Load(ss.str().c_str());
+        CString strFilename;
+        strFilename.Format("enviro%u_0.tga", i * 10);
+        m_EnviroTextures[i] = m_pGame->GetMaterialsMgr()->Load(strFilename);
     }
     
     m_pAmmoBarTex = m_pGame->GetMaterialsMgr()->Load("ammo_bar_0.tga");

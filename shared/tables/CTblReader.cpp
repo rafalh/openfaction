@@ -28,7 +28,7 @@ CTblReader::CTblReader(istream &Stream, const char *pSectionName):
     while(m_Stream.good() && !m_bSectionFound)
     {
         /* Get line from file */
-        string strLine;
+        CString strLine;
         getline(m_Stream, strLine);
         ++m_iLine;
         
@@ -37,7 +37,7 @@ CTblReader::CTblReader(istream &Stream, const char *pSectionName):
             strLine.resize(strLine.size() - 1);
         
         /* Check if we found the section */
-        if(strLine.size() > 0 && strLine[0] == '#' && !StrCmpI(strLine.c_str() + 1, pSectionName))
+        if(strLine.size() > 0 && strLine[0] == '#' && !strLine.comparei(pSectionName, 1))
             m_bSectionFound = true;
     }
 }
@@ -87,7 +87,7 @@ int CTblReader::LoadNextElement()
     return 0;
 }
 
-void CTblReader::GetString(std::string &strRet, const CStringsTable *pStrTbl)
+void CTblReader::GetString(CString &strRet, const CStringsTable *pStrTbl)
 {
     IgnoreSpaces();
     
@@ -115,7 +115,7 @@ void CTblReader::GetString(std::string &strRet, const CStringsTable *pStrTbl)
         m_nPos += pszEnd - (m_strBuf.c_str() + m_nPos);
         IgnoreSpaces();
         
-        string strDefault;
+        CString strDefault;
         if(m_strBuf[m_nPos] == ',')
         {
             ++m_nPos;
@@ -129,7 +129,7 @@ void CTblReader::GetString(std::string &strRet, const CStringsTable *pStrTbl)
         ++m_nPos;
         
         const char *pszResult = pStrTbl->Get(iStr);
-        strRet = pszResult ? pszResult : strDefault;
+        strRet = pszResult ? CString(pszResult) : strDefault;
         
         return;
     }
@@ -190,9 +190,9 @@ void CTblReader::GetBool(bool &bRet)
     IgnoreSpaces();
     
     bool bRet2;
-    if(!strncmp(m_strBuf.c_str() + m_nPos, "true", 4))
+    if(!m_strBuf.compare(m_nPos, 4, "true"))
         bRet2 = true;
-    else if(!strncmp(m_strBuf.c_str() + m_nPos, "false", 5))
+    else if(!m_strBuf.compare(m_nPos, 5, "false"))
         bRet2 = false;
     else
         THROW_EXCEPTION("Invalid bool at line %u", m_iLine);
@@ -215,7 +215,7 @@ void CTblReader::GetFlags(unsigned &nRet, const char *pFlags[], unsigned cFlags)
     ++m_nPos;
     
     unsigned nFlags = 0;
-    string strFlag;
+    CString strFlag;
     while(m_strBuf[m_nPos] != ')')
     {
         GetString(strFlag);
@@ -243,7 +243,7 @@ void CTblReader::GetFlags(unsigned &nRet, const char *pFlags[], unsigned cFlags)
 
 void CTblReader::GetEnum(int &nRet, const char *pNames[], unsigned cNames)
 {
-    string strName;
+    CString strName;
     GetString(strName);
     
     for(unsigned i = 0; i < cNames; ++i)

@@ -13,7 +13,7 @@
 
 #include <irrlicht.h>
 #include <vector>
-#include <string>
+#include "CString.h"
 #include <cstdarg>
 #include "CTimer.h"
 #include "CConsole.h"

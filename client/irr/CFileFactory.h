@@ -12,7 +12,7 @@
 #define CFILEFACTORY_H
 
 #include <irrKlang.h>
-#include <string>
+#include "CString.h"
 #include "CVirtualFileSystem.h"
 
 class CIrrKlangReadFile: public irrklang::IFileReader
@@ -54,7 +54,7 @@ class CIrrKlangReadFile: public irrklang::IFileReader
     
     private:
         CVfsFileStream m_File;
-        const std::string m_strPath;
+        const CString m_strPath;
 };
 
 

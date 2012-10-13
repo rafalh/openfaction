@@ -13,6 +13,7 @@
 
 #include <iostream>
 #include <sstream>
+#include "CString.h"
 #include <stdint.h>
 #include <btBulletCollisionCommon.h>
 

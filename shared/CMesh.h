@@ -74,7 +74,7 @@ class CMesh: public CSharedObject
     private:
         struct SBone
         {
-            std::string strName;
+            CString strName;
             btQuaternion qRot;
             btVector3 vPos;
             int iParent;

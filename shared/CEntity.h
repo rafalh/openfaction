@@ -146,6 +146,16 @@ class CEntity: public CKillableObject
             return m_Action;
         }
         
+        const CEntityState &SetState(const CEntityState &State)
+        {
+            m_State = State;
+        }
+        
+        const CEntityAction &SetAction(const CEntityAction &Action)
+        {
+            m_Action = Action;
+        }
+        
         btVector3 GetHeadPos() const
         {
             static const btVector3 vHeadOffset(0.0f, 0.8724f, 0.0f);

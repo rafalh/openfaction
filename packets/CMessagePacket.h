@@ -40,7 +40,7 @@ class CMessagePacket
         }
         
     private:
-        std::string m_strMessage;
+        CString m_strMessage;
         CPlayer *m_pPlayer;
         bool m_bTeamMsg;
 };

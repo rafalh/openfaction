@@ -158,7 +158,7 @@ class CPlayer
         CEntity *m_pEntity;
         const SMpCharacter *m_pCharacter;
         
-        std::string m_strName;
+        CString m_strName;
         unsigned m_nId, m_nPing, m_nCaps;
         int m_iScore;
         bool m_bInGame;

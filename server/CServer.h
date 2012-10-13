@@ -134,8 +134,8 @@ class CServer: public CEventsHandler
         CThread m_MainThread;
         CThread m_RecvThread;
         
-        std::string m_strLevelFileName;
-        std::string m_strQueuedLevelChange;
+        CString m_strLevelFileName;
+        CString m_strQueuedLevelChange;
         CTimer m_LevelTimer;
         time_t m_LoadingLevelTimestamp;
         unsigned m_nCurrentLevel;

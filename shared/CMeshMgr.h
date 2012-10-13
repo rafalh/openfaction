@@ -12,7 +12,7 @@
 #define CMESHMGR_H
 
 #include <map>
-#include <string>
+#include "CString.h"
 
 class CMesh;
 class CGame;
@@ -24,7 +24,7 @@ class CMeshMgr
             m_pGame(pGame) {}
         
         ~CMeshMgr();
-        CMesh *Load(const std::string &strFilename);
+        CMesh *Load(const CString &strFilename);
         
         CGame *GetGame() const
         {
@@ -33,9 +33,9 @@ class CMeshMgr
     
     private:
         CGame *m_pGame;
-        std::map<std::string, CMesh*> m_Meshes;
+        std::map<CString, CMesh*> m_Meshes;
         
-        std::string FixFilename(const std::string &strFilename);
+        CString FixFilename(const CString &strFilename);
         void Remove(CMesh *pMesh);
         
     friend class CMesh;

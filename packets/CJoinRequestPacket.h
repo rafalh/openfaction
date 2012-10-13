@@ -47,7 +47,7 @@ class CJoinRequestPacket
     private:
         unsigned m_nVersion, m_cbTablesVpp;
         uint32_t m_nTablesVppChecksum;
-        std::string m_strName, m_strPassword;
+        CString m_strName, m_strPassword;
 };
 
 #endif // CJOINREQUESTPACKET_H

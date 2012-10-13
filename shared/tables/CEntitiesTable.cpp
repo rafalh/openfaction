@@ -12,7 +12,7 @@
 #include "CTblReader.h"
 #include "CLogger.h"
 #include "utils.h"
-#include <string>
+#include "CString.h"
 
 using namespace std;
 
@@ -32,7 +32,7 @@ int CEntitiesTable::Load(istream &Stream)
     if(!Reader.IsSectionFound())
         return -1;
     
-    string strWeapon;
+    CString strWeapon;
     
     while(Reader.LoadNextElement() == 0)
     {
@@ -65,20 +65,20 @@ int CEntitiesTable::Load(istream &Stream)
                 Reader.GetString(strWeapon);
             else if(!StrCmpI(pName, "+State"))
             {
-                string strState;
+                CString strState;
                 Reader.GetString(strState);
-                CEntityState State(strState.c_str());
+                CEntityState State(strState);
                 
-                string strFilename;
+                CString strFilename;
                 Reader.GetString(strFilename);
                 m_Entities.back().States[strWeapon][State] = strFilename;
             }
             else if(!StrCmpI(pName, "+Action"))
             {
-                string strAction;
+                CString strAction;
                 Reader.GetString(strAction);
-                CEntityAction Action(strAction.c_str());
-                string strFilename;
+                CEntityAction Action(strAction);
+                CString strFilename;
                 Reader.GetString(strFilename);
                 m_Entities.back().Actions[strWeapon][Action] = strFilename;
             }  
@@ -88,12 +88,12 @@ int CEntitiesTable::Load(istream &Stream)
     return 0;
 }
 
-const SEntityClass *CEntitiesTable::Get(const char *pClassName) const
+const SEntityClass *CEntitiesTable::Get(const CString &strClassName) const
 {
     for(unsigned i = 0; i < m_Entities.size(); ++i)
-        if(!StrCmpI(m_Entities[i].strName.c_str(), pClassName))
+        if(!m_Entities[i].strName.comparei(strClassName))
             return &m_Entities[i];
     
-    CLogger::GetInst().PrintError("Warning! Unknown entity class name: %s", pClassName);
+    CLogger::GetInst().PrintError("Warning! Unknown entity class name: %s", strClassName.c_str());
     return NULL;
 }

@@ -367,7 +367,7 @@ void CSubMesh::LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrr
         uint8_t Id = Stream.ReadUInt8();
         //assert(Id < cBatches);
         //assert(Id == i);
-        std::string strFilename = Stream.ReadString();
+        CString strFilename = Stream.ReadString();
         if(bIrrMesh)
         {
             CMaterial *pMaterial = m_pMeshMgr->GetGame()->GetMaterialsMgr()->Load(strFilename);

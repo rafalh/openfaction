@@ -28,7 +28,7 @@ class CWeapon
         bool Shoot(bool bAltFire, const btVector3 &vPos, const btVector3 &vDir, bool bWait = true);
         void Update(unsigned nDeltaTime);
         bool Reload(bool bWait = true);
-        void DoAction(const char *pszName);
+        void DoAction(const CString &strName);
         
         inline const SWeaponClass *GetClass() const
         {

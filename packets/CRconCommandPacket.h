@@ -27,7 +27,7 @@ class CRconCommandPacket
         }
     
     private:
-        std::string m_strCmd;
+        CString m_strCmd;
 };
 
 #endif // CRCONCOMMANDPACKET_H

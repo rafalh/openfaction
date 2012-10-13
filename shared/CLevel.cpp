@@ -97,8 +97,8 @@ void CLevel::Load(CInputBinaryStream &Stream)
     if(ReadRflString(m_strName, Stream) < 0)
         THROW_EXCEPTION("Failed to read level name");
     
-    if(strncmp(m_strName.c_str(), "XSTR(", 5) == 0)
-        m_strName = m_pGame->GetStringsTbl()->ParseXStr(m_strName.c_str());
+    if(m_strName.compare(0, 5, "XSTR(") == 0)
+        m_strName = m_pGame->GetStringsTbl()->ParseXStr(m_strName);
     
     IgnoreRflString(Stream); // mod
     
@@ -414,7 +414,7 @@ void CLevel::RemoveElement(CElement *pElement)
     }
 }
 
-int CLevel::ReadRflString(std::string &strDest, CInputBinaryStream &Stream)
+int CLevel::ReadRflString(CString &strDest, CInputBinaryStream &Stream)
 {
     unsigned nLen = Stream.ReadUInt16();
     if(!Stream.good())

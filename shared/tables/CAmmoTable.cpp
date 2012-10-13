@@ -42,12 +42,12 @@ int CAmmoTable::Load(istream &Stream)
     return 0;
 }
 
-const SAmmoType *CAmmoTable::Get(const char *pAmmoType) const
+const SAmmoType *CAmmoTable::Get(const CString &strAmmoType) const
 {
     for(unsigned i = 0; i < m_AmmoTypes.size(); ++i)
-        if(!StrCmpI(m_AmmoTypes[i].strName.c_str(), pAmmoType))
+        if(!m_AmmoTypes[i].strName.comparei(strAmmoType))
             return &m_AmmoTypes[i];
     
-    CLogger::GetInst().PrintError("Warning! Unknown ammo type: %s", pAmmoType);
+    CLogger::GetInst().PrintError("Warning! Unknown ammo type: %s", strAmmoType.c_str());
     return NULL;
 }

@@ -31,7 +31,7 @@ int CFoleyTable::Load(istream &Stream)
             SFoleySound Snd;
             Reader.GetString(Snd.strName);
             
-            pCurrent = &m_Sounds.insert(pair<string, SFoleySound>(Snd.strName, Snd)).first->second;
+            pCurrent = &m_Sounds.insert(pair<CString, SFoleySound>(Snd.strName, Snd)).first->second;
         }
         else if(pCurrent)
         {
@@ -51,9 +51,9 @@ int CFoleyTable::Load(istream &Stream)
     return 0;
 }
 
-const SFoleySound *CFoleyTable::Get(const char *pszName) const
+const SFoleySound *CFoleyTable::Get(const CString &strName) const
 {
-    map<string, SFoleySound>::const_iterator it = m_Sounds.find(pszName);
+    map<CString, SFoleySound>::const_iterator it = m_Sounds.find(strName);
     if(it == m_Sounds.end())
         return NULL;
     

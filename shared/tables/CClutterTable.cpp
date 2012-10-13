@@ -50,12 +50,12 @@ int CClutterTable::Load(istream &Stream)
     return 0;
 }
 
-const SClutterClass *CClutterTable::Get(const char *pClassName) const
+const SClutterClass *CClutterTable::Get(const CString &strClassName) const
 {
     for(unsigned i = 0; i < m_Clutter.size(); ++i)
-        if(!StrCmpI(m_Clutter[i].strName.c_str(), pClassName))
+        if(!m_Clutter[i].strName.comparei(strClassName))
             return &m_Clutter[i];
     
-    CLogger::GetInst().PrintError("Warning! Unknown clutter class name: %s", pClassName);
+    CLogger::GetInst().PrintError("Warning! Unknown clutter class name: %s", strClassName.c_str());
     return NULL;
 }

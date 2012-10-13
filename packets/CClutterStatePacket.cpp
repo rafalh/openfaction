@@ -20,7 +20,7 @@ using namespace std;
 void CClutterStatePacket::Send(CPlayer *pPlayer) const
 {
     const set<CElement*> Clutter = pPlayer->GetServer()->GetGame()->GetLevel()->GetElementsMgr()->GetByType(OFET_CLUTTER);
-    string ClutterBitmap;
+    CString ClutterBitmap;
     unsigned cClutter = 0;
     for(set<CElement*>::iterator it = Clutter.begin(); it != Clutter.end(); ++it)
     {

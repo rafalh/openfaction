@@ -14,6 +14,7 @@
 #include "CElement.h"
 #include "CInputBinaryStream.h"
 #include <vector>
+#include "CString.h"
 
 class CEntity;
 
@@ -25,7 +26,7 @@ class CEvent: public CElement
         void Update(unsigned nDeltaTime);
     
     private:
-        std::string m_strClass;
+        CString m_strClass;
         unsigned m_nWait;
         unsigned m_nDelay;
         std::vector<unsigned> m_Links;
@@ -34,7 +35,7 @@ class CEvent: public CElement
         bool m_Bool1, m_Bool2;
         int m_Int1, m_Int2;
         float m_Float1, m_Float2;
-        std::string m_String1, m_String2;
+        CString m_String1, m_String2;
         
         void Execute();
 };

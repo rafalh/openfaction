@@ -59,7 +59,7 @@ void CServerConfig::Load(const char *pszConfName)
         
         if(StrCmpI(pVar, "Name") == 0)
         {
-            string strName;
+            CString strName;
             Reader.GetString(strName);
             if(strName == pszConfName)
             {
@@ -74,7 +74,7 @@ void CServerConfig::Load(const char *pszConfName)
                 Reader.GetString(m_strName);
             else if(StrCmpI(pVar, "Game Type") == 0)
             {
-                string strGameType;
+                CString strGameType;
                 Reader.GetString(strGameType);
                 if(iStatus == 0)
                     m_nGameType = StrToGameType(strGameType.c_str());
@@ -105,7 +105,7 @@ void CServerConfig::Load(const char *pszConfName)
                 Reader.GetBool(m_bBalanceTeams);
             else if(StrCmpI(pVar, "Map") == 0)
             {
-                string strLevel;
+                CString strLevel;
                 Reader.GetString(strLevel);
                 m_Levels.push_back(strLevel);
             }
@@ -118,7 +118,7 @@ void CServerConfig::Load(const char *pszConfName)
                 Reader.GetString(m_strDefaultWeapon);
             else if(StrCmpI(pVar, "Log File") == 0)
             {
-                string strPath;
+                CString strPath;
                 Reader.GetString(strPath);
                 if(SetLogFile(strPath.c_str()) < 0)
                     CLogger::GetInst().PrintError("Warning! Cannot log to file: %s", strPath.c_str());
