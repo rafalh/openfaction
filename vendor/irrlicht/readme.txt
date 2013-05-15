@@ -1,5 +1,5 @@
 ==========================================================================
-The Irrlicht Engine SDK version 1.7.2
+The Irrlicht Engine SDK version 1.8
 ==========================================================================
 
   Welcome the Irrlicht Engine SDK.
@@ -12,7 +12,6 @@ The Irrlicht Engine SDK version 1.7.2
   4. Release Notes
   5. License
   6. Contact
-
 
 
 ==========================================================================
@@ -76,15 +75,10 @@ The Irrlicht Engine SDK version 1.7.2
   with Irrlicht or recompile the engine. However, other compilers/IDEs may
   work as well, we simply didn't test them.
 
-  * gcc 3.3
-  * gcc 3.4
   * gcc 4.x
-  * Visual Studio.NET 2003 (7.1)
-  * Visual Studio 2005 (8.0)
-  * Visual Studio 2008 (9.0)
-  * Code::Blocks 1.0 (& gcc or visual studio toolkit)
-  * DevC++ 5.0 & gcc (project files included)
-
+  * Visual Studio 2008(9.0)-2012(11.0)
+  * Code::Blocks (& gcc or visual studio toolkit)
+  
   If you ever want to (re)compile the engine yourself (which means you don't
   want to use the precompiled version) you need the following:
 
@@ -96,9 +90,10 @@ The Irrlicht Engine SDK version 1.7.2
 
   * Linux:
 	* Needed: XServer with include files
-	* Optional: OpenGL headers and libraries (libGL.so), for OpenGL support
-	*       GLX + XF86VidMode or XRandr extension (X11 support libraries,
-		the latter two for fullscreen mode)
+	* Optional: OpenGL headers and libraries (libGL.so) for OpenGL support
+		GLX +
+		XF86VidMode [package x11proto-xf86vidmode-dev] or XRandr
+		(X11 support libraries, the latter two for fullscreen mode)
 
   * OSX:
 	* Needed: XCode and Cocoa framework
@@ -135,7 +130,7 @@ The Irrlicht Engine SDK version 1.7.2
   The Irrlicht Engine License
   ===========================
 
-  Copyright (C) 2002-2010 Nikolaus Gebhardt
+  Copyright (C) 2002-2012 Nikolaus Gebhardt
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -176,17 +171,20 @@ The Irrlicht Engine SDK version 1.7.2
   See http://irrlicht.sourceforge.net/author.html for more informations)
 
   Christian Stehno (hybrid)   Contribution Coordinator/Developer
+  Michael Zeilfelder (cutealien) GUI Developer
+  Patryk Nadrowski (Nadro)    Developer  
+  Yoran Bosman (Yoran)        Webserver administrator
   Gareth Davidson (bitplane)  Developer/ Forum admin
   Thomas Alten (burningwater) Wrote the burningsvideo software rasterizer
   Luke P. Hoschke (luke)      Wrote the b3d loader, the new animation system, VBOs and other things
   Colin MacDonald (rogerborg) All hands person
-  Michael Zeilfelder (cutealien) GUI and patch expert
   Ahmed Hilali (blindside)    The shader and advanced effects man
   Dean Wadsworth (varmint)    OSX port maintainer and game developer
   Alvaro F. Celis (afecelis)  Lots of work in the community, for example video tutorials about Irrlicht, forum admin
   John Goewert (Saigumi)      Wrote some tutorials for the Irrlicht Engine and doing admin stuff
   Jam                         Takes care of moderating the forums and keeps them clean from those evil spammers.
 
+  Many others (this list hasn't been updated in a while, but they are often mentioned in changes.txt)
   Etienne Petitjean wrote the MacPort of the engine
   Mark Jeacocke	Wrote lots of helpful comments and ideas in the forums and per email.
   Julio Gorgé	Created the 'Unofficial DirectX 9.0 Driver for the Irrlicht Engine'
@@ -231,6 +229,8 @@ The Irrlicht Engine SDK version 1.7.2
   William Finlayson	OpenGL RTT, GLSL support and the reflection 2 layer material for OpenGL.
   Delight	Various code contributions for Irrlicht.NET (particle system, basic shader support and more)
   Michael Zoech	Improved GLSL support
-  Greg Roelofs	Created the zlib and libpng
+  Jean-loup Gailly, Mark Adler	Created the zlib and libpng
   Guy Eric Schalnat, Andreas Dilger, Glenn Randers-Pehrson and others	Created libpng
   The Independent JPEG Group	Created JPEG lib
+  Dr Brian Gladman AES Created aesGladman
+  

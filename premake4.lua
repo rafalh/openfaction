@@ -8,7 +8,7 @@ solution "Open Faction"
 		buildoptions "-Wno-unused-variable"
 	
 	configuration "Debug"
-		defines { "DEBUG" }
+		defines { "_DEBUG", "DEBUG" }
 		flags { "Symbols" }
 	
 	configuration "Release"
@@ -17,6 +17,8 @@ solution "Open Faction"
 
 	configuration "linux"
 		defines { "LINUX" }
+	configuration "windows"
+		defines { "WIN32" }
 	
 	include "vendor"
 	include "client"

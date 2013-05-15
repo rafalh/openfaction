@@ -1,7 +1,7 @@
 
 /* pngtest.c - a simple test program to test libpng
  *
- * Last changed in libpng 1.5.15 [March 28, 2013]
+ * Last changed in libpng 1.6.2 [April 25, 2013]
  * Copyright (c) 1998-2013 Glenn Randers-Pehrson
  * (Version 0.96 Copyright (c) 1996, 1997 Andreas Dilger)
  * (Version 0.88 Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.)
@@ -43,7 +43,23 @@
 
 #include "png.h"
 
-#ifdef PNG_READ_SUPPORTED /* else nothing can be done */
+/* Known chunks that exist in pngtest.png must be supported or pngtest will fail
+ * simply as a result of re-ordering them.  This may be fixed in 1.7
+ */
+#if defined PNG_READ_SUPPORTED && /* else nothing can be done */\
+   defined PNG_READ_bKGD_SUPPORTED &&\
+   defined PNG_READ_cHRM_SUPPORTED &&\
+   defined PNG_READ_gAMA_SUPPORTED &&\
+   defined PNG_READ_oFFs_SUPPORTED &&\
+   defined PNG_READ_pCAL_SUPPORTED &&\
+   defined PNG_READ_pHYs_SUPPORTED &&\
+   defined PNG_READ_sBIT_SUPPORTED &&\
+   defined PNG_READ_sCAL_SUPPORTED &&\
+   defined PNG_READ_sRGB_SUPPORTED &&\
+   defined PNG_READ_tEXt_SUPPORTED &&\
+   defined PNG_READ_tIME_SUPPORTED &&\
+   defined PNG_READ_zTXt_SUPPORTED
+
 #include "zlib.h"
 /* Copied from pngpriv.h but only used in error messages below. */
 #ifndef PNG_ZBUF_SIZE
@@ -766,7 +782,7 @@ write_chunks(png_structp write_ptr, int location)
  */
 #ifdef PNG_TEXT_SUPPORTED
 static void
-pngtest_check_text_support(png_structp png_ptr, png_textp text_ptr,
+pngtest_check_text_support(png_const_structp png_ptr, png_textp text_ptr,
    int num_text)
 {
    while (num_text > 0)
@@ -1173,7 +1189,8 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
    }
 #endif
 #ifdef PNG_sCAL_SUPPORTED
-#ifdef PNG_FLOATING_POINT_SUPPORTED
+#if defined(PNG_FLOATING_POINT_SUPPORTED) && \
+   defined(PNG_FLOATING_ARITHMETIC_SUPPORTED)
    {
       int unit;
       double scal_width, scal_height;
@@ -1235,15 +1252,15 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
       {
          png_set_tIME(write_ptr, write_info_ptr, mod_time);
 #ifdef PNG_TIME_RFC1123_SUPPORTED
-         /* We have to use memcpy instead of "=" because the string
-          * pointed to by png_convert_to_rfc1123() gets free'ed before
-          * we use it.
-          */
-         memcpy(tIME_string,
-                    png_convert_to_rfc1123(read_ptr, mod_time),
-                    png_sizeof(tIME_string));
+         if (png_convert_to_rfc1123_buffer(tIME_string, mod_time))
+            tIME_string[(sizeof tIME_string) - 1] = '\0';
 
-         tIME_string[png_sizeof(tIME_string) - 1] = '\0';
+         else
+         {
+            strncpy(tIME_string, "*** invalid time ***", (sizeof tIME_string));
+            tIME_string[(sizeof tIME_string) - 1] = '\0';
+         }
+
          tIME_chunk_present++;
 #endif /* PNG_TIME_RFC1123_SUPPORTED */
       }
@@ -1419,14 +1436,15 @@ test_one_file(PNG_CONST char *inname, PNG_CONST char *outname)
       {
          png_set_tIME(write_ptr, write_end_info_ptr, mod_time);
 #ifdef PNG_TIME_RFC1123_SUPPORTED
-         /* We have to use memcpy instead of "=" because the string
-            pointed to by png_convert_to_rfc1123() gets free'ed before
-            we use it */
-         memcpy(tIME_string,
-                    png_convert_to_rfc1123(read_ptr, mod_time),
-                    png_sizeof(tIME_string));
+         if (png_convert_to_rfc1123_buffer(tIME_string, mod_time))
+            tIME_string[(sizeof tIME_string) - 1] = '\0';
 
-         tIME_string[png_sizeof(tIME_string) - 1] = '\0';
+         else
+         {
+            strncpy(tIME_string, "*** invalid time ***", sizeof tIME_string);
+            tIME_string[(sizeof tIME_string)-1] = '\0';
+         }
+
          tIME_chunk_present++;
 #endif /* PNG_TIME_RFC1123_SUPPORTED */
       }
@@ -1944,9 +1962,10 @@ main(void)
 {
    fprintf(STDERR,
       " test ignored because libpng was not built with read support\n");
-   return 0;
+   /* And skip this test */
+   return 77;
 }
 #endif
 
 /* Generate a compiler error if there is an old png.h in the search path. */
-typedef png_libpng_version_1_5_15 Your_png_h_is_not_version_1_5_15;
+typedef png_libpng_version_1_6_2 Your_png_h_is_not_version_1_6_2;

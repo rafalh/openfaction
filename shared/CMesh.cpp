@@ -233,7 +233,7 @@ void CMesh::DbgDraw(const CObject *pObj) const
         core::position2di vPosScr = m_pMeshMgr->GetGame()->GetSceneMgr()->getSceneCollisionManager()->getScreenCoordinatesFrom3DPosition(vIrrBonePos, m_pMeshMgr->GetGame()->GetCamera()->GetSceneNode());
         wchar_t wszBuf[32];
         swprintf(wszBuf, sizeof(wszBuf), L"%hs", Bone.strName.c_str());
-        m_pMeshMgr->GetGame()->GetGuiEnv()->getBuiltInFont()->draw(wszBuf, core::recti(vPosScr, vPosScr), video::SColor(255, 255, 255, 255), true, true);
+        m_pMeshMgr->GetGame()->GetGuiEnv()->getBuiltInFont()->draw(wszBuf, core::recti(vPosScr, vPosScr), video::SColor(255, 255, 255, 255));
     }
     
     core::vector3df vTestPos = vIrrPos + core::vector3df(0.0f, 2.0f, 0.0f);

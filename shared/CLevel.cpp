@@ -380,7 +380,6 @@ void CLevel::DbgDraw() const
         if(vDist.length2() < 100.0f)
             pEntity->DbgDraw();
     }
-        
 #endif // DEBUG
 }
 

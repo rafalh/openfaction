@@ -19,4 +19,8 @@ project "libpng"
 		"pngwrite.c",
 		"pngwtran.c",
 		"pngwutil.c",
+		"*.h",
 	}
+	
+	configuration "Debug"
+		defines { "PNG_DEBUG=1" }
