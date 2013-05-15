@@ -162,6 +162,8 @@ bool CMaterial::LoadVbm(CInputBinaryStream &Stream)
         //for(unsigned j = 1; j < Hdr.mipmaps_count; ++j)
         //    Stream.ignore()
     }
+    
+    return true;
 }
 
 irr::scene::ISceneNodeAnimator *CMaterial::CreateAnimator(unsigned iNodeMaterial)

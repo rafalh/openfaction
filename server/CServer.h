@@ -125,10 +125,10 @@ class CServer: public CEventsHandler
         void FinishLevelChange();
         void FlushPackets();
         
+        CPlayersManager m_PlayersMgr;
         CGame *m_pGame;
         CServerConfig *m_pConf;
         CBanlist *m_pBanlist;
-        CPlayersManager m_PlayersMgr;
         CSocket m_Sock;
         
         CThread m_MainThread;

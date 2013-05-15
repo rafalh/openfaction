@@ -45,7 +45,7 @@ CEntity *CPlayer::Spawn(const SMpCharacter *pCharacter, const btVector3 &vPos, c
     }
     
     if(!pCharacter->pEntityAnimClass)
-        return false;
+        return NULL;
     
     m_pEntity = new CEntity(m_pServer->GetLevel(), pCharacter->pEntityAnimClass);
     m_pEntity->SetPos(vPos);

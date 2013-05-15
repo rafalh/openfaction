@@ -13,8 +13,8 @@ CAnimatedMesh::CAnimatedMesh(CMesh *pMesh):
     
     for(unsigned i = 0; i < pIrrMesh->getMeshBufferCount(); ++i)
     {
-        irr::scene::IMeshBuffer *pMeshBuf = pIrrMesh->getMeshBuffer(i);
-        
+        //irr::scene::IMeshBuffer *pMeshBuf = pIrrMesh->getMeshBuffer(i);
+        //TODO
     }
 #endif // OF_CLIENT
 }

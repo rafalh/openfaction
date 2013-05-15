@@ -42,8 +42,7 @@ CClientApp::CClientApp():
     m_pGame(NULL),
     m_pDevice(NULL), m_pSceneMgr(NULL), m_pDriver(NULL),
     m_pFont(NULL), m_pFontFace(NULL),
-    m_pCamera(NULL),
-    m_pConsole(NULL),
+    m_pCamera(NULL), m_pConsole(NULL),
     m_pEntityController(NULL), m_pHud(NULL), m_pWeaponSel(NULL) {}
 
 CClientApp::~CClientApp()
@@ -108,6 +107,9 @@ void CClientApp::Init()
     else
     {
         m_pFont = m_pDevice->getGUIEnvironment()->getBuiltInFont();
+        assert(m_pFont);
+        if(!m_pFont)
+            THROW_EXCEPTION("Failed to get Irrlicht builtin font");
         m_pFont->grab();
     }
     
@@ -120,6 +122,7 @@ void CClientApp::Init()
     m_pGame = new CGame(m_pConsole, m_pDevice);
     m_pGame->InitVfs();
     m_pGame->LoadTables();
+    m_pGame->SetCamera(m_pCamera);
     
     m_pHud = new CHud(m_pGame);
     if(m_pFontFace)
@@ -288,9 +291,6 @@ void CClientApp::LoadLevel(const char *pszName)
     // Change camera to first person
     SetCameraType(false);
     
-    m_pHud->SetEntity(m_pLocalEntity);
-    m_pWeaponSel->SetEntity(m_pLocalEntity);
-    
     m_pConsole->Print("Level %s has been loaded.\n", pszName);
 }
 
@@ -305,4 +305,7 @@ void CClientApp::SetCameraType(bool bFreeCamera)
     m_pCamera->GetSceneNode()->setNearValue(0.1f);
     m_pCamera->GetSceneNode()->setFarValue(300.0f);
     m_pCamera->OnActivate();
+    
+    if(m_pGame)
+        m_pGame->SetCamera(m_pCamera);
 }

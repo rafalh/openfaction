@@ -15,13 +15,14 @@
 #include "CEntity.h"
 #include "CWeapon.h"
 #include "CString.h"
+#include "camera/CCamera.h"
 
 using namespace std;
 using namespace irr;
 
 CHud::CHud(CGame *pGame):
     m_pGame(pGame),
-    m_pEntity(0), m_pReticleTexture(NULL),
+    m_pReticleTexture(NULL),
     m_pFont(NULL)
 {
     for(unsigned i = 0; i <= 10; ++i)
@@ -42,6 +43,8 @@ CHud::CHud(CGame *pGame):
     m_pAmmoBarPowerTex = m_pGame->GetMaterialsMgr()->Load("ammo_bar_power_0.tga");
     m_pAmmoSignalGreenTex = m_pGame->GetMaterialsMgr()->Load("ammo_signal_green_0.tga");
     m_pAmmoSignalRedTex = m_pGame->GetMaterialsMgr()->Load("ammo_signal_red_0.tga");
+    
+    m_pReticleTexture = m_pGame->GetMaterialsMgr()->Load("reticle_0.tga");
 }
 
 CHud::~CHud()
@@ -69,25 +72,16 @@ CHud::~CHud()
 
 void CHud::Render()
 {
-    if(!m_pEntity || !m_pEntity->IsAlive())
+    CEntity *pEntity = dynamic_cast<CEntity*>(m_pGame->GetCamera()->GetTarget());
+    if(!pEntity || !pEntity->IsAlive())
         return;
     
-    RenderReticle();
-    RenderHealthArmor();
-    RenderAmmo();
+    RenderReticle(pEntity);
+    RenderHealthArmor(pEntity);
+    RenderAmmo(pEntity);
 }
 
-void CHud::SetEntity(CEntity *pEntity)
-{
-    m_pEntity = pEntity;
-    
-    if(m_pReticleTexture)
-        m_pReticleTexture->Release();
-    
-    m_pReticleTexture = m_pGame->GetMaterialsMgr()->Load("reticle_0.tga");
-}
-
-void CHud::RenderReticle()
+void CHud::RenderReticle(CEntity *pEntity)
 {
     if(!m_pReticleTexture)
         return;
@@ -101,9 +95,9 @@ void CHud::RenderReticle()
     m_pGame->GetVideoDriver()->draw2DImage(m_pReticleTexture->GetFrame(0), DestPos, SrcRect, 0, video::SColor(255, 255, 255, 255), true);
 }
 
-void CHud::RenderHealthArmor()
+void CHud::RenderHealthArmor(CEntity *pEntity)
 {
-    unsigned iHealthTex = static_cast<int>(m_pEntity->GetLife()) / 10;
+    unsigned iHealthTex = static_cast<int>(pEntity->GetLife()) / 10;
     if(iHealthTex > 10)
         iHealthTex = 10;
     else if(iHealthTex < 0)
@@ -117,7 +111,7 @@ void CHud::RenderHealthArmor()
     
     m_pGame->GetVideoDriver()->draw2DImage(pHealthTex->GetFrame(0), HealthDestPos, HealthSrcRect, 0, video::SColor(96, 255, 255, 255), true);
     
-    unsigned iEnviroTex = static_cast<int>(m_pEntity->GetArmor()) / 10;
+    unsigned iEnviroTex = static_cast<int>(pEntity->GetArmor()) / 10;
     if(iEnviroTex > 10)
         iEnviroTex = 10;
     else if(iEnviroTex < 0)
@@ -135,22 +129,22 @@ void CHud::RenderHealthArmor()
     wchar_t wszBuf[64];
     
     core::recti HealthTextRect(70, 55, 100, 80);
-    swprintf(wszBuf, L"%.0f", m_pEntity->GetLife());
+    swprintf(wszBuf, L"%.0f", pEntity->GetLife());
     pFont->draw(wszBuf, HealthTextRect, video::SColor(255, 255, 255, 0), true, true);
     
     core::recti EnviroTextRect(110, 55, 140, 80);
-    swprintf(wszBuf, L"%.0f", m_pEntity->GetArmor());
+    swprintf(wszBuf, L"%.0f", pEntity->GetArmor());
     pFont->draw(wszBuf, EnviroTextRect, video::SColor(255, 255, 255, 0), true, true);
 }
 
-void CHud::RenderAmmo()
+void CHud::RenderAmmo(CEntity *pEntity)
 {
-    if(!m_pEntity->GetWeapon())
+    if(!pEntity->GetWeapon())
         return;
     
-    bool bHasClip = (m_pEntity->GetWeapon()->GetClass()->nClipSize > 0);
-    unsigned cClipAmmo = m_pEntity->GetWeapon()->GetAmmo();
-    unsigned cAmmo = m_pEntity->GetAmmo(m_pEntity->GetWeapon()->GetClass()->pAmmoType);
+    bool bHasClip = (pEntity->GetWeapon()->GetClass()->nClipSize > 0);
+    unsigned cClipAmmo = pEntity->GetWeapon()->GetAmmo();
+    unsigned cAmmo = pEntity->GetAmmo(pEntity->GetWeapon()->GetClass()->pAmmoType);
     bool bHasAmmo = cClipAmmo > 0 || (!bHasClip && cAmmo > 0);
     
     const core::dimension2du &ScrSize = m_pGame->GetVideoDriver()->getScreenSize();

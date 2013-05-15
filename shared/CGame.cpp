@@ -48,6 +48,8 @@ CGame::CGame(CConsole *pConsole, irr::IrrlichtDevice *pIrrDevice):
 #endif // OF_CLIENT
     m_pLevel = new CLevel(this);
     
+    m_pCamera = NULL;
+    
 #ifdef OF_CLIENT
     if(m_pIrrDevice)
         m_pIrrDevice->grab();
@@ -115,73 +117,66 @@ void CGame::LoadTables()
     
     /* Load strings table */
     m_pStringsTbl = new CStringsTable;
-    int iStatus = Stream.Open("strings.tbl");
-    if(iStatus >= 0)
-        iStatus = m_pStringsTbl->Load(Stream);
+    Stream.Open("strings.tbl");
+    assert(Stream.good());
+    int iStatus = m_pStringsTbl->Load(Stream);
     if(iStatus < 0)
         THROW_EXCEPTION("Failed to load strings.tbl");
     
     /* Load ammo table */
     m_pAmmoTbl = new CAmmoTable;
-    iStatus = Stream.Open("ammo.tbl");
-    if(iStatus >= 0)
-        iStatus = m_pAmmoTbl->Load(Stream);
+    Stream.Open("ammo.tbl");
+    assert(Stream.good());
+    iStatus = m_pAmmoTbl->Load(Stream);
     if(iStatus < 0)
         THROW_EXCEPTION("Failed to load ammo.tbl");
     
     /* Load weapons table */
     m_pWeaponsTbl = new CWeaponsTable(this);
-    iStatus = Stream.Open("weapons.tbl");
-    if(iStatus >= 0)
-        iStatus = m_pWeaponsTbl->Load(Stream);
+    Stream.Open("weapons.tbl");
+    iStatus = m_pWeaponsTbl->Load(Stream);
     if(iStatus < 0)
         THROW_EXCEPTION("Failed to load weapons.tbl");
     
     /* Load items table */
     m_pItemsTbl = new CItemsTable(this);
-    iStatus = Stream.Open("items.tbl");
-    if(iStatus >= 0)
-        iStatus = m_pItemsTbl->Load(Stream);
+    Stream.Open("items.tbl");
+    iStatus = m_pItemsTbl->Load(Stream);
     if(iStatus < 0)
         THROW_EXCEPTION("Failed to load items.tbl");
     
     /* Load entities table */
     m_pEntitiesTbl = new CEntitiesTable;
-    iStatus = Stream.Open("entity.tbl");
-    if(iStatus >= 0)
-        iStatus = m_pEntitiesTbl->Load(Stream);
+    Stream.Open("entity.tbl");
+    iStatus = m_pEntitiesTbl->Load(Stream);
     if(iStatus < 0)
         THROW_EXCEPTION("Failed to load entity.tbl");
     
     /* Load clutter table */
     m_pClutterTbl = new CClutterTable;
-    iStatus = Stream.Open("clutter.tbl");
-    if(iStatus >= 0)
-        iStatus = m_pClutterTbl->Load(Stream);
+    Stream.Open("clutter.tbl");
+    iStatus = m_pClutterTbl->Load(Stream);
     if(iStatus < 0)
         THROW_EXCEPTION("Failed to load clutter.tbl");
     
     /* Load game table */
     m_pGameTbl = new CGameTable;
-    iStatus = Stream.Open("game.tbl");
-    if(iStatus >= 0)
-        iStatus = m_pGameTbl->Load(Stream);
+    Stream.Open("game.tbl");
+    iStatus = m_pGameTbl->Load(Stream);
     if(iStatus < 0)
         THROW_EXCEPTION("Failed to load game.tbl");
     
     /* Load multiplayer characters table */
     m_pMpCharactersTbl = new CMpCharactersTable(this);
-    iStatus = Stream.Open("pc_multi.tbl");
-    if(iStatus >= 0)
-        iStatus = m_pMpCharactersTbl->Load(Stream);
+    Stream.Open("pc_multi.tbl");
+    iStatus = m_pMpCharactersTbl->Load(Stream);
     if(iStatus < 0)
         THROW_EXCEPTION("Failed to load pc_multi.tbl");
     
     /* Load foley sounds table */
     m_pFoleyTbl = new CFoleyTable;
-    iStatus = Stream.Open("foley.tbl");
-    if(iStatus >= 0)
-        iStatus = m_pFoleyTbl->Load(Stream);
+    Stream.Open("foley.tbl");
+    iStatus = m_pFoleyTbl->Load(Stream);
     if(iStatus < 0)
         THROW_EXCEPTION("Failed to load pc_multi.tbl");
 }
@@ -196,9 +191,6 @@ void CGame::LoadMod(const char *pszModName)
 void CGame::LoadLevel(const char *pszFilename)
 {
     CVfsFileStream Stream;
-    int iStatus = Stream.Open(pszFilename);
-    if(iStatus < 0)
-        THROW_EXCEPTION("Failed to open level file %s", pszFilename);
-    
+    Stream.Open(pszFilename);
     m_pLevel->Load(Stream);
 }

@@ -1,3 +1,10 @@
+irrKlang 1.4.0b
+
+- Improved Linux compatibility: A lot of games using irrKlang are now released on 
+  Valves "Steam for Linux" and now also work there nicely with this update.
+
+ -------------------------------------------------------------------
+ 
 irrKlang 1.4.0
 
 - Fixed a potential crash in the windows version, when using DirectSound8

@@ -15,6 +15,7 @@
 # include "CPlayer.h"
 #else // !OF_SERVER
 # include "CLightmaps.h"
+# include "camera/CCamera.h"
 # include <irrlicht.h>
 #endif // OF_SERVER
 #include "rfl_format.h"
@@ -131,7 +132,7 @@ void CLevel::Load(CInputBinaryStream &Stream)
                     
                     try
                     {
-                        CClutter *pClutter = new CClutter(this, Stream);
+                        new CClutter(this, Stream);
                     }
                     catch(const exception &e)
                     {
@@ -152,7 +153,7 @@ void CLevel::Load(CInputBinaryStream &Stream)
                     
                     try
                     {
-                        CEntity *pEntity = new CEntity(this, Stream);
+                        new CEntity(this, Stream);
                     }
                     catch(const exception &e)
                     {
@@ -171,7 +172,7 @@ void CLevel::Load(CInputBinaryStream &Stream)
                     if(!Stream.good())
                         break;
                     
-                    CEvent *pEvent = new CEvent(this, Stream);
+                    new CEvent(this, Stream);
                 }
                 m_pGame->GetConsole()->DbgPrint("Loaded %u/%u events\n", i, cEvents);
                 break;
@@ -186,7 +187,7 @@ void CLevel::Load(CInputBinaryStream &Stream)
                     if(!Stream.good())
                         break;
                     
-                    CItem *pItem = new CItem(this, Stream, i);
+                    new CItem(this, Stream, i);
                 }
                 
                 m_pGame->GetConsole()->DbgPrint("Loaded %u/%u items\n", i, cItems);
@@ -227,7 +228,7 @@ void CLevel::Load(CInputBinaryStream &Stream)
                     if(!Stream.good())
                         break;
                     
-                    CTrigger *pTrigger = new CTrigger(this, Stream);
+                    new CTrigger(this, Stream);
                 }
                 m_pGame->GetConsole()->DbgPrint("Loaded %u/%u triggers\n", i, cTriggers);
                 break;
@@ -375,8 +376,7 @@ void CLevel::DbgDraw() const
         if(pEntity->GetUid() == OFE_INVALID_UID)
             continue;
         
-        irr::core::vector3df vCamPos = m_pGame->GetCamera()->getPosition();
-        btVector3 vDist = btVector3(vCamPos.X, vCamPos.Y, vCamPos.Z) - pEntity->GetPos();
+        btVector3 vDist = m_pGame->GetCamera()->GetPos() - pEntity->GetPos();
         if(vDist.length2() < 100.0f)
             pEntity->DbgDraw();
     }

@@ -15,6 +15,7 @@
 #include "CCamera.h"
 
 class CEntity;
+class CElement;
 
 class CEntityCamera: public CCamera
 {
@@ -22,6 +23,11 @@ class CEntityCamera: public CCamera
         CEntityCamera(irr::scene::ISceneManager *pSceneMgr, CEntity *pEntity);
         void Update(unsigned uDeltaTime);
         void OnActivate();
+        
+        CElement *GetTarget() const
+        {
+            return reinterpret_cast<CElement*>(m_pEntity);
+        }
     
     private:
         CEntity *m_pEntity;

@@ -27,15 +27,9 @@ class CWeaponSelection: public irr::IEventReceiver
         ~CWeaponSelection();
         void Render();
         bool OnEvent(const irr::SEvent &Event);
-        
-        void SetEntity(CEntity *pEntity)
-        {
-            m_pEntity = pEntity;
-        }
     
     private:
         CGame *m_pGame;
-        CEntity *m_pEntity;
         CMaterial *m_Textures[256];
         
         EWeaponType m_WeaponType;
@@ -46,7 +40,7 @@ class CWeaponSelection: public irr::IEventReceiver
         
         static const unsigned VISIBLE_TIME;
         
-        CWeapon *FindWeaponFromType(EWeaponType Type, unsigned iHint = 0u);
+        CWeapon *FindWeaponFromType(CEntity *pEntity, EWeaponType Type, unsigned iHint = 0u);
 };
 
 #endif // CWEAPONSELECTION_H

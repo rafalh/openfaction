@@ -20,7 +20,7 @@ class CSharedObject
             m_cRefs(1) {}
         virtual ~CSharedObject() {}
         
-        unsigned AddRef()
+        void AddRef()
         {
             assert(m_cRefs > 0);
             ++m_cRefs;

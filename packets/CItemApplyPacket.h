@@ -18,7 +18,7 @@ class CItemApplyPacket
 {
     public:
         inline CItemApplyPacket(const CItem *pItem, CEntity *pEntity):
-            m_pItem(pItem), m_pEntity(pEntity) {}
+            m_pEntity(pEntity), m_pItem(pItem) {}
         void Send(CPlayer *pPlayer) const;
     
     private:

@@ -49,7 +49,7 @@ project "FreeType"
 	}
 	defines {
 		"FT2_BUILD_LIBRARY",
-		"FT_OPTION_AUTOFIT2",
+		--"FT_OPTION_AUTOFIT2",
 	}
 	
 	configuration "Debug"

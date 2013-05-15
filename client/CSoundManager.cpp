@@ -18,10 +18,15 @@
 CSoundManager::CSoundManager(CGame *pGame):
     m_pGame(pGame)
 {
+#if 1
     m_pSoundEngine = irrklang::createIrrKlangDevice();
     
     m_pFileFactory = new CIrrKlangFileFactory;
     m_pSoundEngine->addFileFactory(m_pFileFactory);
+#else
+    m_pSoundEngine = NULL;
+    m_pFileFactory = NULL;
+#endif
 }
 
 CSoundManager::~CSoundManager()
@@ -34,7 +39,7 @@ CSoundManager::~CSoundManager()
 
 bool CSoundManager::PlayFoleySound(const char *pszName)
 {
-    if(!pszName || !pszName[0])
+    if(!pszName || !pszName[0] || !m_pSoundEngine)
         return false;
     
     // Find foley sound set
@@ -64,6 +69,9 @@ bool CSoundManager::PlayFoleySound(const char *pszName)
 
 bool CSoundManager::PlaySound(const char *pszFilename)
 {
+    if(!m_pSoundEngine)
+        return false;
+    
     // Create sound object
     irrklang::ISound *pSound = m_pSoundEngine->play2D(pszFilename, false, true);
     if(!pSound)

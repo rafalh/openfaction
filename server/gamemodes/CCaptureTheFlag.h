@@ -38,7 +38,7 @@ class CCaptureTheFlag: public CGamemode
             return m_RedScore;
         }
         
-        inline unsigned SetRedScore(unsigned nScore)
+        inline void SetRedScore(unsigned nScore)
         {
             m_RedScore = nScore;
         }
@@ -48,7 +48,7 @@ class CCaptureTheFlag: public CGamemode
             return m_BlueScore;
         }
         
-        inline unsigned SetBlueScore(unsigned nScore)
+        inline void SetBlueScore(unsigned nScore)
         {
             m_BlueScore = nScore;
         }

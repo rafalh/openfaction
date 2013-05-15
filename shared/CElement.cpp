@@ -15,7 +15,7 @@
 using namespace std;
 
 CElement::CElement(EElementType Type, CLevel *pLevel, unsigned nUid):
-    m_Type(Type), m_pLevel(pLevel), m_nUid(nUid)
+    m_Type(Type), m_nUid(nUid), m_pLevel(pLevel)
 {
     m_pLevel->GetElementsMgr()->Add(this);
 }

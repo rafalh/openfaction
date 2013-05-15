@@ -50,7 +50,7 @@ class CVfsFileBuf: public std::streambuf
             Close();
         }
         
-        inline int Open(const CString &strFilename)
+        inline void Open(const CString &strFilename)
         {
             Close();
             
@@ -103,11 +103,10 @@ class CVfsFileStream: private CVfsFileBuf, public CInputBinaryStream
             CVfsFileBuf::Open(pFileName);
         }
         
-        inline int Open(const char *pFileName)
+        inline void Open(const char *pFileName)
         {
-            int iStatus = CVfsFileBuf::Open(pFileName);
-            clear(iStatus >= 0 ? goodbit : failbit);
-            return iStatus;
+            CVfsFileBuf::Open(pFileName);
+            clear(goodbit);
         }
         
         inline void Close()

@@ -16,6 +16,8 @@
 #include "CException.h"
 #include "CLogger.h"
 
+#include <stdint.h>
+
 using namespace std;
 using namespace irr;
 

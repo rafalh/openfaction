@@ -13,6 +13,7 @@
 #include "CLogger.h"
 #include "utils.h"
 
+#include <iostream>
 using namespace std;
 
 SAmmoType::SAmmoType(unsigned _nId)

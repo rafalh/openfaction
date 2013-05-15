@@ -1,8 +1,8 @@
 
 /* pngrtran.c - transforms the data in a row for PNG readers
  *
- * Last changed in libpng 1.5.11 [June 14, 2012]
- * Copyright (c) 1998-2012 Glenn Randers-Pehrson
+ * Last changed in libpng 1.5.15 [March 28, 2013]
+ * Copyright (c) 1998-2013 Glenn Randers-Pehrson
  * (Version 0.96 Copyright (c) 1996, 1997 Andreas Dilger)
  * (Version 0.88 Copyright (c) 1995, 1996 Guy Eric Schalnat, Group 42, Inc.)
  *
@@ -1221,7 +1221,7 @@ png_init_rgb_transformations(png_structp png_ptr)
             default:
 
             case 8:
-               /* Already 8 bits, fall through */
+               /* FALL THROUGH (already 8 bits) */
 
             case 16:
                /* Already a full 16 bits */
@@ -2198,8 +2198,8 @@ png_do_read_transformations(png_structp png_ptr, png_row_infop row_info)
       png_do_gray_to_rgb(row_info, png_ptr->row_buf + 1);
 #endif
 
-#if (defined PNG_READ_BACKGROUND_SUPPORTED) ||\
-   (defined PNG_READ_ALPHA_MODE_SUPPORTED)
+#if defined(PNG_READ_BACKGROUND_SUPPORTED) ||\
+   defined(PNG_READ_ALPHA_MODE_SUPPORTED)
    if (png_ptr->transformations & PNG_COMPOSE)
       png_do_compose(row_info, png_ptr->row_buf + 1, png_ptr);
 #endif
@@ -2210,8 +2210,8 @@ png_do_read_transformations(png_structp png_ptr, png_row_infop row_info)
       /* Because RGB_TO_GRAY does the gamma transform. */
       !(png_ptr->transformations & PNG_RGB_TO_GRAY) &&
 #endif
-#if (defined PNG_READ_BACKGROUND_SUPPORTED) ||\
-   (defined PNG_READ_ALPHA_MODE_SUPPORTED)
+#if defined(PNG_READ_BACKGROUND_SUPPORTED) ||\
+   defined(PNG_READ_ALPHA_MODE_SUPPORTED)
       /* Because PNG_COMPOSE does the gamma transform if there is something to
        * do (if there is an alpha channel or transparency.)
        */
@@ -3477,8 +3477,8 @@ png_build_grayscale_palette(int bit_depth, png_colorp palette)
 
 
 #ifdef PNG_READ_TRANSFORMS_SUPPORTED
-#if (defined PNG_READ_BACKGROUND_SUPPORTED) ||\
-   (defined PNG_READ_ALPHA_MODE_SUPPORTED)
+#if defined(PNG_READ_BACKGROUND_SUPPORTED) ||\
+   defined(PNG_READ_ALPHA_MODE_SUPPORTED)
 /* Replace any alpha or transparency with the supplied background color.
  * "background" is already in the screen gamma, while "background_1" is
  * at a gamma of 1.0.  Paletted files have already been taken care of.
@@ -3920,7 +3920,7 @@ png_do_compose(png_row_infop row_info, png_bytep row, png_structp png_ptr)
                         *sp = (png_byte)png_ptr->background.gray;
 
                      else if (a < 0xff)
-                        png_composite(*sp, *sp, a, png_ptr->background_1.gray);
+                        png_composite(*sp, *sp, a, png_ptr->background.gray);
                   }
                }
             }
@@ -3989,7 +3989,7 @@ png_do_compose(png_row_infop row_info, png_bytep row, png_structp png_ptr)
                         png_uint_16 g, v;
 
                         g = (png_uint_16)(((*sp) << 8) + *(sp + 1));
-                        png_composite_16(v, g, a, png_ptr->background_1.gray);
+                        png_composite_16(v, g, a, png_ptr->background.gray);
                         *sp = (png_byte)((v >> 8) & 0xff);
                         *(sp + 1) = (png_byte)(v & 0xff);
                      }
@@ -4746,7 +4746,9 @@ png_do_expand(png_row_infop row_info, png_bytep row,
          {
             if (row_info->bit_depth == 8)
             {
-               gray = gray & 0xff;
+               /* NOTE: prior to libpng 1.5.14 this cleared out the top bits of
+                * 'gray', however if those are set it is an error.
+                */
                sp = row + (png_size_t)row_width - 1;
                dp = row + (png_size_t)(row_width << 1) - 1;
 

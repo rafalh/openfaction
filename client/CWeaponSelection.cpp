@@ -16,6 +16,7 @@
 #include "CGame.h"
 #include "CConsole.h"
 #include "CStringsTable.h"
+#include "camera/CCamera.h"
 
 using namespace std;
 using namespace irr;
@@ -23,7 +24,7 @@ using namespace irr;
 const unsigned CWeaponSelection::VISIBLE_TIME = 3000;
 
 CWeaponSelection::CWeaponSelection(CGame *pGame):
-    m_pGame(pGame), m_pEntity(NULL),
+    m_pGame(pGame),
     m_WeaponType(WT_SEMI_AUTO), m_iWeaponCls(0), m_bVisible(false)
 {
     for(unsigned i = 0; i < COUNTOF(m_Textures); ++i)
@@ -39,7 +40,8 @@ CWeaponSelection::~CWeaponSelection()
 
 void CWeaponSelection::Render()
 {
-    if(!m_bVisible || !m_pEntity)
+    CEntity *pEntity = dynamic_cast<CEntity*>(m_pGame->GetCamera()->GetTarget());
+    if(!m_bVisible || !pEntity)
         return;
     
     if(m_Timer.GetValue() > VISIBLE_TIME)
@@ -81,7 +83,7 @@ void CWeaponSelection::Render()
     const SWeaponClass *pWeaponCls = NULL;
     while(true)
     {
-        CWeapon *pWeapon = FindWeaponFromType(m_WeaponType, pWeaponCls ? pWeaponCls->nId + 1 : 0);
+        CWeapon *pWeapon = FindWeaponFromType(pEntity, m_WeaponType, pWeaponCls ? pWeaponCls->nId + 1 : 0);
         if(!pWeapon)
             break;
         
@@ -99,7 +101,7 @@ void CWeaponSelection::Render()
             core::position2di DestPos(ScrSize.Width - ImgSize.Width - 30, y);
             
             video::SColor clrWeapon;
-            if(pWeapon->GetAmmo() > 0 || m_pEntity->GetAmmo(pWeaponCls->pAmmoType) > 0)
+            if(pWeapon->GetAmmo() > 0 || pEntity->GetAmmo(pWeaponCls->pAmmoType) > 0)
                 clrWeapon.set(255, 128, 255, 0);
             else
                 clrWeapon.set(255, 255, 128, 128);
@@ -129,12 +131,13 @@ bool CWeaponSelection::OnEvent(const SEvent &Event)
         if(Event.KeyInput.Key >= '1' && Event.KeyInput.Key <= '4')
         {
             EWeaponType NewWeaponType = (EWeaponType)(Event.KeyInput.Key - '1');
+            CEntity *pEntity = dynamic_cast<CEntity*>(m_pGame->GetCamera()->GetTarget());
             
             if(m_bVisible && NewWeaponType == m_WeaponType)
             {
-                CWeapon *pWeapon = FindWeaponFromType(m_WeaponType, m_iWeaponCls + 1);
+                CWeapon *pWeapon = FindWeaponFromType(pEntity, m_WeaponType, m_iWeaponCls + 1);
                 if(!pWeapon)
-                    pWeapon = FindWeaponFromType(m_WeaponType);
+                    pWeapon = FindWeaponFromType(pEntity, m_WeaponType);
                 
                 assert(pWeapon);
                 m_iWeaponCls = pWeapon->GetClass()->nId;
@@ -142,7 +145,7 @@ bool CWeaponSelection::OnEvent(const SEvent &Event)
             }
             else
             {
-                CWeapon *pWeapon = FindWeaponFromType(NewWeaponType);
+                CWeapon *pWeapon = FindWeaponFromType(pEntity, NewWeaponType);
                 if(!pWeapon)
                     return false;
                 
@@ -158,7 +161,9 @@ bool CWeaponSelection::OnEvent(const SEvent &Event)
     else if(Event.EventType == EET_MOUSE_INPUT_EVENT && Event.MouseInput.Event == EMIE_LMOUSE_PRESSED_DOWN && m_bVisible)
     {
         const SWeaponClass *pWeaponCls = m_pGame->GetWeaponsTbl()->Get(m_iWeaponCls);
-        m_pEntity->SwitchWeapon(pWeaponCls);
+        CEntity *pEntity = dynamic_cast<CEntity*>(m_pGame->GetCamera()->GetTarget());
+        if(pEntity)
+            pEntity->SwitchWeapon(pWeaponCls);
         m_bVisible = false;
         return true;
     }
@@ -171,9 +176,12 @@ bool CWeaponSelection::OnEvent(const SEvent &Event)
     return false;
 }
 
-CWeapon *CWeaponSelection::FindWeaponFromType(EWeaponType Type, unsigned iHint)
+CWeapon *CWeaponSelection::FindWeaponFromType(CEntity *pEntity, EWeaponType Type, unsigned iHint)
 {
     unsigned i = iHint;
+    
+    if(!pEntity)
+        return NULL;
     
     while(true)
     {
@@ -184,7 +192,7 @@ CWeapon *CWeaponSelection::FindWeaponFromType(EWeaponType Type, unsigned iHint)
         if(pWeaponCls->WeaponType != Type || pWeaponCls->strWeaponIcon.empty())
             continue;
         
-        CWeapon *pWeapon = m_pEntity->GetWeapon(pWeaponCls);
+        CWeapon *pWeapon = pEntity->GetWeapon(pWeaponCls);
         if(!pWeapon)
             continue;
         

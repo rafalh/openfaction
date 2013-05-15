@@ -4,6 +4,9 @@ solution "Open Faction"
 	includedirs "include"
 	language "C++" -- default
 	
+	configuration "gmake or codeblocks"
+		buildoptions "-Wno-unused-variable"
+	
 	configuration "Debug"
 		defines { "DEBUG" }
 		flags { "Symbols" }

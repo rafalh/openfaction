@@ -17,6 +17,6 @@
 void CDeathmatch::OnPlayerKill(CPlayer *pPlayer, CPlayer *pKiller)
 {
     CGamemode::OnPlayerKill(pPlayer, pKiller);
-    if(pKiller && pKiller->GetScore() >= m_pServer->GetConf()->GetKillsLimit())
+    if(pKiller && pKiller->GetScore() >= (int)m_pServer->GetConf()->GetKillsLimit())
         ; // end game
 }

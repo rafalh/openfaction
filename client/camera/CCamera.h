@@ -12,6 +12,9 @@
 #define CCAMERA_H
 
 #include <irrlicht.h>
+#include <btBulletDynamicsCommon.h>
+
+class CElement;
 
 class CCamera
 {
@@ -29,10 +32,17 @@ class CCamera
         virtual void Update(unsigned uDeltaTime) {}
         virtual bool OnEvent(const irr::SEvent &Event) { return false; }
         virtual void OnActivate() {}
+        virtual CElement *GetTarget() const { return 0; }
         
         virtual irr::scene::ICameraSceneNode *GetSceneNode()
         {
             return m_pSceneNode;
+        }
+        
+        btVector3 GetPos() const
+        {
+            irr::core::vector3df vPos = m_pSceneNode->getPosition();
+            return btVector3(vPos.X, vPos.Y, vPos.Z);
         }
     
     protected:

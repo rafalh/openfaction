@@ -52,4 +52,5 @@ CGamemode *CGamemode::Create(CServer *pServer, unsigned Id)
         return new CCaptureTheFlag(pServer);
     else
         assert(false);
+    return NULL;
 }

@@ -20,6 +20,7 @@
 #ifdef OF_CLIENT
 # include "irr/CReadFile.h"
 # include "CLevel.h"
+# include "camera/CCamera.h"
 #endif // OF_CLIENT
 
 #define ALIGN(num, alignment) (((num) + (alignment) - 1) - ((num) + (alignment) - 1) % (alignment))
@@ -56,7 +57,7 @@ void CMesh::Load(CInputBinaryStream &Stream)
     while(Stream.good())
     {
         // Read section header
-        streampos nPos = Stream.tellg();
+        //streampos nPos = Stream.tellg();
         Stream.ReadBinary(&Sect, sizeof(Sect));
         
         // Is it ending section?
@@ -116,7 +117,7 @@ btMultiSphereShape *CMesh::GetMultiColSphere()
             
             if(m_ColSpheres[i].iBone >= 0)
             {
-                assert(m_ColSpheres[i].iBone < m_Bones.size());
+                assert(m_ColSpheres[i].iBone < (int)m_Bones.size());
                 Pos[i] -= m_Bones[m_ColSpheres[i].iBone].vPos;
             }
         }
@@ -172,7 +173,7 @@ void CMesh::LoadBones(CInputBinaryStream &Stream)
     assert(Root >= 0);
     
     for(unsigned i = 0; i < m_Bones.size(); ++i)
-        assert(m_Bones[i].iParent == -1 || (m_Bones[i].iParent >= 0 && m_Bones[i].iParent < m_Bones.size()));
+        assert(m_Bones[i].iParent == -1 || (m_Bones[i].iParent >= 0 && m_Bones[i].iParent < (int)m_Bones.size()));
     
     PrepareBones(Root);
 }
@@ -229,7 +230,7 @@ void CMesh::DbgDraw(const CObject *pObj) const
         }
         
         // Draw bone name
-        core::position2di vPosScr = m_pMeshMgr->GetGame()->GetSceneMgr()->getSceneCollisionManager()->getScreenCoordinatesFrom3DPosition(vIrrBonePos, m_pMeshMgr->GetGame()->GetCamera());
+        core::position2di vPosScr = m_pMeshMgr->GetGame()->GetSceneMgr()->getSceneCollisionManager()->getScreenCoordinatesFrom3DPosition(vIrrBonePos, m_pMeshMgr->GetGame()->GetCamera()->GetSceneNode());
         wchar_t wszBuf[32];
         swprintf(wszBuf, sizeof(wszBuf), L"%hs", Bone.strName.c_str());
         m_pMeshMgr->GetGame()->GetGuiEnv()->getBuiltInFont()->draw(wszBuf, core::recti(vPosScr, vPosScr), video::SColor(255, 255, 255, 255), true, true);

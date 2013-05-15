@@ -60,7 +60,7 @@ struct SIrrRoom
 
 CRoom::CRoom(CLevel *pLevel, unsigned nId, float fLife, bool bDetail):
     CKillableObject(OFET_LEVEL, pLevel, nId),
-    m_pShape(NULL), m_pMesh(NULL),
+    m_pMesh(NULL), m_pShape(NULL),
     m_bDetail(bDetail)
 {
     m_iColGroup = COL_LEVEL;
@@ -259,14 +259,17 @@ void CStaticGeometry::Load(CLevel *pLevel, CInputBinaryStream &Stream, unsigned 
     }
     
     unsigned cLightmapVertices = Stream.ReadUInt32();
+#ifdef OF_CLIENT
     unsigned LightmapVertices[cLightmapVertices];
+#endif // OF_CLIENT
+
     for(unsigned i = 0; i < cLightmapVertices; ++i)
     {
         unsigned iLightmap = Stream.ReadUInt32();
 #ifdef OF_CLIENT
         assert(iLightmap < pLevel->GetLightmaps()->GetCount());
-#endif // OF_CLIENT
         LightmapVertices[i] = iLightmap;
+#endif // OF_CLIENT
         Stream.ignore(92); // unknown4
     }
     

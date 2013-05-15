@@ -22,6 +22,7 @@ class CGamemode
     public:
         CGamemode(CServer *pServer):
             m_pServer(pServer) {}
+        virtual ~CGamemode() {}
         
         virtual unsigned GetId() const = 0;
         virtual void Update(unsigned nDeltaTime) {}

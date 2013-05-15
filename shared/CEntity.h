@@ -146,12 +146,12 @@ class CEntity: public CKillableObject
             return m_Action;
         }
         
-        const CEntityState &SetState(const CEntityState &State)
+        void SetState(const CEntityState &State)
         {
             m_State = State;
         }
         
-        const CEntityAction &SetAction(const CEntityAction &Action)
+        void SetAction(const CEntityAction &Action)
         {
             m_Action = Action;
         }

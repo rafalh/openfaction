@@ -28,7 +28,7 @@ class CProjectile: public CObject
             return m_pEntity;
         }
         
-        inline CEntity *SetEntity(CEntity *pEntity)
+        inline void SetEntity(CEntity *pEntity)
         {
             m_pEntity = pEntity;
         }
@@ -56,15 +56,14 @@ class CProjectile: public CObject
         }
         
     private:
-        const SWeaponClass *m_pWeaponCls;
-        bool m_bAltFire;
-        btVector3 m_vDir;
-        btTransform m_OldTransform;
-        unsigned m_nTime;
-        class CEntity *m_pEntity;
-        
         btSphereShape m_ColShape;
         btDefaultMotionState m_MotionState;
+        btTransform m_OldTransform;
+        btVector3 m_vDir;
+        unsigned m_nTime;
+        const SWeaponClass *m_pWeaponCls;
+        class CEntity *m_pEntity;
+        bool m_bAltFire;
 };
 
 #endif // CPROJECTILE_H

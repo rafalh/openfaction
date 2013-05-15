@@ -73,9 +73,9 @@ using namespace std;
 
 CServer::CServer(CServerConfig *pServerConfig):
     m_PlayersMgr(this),
-    m_LoadingLevelTimestamp(0), m_nCurrentLevel(0),
-    m_nBluePlayers(0),
     m_pGame(NULL),
+    m_LoadingLevelTimestamp(0),
+    m_nCurrentLevel(0), m_nBluePlayers(0),
     m_pGamemode(NULL)
 {
     m_pGame = new CGame(CLogger::GetInst().GetConsole());

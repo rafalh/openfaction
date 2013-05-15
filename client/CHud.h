@@ -23,7 +23,6 @@ class CHud
         CHud(CGame *pGame);
         ~CHud();
         void Render();
-        void SetEntity(CEntity *pEntity);
         
         void SetFont(irr::gui::IGUIFont *pFont)
         {
@@ -36,7 +35,6 @@ class CHud
     
     private:
         CGame *m_pGame;
-        CEntity *m_pEntity;
         CMaterial *m_pReticleTexture;
         CMaterial *m_HealthTextures[11];
         CMaterial *m_EnviroTextures[11];
@@ -46,9 +44,9 @@ class CHud
         CMaterial *m_pAmmoSignalRedTex;
         irr::gui::IGUIFont *m_pFont;
         
-        void RenderReticle();
-        void RenderHealthArmor();
-        void RenderAmmo();
+        void RenderReticle(CEntity *pEntity);
+        void RenderHealthArmor(CEntity *pEntity);
+        void RenderAmmo(CEntity *pEntity);
 };
 
 #endif // CHUD_H

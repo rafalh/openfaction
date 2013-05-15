@@ -60,13 +60,13 @@ void CClientConsole::Render()
     if(m_State == CS_SHOWING)
     {
         ConsoleSize.Height = min((int)m_ToggleTimer.GetValue() * HEIGHT / TOGGLE_TIME, HEIGHT);
-        if(ConsoleSize.Height == HEIGHT)
+        if((int)ConsoleSize.Height == HEIGHT)
             m_State = CS_VISIBLE;
     }
     else if(m_State == CS_HIDING)
     {
         ConsoleSize.Height = max((TOGGLE_TIME - (int)m_ToggleTimer.GetValue()) * HEIGHT / TOGGLE_TIME, 0);
-        if(ConsoleSize.Height == HEIGHT)
+        if((int)ConsoleSize.Height == HEIGHT)
             m_State = CS_HIDDEN;
     }
     
@@ -145,6 +145,6 @@ void CClientConsole::AddLine(const irr::core::stringw &strLine)
 {
     m_Lines.push_back(strLine);
     
-    if(m_Lines.size() > LINES_LIMIT)
+    if((int)m_Lines.size() > LINES_LIMIT)
         m_Lines.erase(m_Lines.begin());
 }

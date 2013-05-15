@@ -18,12 +18,13 @@
 #ifdef OF_CLIENT
 # include <irrlicht.h>
 # include "CGame.h"
-#endif
+# include "camera/CCamera.h"
+#endif // OF_CLIENT
 
 using namespace std;
 #ifdef OF_CLIENT
 using namespace irr;
-#endif
+#endif // OF_CLIENT
 
 #ifdef OF_CLIENT
 class COfDebugDrawer: public btIDebugDraw
@@ -56,7 +57,7 @@ class COfDebugDrawer: public btIDebugDraw
         
         bool IsPointVisible(const core::vector3df &vPos)
         {
-            const core::vector3df &vCamera = m_pGame->GetCamera()->getPosition();
+            const core::vector3df &vCamera = m_pGame->GetCamera()->GetSceneNode()->getPosition();
             if(vCamera.getDistanceFromSQ(vPos) < 1000.0f)
                 return true;
             return false;
@@ -110,7 +111,7 @@ class COfDebugDrawer: public btIDebugDraw
             return m_DebugMode;
         }
 };
-#endif
+#endif // OF_CLIENT
 
 CColWorld::CColWorld(CLevel *pLevel):
     m_PointShape(0.0f)
@@ -196,7 +197,7 @@ struct RayResultCallback: public btCollisionWorld::RayResultCallback
 {
     RayResultCallback(bool bClosest, CObject *pIgnoredObj = NULL):
         btCollisionWorld::RayResultCallback(),
-        m_bClosest(bClosest), m_pIgnoredObj(pIgnoredObj) {}
+        m_pIgnoredObj(pIgnoredObj), m_bClosest(bClosest) {}
     
     virtual bool needsCollision(btBroadphaseProxy *pProxy) const
     {
@@ -313,6 +314,7 @@ struct ConvexResultCallback: public btCollisionWorld::ConvexResultCallback
         Info.fFraction = convexResult.m_hitFraction;
         Info.vPos = convexResult.m_hitPointLocal;
         Info.vNormal = convexResult.m_hitNormalLocal;
+        return convexResult.m_hitFraction;
     }
 };
 

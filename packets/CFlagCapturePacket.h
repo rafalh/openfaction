@@ -19,7 +19,7 @@ class CFlagCapturePacket
 {
     public:
         inline CFlagCapturePacket(CCaptureTheFlag *pCtf, CPlayer *pPlayer):
-            m_pCtf(pCtf), m_pPlayer(pPlayer) {}
+            m_pPlayer(pPlayer), m_pCtf(pCtf) {}
         
         void Send(CPlayer *pPlayer) const;
         

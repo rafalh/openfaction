@@ -29,8 +29,9 @@ using namespace std;
 CProjectile::CProjectile(CLevel *pLevel, const SWeaponClass *pWeaponCls, bool bAltFire, CEntity *pEntity):
     CObject(OFET_PROJECTILE, pLevel, OFE_INVALID_UID),
     m_ColShape(pWeaponCls->fColRadius),
-    m_pWeaponCls(pWeaponCls), m_bAltFire(bAltFire),
-    m_pEntity(pEntity)
+    m_pWeaponCls(pWeaponCls),
+    m_pEntity(pEntity),
+    m_bAltFire(bAltFire)
 {
     assert(pWeaponCls);
     

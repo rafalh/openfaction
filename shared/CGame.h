@@ -12,7 +12,7 @@
 #define CGAME_H
 
 #ifdef OF_CLIENT
-#include <irrlicht.h>
+# include <irrlicht.h>
 #endif // OF_CLIENT
 
 class CLevel;
@@ -23,6 +23,7 @@ class CSoundManager;
 class CConsole;
 class CVirtualFileSystem;
 class CEventsHandler;
+class CCamera;
 
 class CStringsTable;
 class CAmmoTable;
@@ -201,13 +202,14 @@ class CGame
             return 0;
         }
         
-        irr::scene::ICameraSceneNode *GetCamera() const
+        CCamera *GetCamera() const
         {
-#ifdef OF_CLIENT
-            if(m_pIrrDevice)
-                return m_pIrrDevice->getSceneManager()->getActiveCamera();
-#endif
-            return 0;
+            return m_pCamera;
+        }
+        
+        void SetCamera(CCamera *pCamera)
+        {
+            m_pCamera = pCamera;
         }
     
     private:
@@ -220,6 +222,7 @@ class CGame
         CVirtualFileSystem *m_pVfs;
         CEventsHandler *m_pEventsHandler;
         SConfig m_Config;
+        CCamera *m_pCamera;
         irr::IrrlichtDevice *m_pIrrDevice;
         
         CStringsTable *m_pStringsTbl;
