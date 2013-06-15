@@ -229,11 +229,7 @@ void CClientApp::Run()
 		
         // Draw all scene objects
 		m_pSceneMgr->drawAll();
-        
         m_pGame->GetLevel()->DbgDraw();
-        
-        // Reset world matrix - sometimes needed after GUIFont::draw (for example caled from CLevel::DbgDraw)
-        m_pGame->GetVideoDriver()->setTransform(irr::video::ETS_WORLD, irr::core::matrix4());
         
         // Draw GUI
         m_pHud->Render();

@@ -364,7 +364,6 @@ void CLevel::DbgDraw() const
 #if defined(DEBUG) && defined(OF_CLIENT)
     // Reset World matrix and draw collision world for debugging
     irr::video::IVideoDriver *pVideoDrv = m_pGame->GetVideoDriver();
-    pVideoDrv->setTransform(irr::video::ETS_WORLD, irr::core::matrix4());
     
     m_pColWorld->GetColWorld()->debugDrawWorld();
     

@@ -32,6 +32,7 @@ class COfDebugDrawer: public btIDebugDraw
     private:
         int m_DebugMode;
         CGame *m_pGame;
+        video::SMaterial m_Material;
     
     public:
         inline COfDebugDrawer(CGame *pGame):
@@ -53,6 +54,8 @@ class COfDebugDrawer: public btIDebugDraw
                 //DBG_DrawConstraintLimits |
                 //DBG_FastWireframe |
             0;
+            
+            m_Material.setFlag(video::EMF_LIGHTING, false);
         }
         
         bool IsPointVisible(const core::vector3df &vPos)
@@ -70,6 +73,8 @@ class COfDebugDrawer: public btIDebugDraw
             if(IsPointVisible(vFrom) && IsPointVisible(vTo))
             {
                 video::SColor Clr(255, color.x()*255, color.y()*255, color.z()*255);
+                m_pGame->GetVideoDriver()->setMaterial(m_Material);
+                m_pGame->GetVideoDriver()->setTransform(video::ETS_WORLD, core::IdentityMatrix);
                 m_pGame->GetVideoDriver()->draw3DLine(vFrom, vTo, Clr);
             }
         }
@@ -81,6 +86,8 @@ class COfDebugDrawer: public btIDebugDraw
             if(IsPointVisible(vMin) && IsPointVisible(vMax))
             {
                 video::SColor Clr(255, color.x()*255, color.y()*255, color.z()*255);
+                m_pGame->GetVideoDriver()->setMaterial(m_Material);
+                m_pGame->GetVideoDriver()->setTransform(video::ETS_WORLD, core::IdentityMatrix);
                 m_pGame->GetVideoDriver()->draw3DBox(core::aabbox3df(vMin, vMax), Clr);
             }
         }

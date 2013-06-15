@@ -87,7 +87,6 @@ bool CWeapon::Shoot(bool bAltFire, const btVector3 &vPos, const btVector3 &vDir,
     unsigned cProjectiles = m_pClass->cProjectiles;
     
     /* Calculate projectiles count and remove ammo */
-    unsigned cBullets = 0;
     if(!bMelee)
     {
         if(bAltFire && (m_pClass->nFlags2 & OFW_FLAME))
@@ -95,7 +94,7 @@ bool CWeapon::Shoot(bool bAltFire, const btVector3 &vPos, const btVector3 &vDir,
             if(cAmmo == m_pClass->nClipSize)
             {
                 cAmmo = 0;
-                cBullets = m_pClass->nClipSize;
+                //cBullets = m_pClass->nClipSize;
             } else
                 cProjectiles = 0;
         }

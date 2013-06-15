@@ -201,6 +201,10 @@ void CMesh::DbgDraw(const CObject *pObj) const
     const btVector3 &vPos = pObj->GetPos();
     core::vector3df vIrrPos(vPos[0], vPos[1], vPos[2]);
     
+    // Prepare material for lines
+    video::SMaterial Material;
+    Material.setFlag(video::EMF_LIGHTING, false);
+    
     pVideoDrv->draw3DBox(core::aabbox3df(vIrrPos - core::vector3df(1, 1, 1), vIrrPos + core::vector3df(1, 1, 1)));
     for(unsigned i = 0; i < m_Bones.size(); ++i)
     {
@@ -213,6 +217,8 @@ void CMesh::DbgDraw(const CObject *pObj) const
         vIrrBonePos += vIrrPos;
         
         // Draw box in center of each bone
+        pVideoDrv->setMaterial(Material);
+        pVideoDrv->setTransform(video::ETS_WORLD, core::IdentityMatrix);
         pVideoDrv->draw3DBox(core::aabbox3df(vIrrBonePos - core::vector3df(0.01, 0.01, 0.01), vIrrBonePos + core::vector3df(0.01, 0.01, 0.01)), video::SColor(128, 255, 255, 0));
         
         if(Bone.iParent >= 0)
@@ -239,6 +245,8 @@ void CMesh::DbgDraw(const CObject *pObj) const
     core::vector3df vTestPos = vIrrPos + core::vector3df(0.0f, 2.0f, 0.0f);
     irr::core::quaternion q;
     vTestPos = q * vTestPos;
+    pVideoDrv->setMaterial(video::SMaterial());
+    pVideoDrv->setTransform(video::ETS_WORLD, core::IdentityMatrix);
     pVideoDrv->draw3DBox(core::aabbox3df(vTestPos - core::vector3df(0.01, 0.01, 0.01), vTestPos + core::vector3df(0.01, 0.01, 0.01)), video::SColor(255, 0, 255, 0));
 }
 #endif // OF_CLIENT
@@ -295,6 +303,7 @@ void CSubMesh::Load(CInputBinaryStream &Stream)
     }
     
     btVector3 vCenter = Stream.ReadVector();
+    (void)vCenter; // not used
     float fRadius = Stream.ReadFloat();
     assert(fRadius > 0.0f);
     
