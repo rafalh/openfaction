@@ -17,7 +17,7 @@
 using namespace irr;
 using namespace std;
 
-const int CClientConsole::LINES_LIMIT = 10;
+const int CClientConsole::LINES_LIMIT = 50;
 const int CClientConsole::TOGGLE_TIME = 150;
 const int CClientConsole::HEIGHT = 160;
 const video::SColor CClientConsole::BACKGROUND_COLOR(160, 0, 0, 0);
