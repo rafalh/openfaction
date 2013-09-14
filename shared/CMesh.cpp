@@ -441,19 +441,19 @@ void CSubMesh::LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrr
             //                             Batches[i].vertices_count, Batches[i].triangles_count, Batches[i].positions_size, Batches[i].indices_size, Batches[i].tex_coords_size);
             
             //m_pMeshMgr->GetGame()->GetConsole()->DbgPrint("Positions offset 0x%x\n", uDataOffset + uOffset);
-            float *pPositions = (float*)(pData + uOffset);
+            float *pPositions = reinterpret_cast<float*>(pData + uOffset);
             uOffset = ALIGN(uOffset + Batches[i].positions_size, V3D_ALIGNMENT);
             
             //m_pMeshMgr->GetGame()->GetConsole()->DbgPrint("Normals offset 0x%x\n", uDataOffset + uOffset);
-            float *pNormals = (float*)(pData + uOffset);
+            float *pNormals = reinterpret_cast<float*>(pData + uOffset);
             uOffset = ALIGN(uOffset + Batches[i].positions_size, V3D_ALIGNMENT);
             
             //m_pMeshMgr->GetGame()->GetConsole()->DbgPrint("Tex coords offset 0x%x\n", uDataOffset + uOffset);
-            float *pTexCoords = (float*)(pData + uOffset);
+            float *pTexCoords = reinterpret_cast<float*>(pData + uOffset);
             uOffset = ALIGN(uOffset + Batches[i].tex_coords_size, V3D_ALIGNMENT);
             
             //m_pMeshMgr->GetGame()->GetConsole()->DbgPrint("Indices offset 0x%x\n", uDataOffset + uOffset);
-            uint16_t *pIndices = (uint16_t*)(pData + uOffset);
+            uint16_t *pIndices = reinterpret_cast<uint16_t*>(pData + uOffset);
             uOffset = ALIGN(uOffset + Batches[i].indices_size, V3D_ALIGNMENT);
             
             if(uFlags & 0x20)

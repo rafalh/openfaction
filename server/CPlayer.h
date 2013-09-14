@@ -164,7 +164,7 @@ class CPlayer
         bool m_bInGame;
         
         CTimer m_PingTimer;
-        bool m_bAdmin, m_bBlueTeam, m_bFlag;
+        bool m_bAdmin, m_bBlueTeam;
         
         CPlayerConnection *m_pConnection;
 };

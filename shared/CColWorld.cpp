@@ -211,17 +211,29 @@ struct RayResultCallback: public btCollisionWorld::RayResultCallback
         if(!btCollisionWorld::RayResultCallback::needsCollision(pProxy))
             return false;
         
-        btCollisionObject *pColObj = (btCollisionObject*)pProxy->m_clientObject;
-        CObject *pObj = (CObject*)pColObj->getUserPointer();
+        btCollisionObject *pColObj = static_cast<btCollisionObject*>(pProxy->m_clientObject);
+        CObject *pObj = static_cast<CObject*>(pColObj->getUserPointer());
         return (pObj != m_pIgnoredObj);
     }
     
     virtual btScalar addSingleResult(btCollisionWorld::LocalRayResult &RayResult, bool bNormalInWorldSpace)
     {
-        CObject * const pObject = (CObject*)RayResult.m_collisionObject->getUserPointer();
+        CObject * const pObject = static_cast<CObject*>(RayResult.m_collisionObject->getUserPointer());
         
         /* Does this object stop rays? */
-        if(m_bClosest && (pObject->GetType() != OFET_LEVEL || !((CRoom*)pObject)->IsDetail() || ((CRoom*)pObject)->GetLife() < 0.0f))
+        bool bStopRays = false;
+        if(m_bClosest)
+        {
+            if(pObject->GetType() != OFET_LEVEL)
+                bStopRays = true;
+            else
+            {
+                CRoom *pRoom = static_cast<CRoom*>(pObject);
+                bStopRays = (pRoom->IsDetail() || pRoom->GetLife() < 0.0f);
+            }
+        }
+        
+        if(bStopRays)
         {
             /* Remove further results */
             unsigned i = 0;
@@ -269,7 +281,8 @@ struct ContactResultCallback: public btCollisionWorld::ContactResultCallback
     
     btScalar addSingleResult(btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0, int partId0, int index0, const btCollisionObjectWrapper* colObj1, int partId1, int index1)
     {
-        m_Objects.push_back((CObject*)(colObj1->getCollisionObject()->getUserPointer()));
+        CObject *pObj = static_cast<CObject*>(colObj1->getCollisionObject()->getUserPointer());
+        m_Objects.push_back(pObj);
         return 1.0f;
     }
     
@@ -305,8 +318,8 @@ struct ConvexResultCallback: public btCollisionWorld::ConvexResultCallback
     
     virtual bool needsCollision(btBroadphaseProxy *pProxy) const
     {
-        btCollisionObject *pColObj = (btCollisionObject*)pProxy->m_clientObject;
-        CObject *pObj = (CObject*)pColObj->getUserPointer();
+        btCollisionObject *pColObj = static_cast<btCollisionObject*>(pProxy->m_clientObject);
+        CObject *pObj = static_cast<CObject*>(pColObj->getUserPointer());
         
         if(!btCollisionWorld::ConvexResultCallback::needsCollision(pProxy))
             return false;
@@ -316,7 +329,7 @@ struct ConvexResultCallback: public btCollisionWorld::ConvexResultCallback
     
     virtual btScalar addSingleResult(btCollisionWorld::LocalConvexResult &convexResult, bool bNormalInWorldSpace)
     {
-        CObject *pObj = (CObject*)convexResult.m_hitCollisionObject->getUserPointer();
+        CObject *pObj = static_cast<CObject*>(convexResult.m_hitCollisionObject->getUserPointer());
         SColInfo &Info = m_Objects[pObj];
         Info.fFraction = convexResult.m_hitFraction;
         Info.vPos = convexResult.m_hitPointLocal;

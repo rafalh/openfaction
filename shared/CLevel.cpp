@@ -425,7 +425,7 @@ int CLevel::ReadRflString(CString &strDest, CInputBinaryStream &Stream)
     
     pStr[nLen] = 0;
     strDest = pStr;
-    delete pStr;
+    delete[] pStr;
     
     return 0;
 }

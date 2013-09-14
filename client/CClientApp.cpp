@@ -42,7 +42,9 @@ CClientApp::CClientApp():
     m_pGame(NULL),
     m_pDevice(NULL), m_pSceneMgr(NULL), m_pDriver(NULL),
     m_pFont(NULL), m_pFontFace(NULL),
+    m_bFreeCamera(false),
     m_pCamera(NULL), m_pConsole(NULL),
+    m_pLocalEntity(NULL),
     m_pEntityController(NULL), m_pHud(NULL), m_pWeaponSel(NULL) {}
 
 CClientApp::~CClientApp()

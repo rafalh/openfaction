@@ -337,8 +337,7 @@ void CEntity::Update(unsigned nDeltaTime)
             
             if(pItem)
             {
-                bool bCanApply = true;
-                bCanApply = (m_pLevel->GetGame()->GetConfig().bWeaponsStay || !pItem->GetClass()->bWeapon || pItem->GetBit() == 0xFFFF ||
+                bool bCanApply = (m_pLevel->GetGame()->GetConfig().bWeaponsStay || !pItem->GetClass()->bWeapon || pItem->GetBit() == 0xFFFF ||
                             !GetWeapon(pItem->GetClass()->pWeaponClass));
                 if(bCanApply)
                     pItem->OnPickup(this);

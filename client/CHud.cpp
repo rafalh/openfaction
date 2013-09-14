@@ -97,7 +97,7 @@ void CHud::RenderReticle(CEntity *pEntity)
 
 void CHud::RenderHealthArmor(CEntity *pEntity)
 {
-    unsigned iHealthTex = static_cast<int>(pEntity->GetLife()) / 10;
+    int iHealthTex = static_cast<int>(pEntity->GetLife()) / 10;
     if(iHealthTex > 10)
         iHealthTex = 10;
     else if(iHealthTex < 0)
@@ -111,7 +111,7 @@ void CHud::RenderHealthArmor(CEntity *pEntity)
     
     m_pGame->GetVideoDriver()->draw2DImage(pHealthTex->GetFrame(0), HealthDestPos, HealthSrcRect, 0, video::SColor(96, 255, 255, 255), true);
     
-    unsigned iEnviroTex = static_cast<int>(pEntity->GetArmor()) / 10;
+    int iEnviroTex = static_cast<int>(pEntity->GetArmor()) / 10;
     if(iEnviroTex > 10)
         iEnviroTex = 10;
     else if(iEnviroTex < 0)

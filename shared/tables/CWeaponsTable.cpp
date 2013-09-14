@@ -40,9 +40,12 @@ SWeaponClass::SWeaponClass(unsigned _nId)
     nFlags2 = 0;
     iCyclePos = 0;
     iPrefPos = 0;
+    WeaponType = WT_SEMI_AUTO;
+    DmgType = WDT_BULLET;
     pAmmoType = NULL;
     nMaxAmmo = 0;
     nClipSize = 0;
+    fMass = 0.1f;
     fVelocity = 1.0f;
     fColRadius = 0.01f;
     nClipReloadTime = 0;

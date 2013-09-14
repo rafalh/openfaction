@@ -16,7 +16,7 @@
 using namespace std;
 
 CPlayerConnection::CPlayerConnection(CPlayer *pPlayer, const CSocketAddress &Addr):
-    m_pPlayer(pPlayer), m_Addr(Addr), m_cReliablePackets(0) {}
+    m_pPlayer(pPlayer), m_Addr(Addr), m_cReliablePackets(0), m_bReliablePackets(false) {}
 
 CPlayerConnection::~CPlayerConnection()
 {

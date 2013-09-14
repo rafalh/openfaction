@@ -34,6 +34,9 @@ class CAnimatedMesh
 #endif // OF_CLIENT
     
     private:
+        // No copy constructor
+        CAnimatedMesh(const CAnimatedMesh&);
+        
         CMesh *m_pMesh;
 #ifdef OF_CLIENT
         irr::scene::IMesh *m_pIrrMesh;

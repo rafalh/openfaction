@@ -18,7 +18,7 @@ using namespace std;
 
 CPlayer::CPlayer(CServer *pServer, const char *lpName, unsigned nId, const CSocketAddress &Addr):
     m_pServer(pServer),
-    m_pEntity(NULL),
+    m_pEntity(NULL), m_pCharacter(NULL),
     m_strName(lpName), m_nId(nId),
     m_nPing(0), m_nCaps(0), m_iScore(0),
     m_bInGame(false),

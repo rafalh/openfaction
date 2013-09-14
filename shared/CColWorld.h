@@ -57,6 +57,9 @@ class CColWorld
         btConstraintSolver *m_pConstraintSolver;
         btDiscreteDynamicsWorld *m_pColWorld;
         btSphereShape m_PointShape;
+        
+        // No copy constructor
+        CColWorld(const CColWorld&);
 };
 
 #endif // CCOLWORLD_H

@@ -18,7 +18,7 @@
 using namespace std;
 
 CTblReader::CTblReader(istream &Stream, const char *pSectionName):
-    m_Stream(Stream), m_bSectionFound(false), m_iLine(0)
+    m_Stream(Stream), m_bSectionFound(false), m_iLine(0), m_nPos(0), m_nNamePos(0)
 {
     if(!pSectionName)
         m_bSectionFound = true;

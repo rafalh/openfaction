@@ -20,7 +20,7 @@
 
 CEvent::CEvent(CLevel *pLevel, CInputBinaryStream &Stream):
     CElement(OFET_EVENT, pLevel),
-    m_nWait(0)
+    m_nWait(0), m_pEntity(NULL)
 {
     m_nUid = Stream.ReadUInt32();
     m_strClass = Stream.ReadString2();
@@ -116,7 +116,7 @@ void CEvent::Execute()
         CElement *pElement = m_pLevel->GetElementsMgr()->Get(m_Links[i]);
         if(pElement && pElement->GetType() == OFET_EVENT)
         {
-            CEvent * const pEvent = (CEvent*)pElement;
+            CEvent * const pEvent = static_cast<CEvent*>(pElement);
             pEvent->Activate(m_pEntity);
         }
     }

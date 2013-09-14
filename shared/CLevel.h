@@ -78,7 +78,7 @@ class CLevel
         {
             return m_pSpawnpointsMgr;
         }
-#else
+#elif OF_CLIENT
         CLightmaps *GetLightmaps()
         {
             return m_pLightmaps;
@@ -96,6 +96,9 @@ class CLevel
         int ReadRflString(CString &strDest, CInputBinaryStream &Stream);
         int IgnoreRflString(CInputBinaryStream &Stream);
         
+        // No copy constructor
+        CLevel(const CLevel&);
+        
         CGame *m_pGame;
         CString m_strName;
         CColWorld *m_pColWorld;
@@ -105,9 +108,9 @@ class CLevel
 #ifdef OF_SERVER
         CChecksum m_Checksum;
         CSpawnpointsManager *m_pSpawnpointsMgr;
-#else // !OF_SERVER
+#elif OF_CLIENT
         CLightmaps *m_pLightmaps;
-#endif // OF_SERVER
+#endif
         btVector3 m_vPlayerStartPos;
         btMatrix3x3 m_PlayerStartRotMatrix;
         

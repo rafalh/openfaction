@@ -86,7 +86,7 @@ bool CGUITTFace::load(const io::path& filename, io::IFileSystem* filesystem)
 //////////////////////
 
 CGUITTGlyph::CGUITTGlyph()
-: cached(false), face(0), image(0), texture(0), texture_mono(0),
+: cached(false), Driver(NULL), face(0), image(0), texture(0), texture_mono(0),
 size(0), size_is_pixels(false), hasDefault(false), hasMonochrome(false)
 {
 }
@@ -334,9 +334,6 @@ void CGUITTFont::draw(const core::stringw& text, const core::rect<s32>& position
 
 	core::dimension2d<s32> textDimension;
 	core::position2d<s32> offset = position.UpperLeftCorner;
-	video::SColor colors[4];
-	for (int i = 0; i < 4; i++)
-		colors[i] = color;
 
     if (hcenter || vcenter)
 	{

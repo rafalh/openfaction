@@ -43,7 +43,10 @@ class CVfsFileBuf: public std::streambuf
 {
     public:
         inline CVfsFileBuf():
-            m_pFile(NULL), m_nPos(0), m_nSize(0) {}
+            m_pFile(NULL), m_nPos(0), m_nSize(0)
+        {
+            memset(m_Buf, 0, sizeof(m_Buf));
+        }
         
         inline ~CVfsFileBuf()
         {

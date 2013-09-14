@@ -31,6 +31,9 @@ class CSoundManager
         CGame *m_pGame;
         irrklang::ISoundEngine *m_pSoundEngine;
         irrklang::IFileFactory *m_pFileFactory;
+        
+        // No copy constructor
+        CSoundManager(const CSoundManager&);
 };
 
 #endif // CSOUNDMANAGER_H

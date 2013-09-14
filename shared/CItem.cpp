@@ -211,7 +211,7 @@ void CItem::Apply(CEntity *pEntity)
         CWeapon *pWeapon = pEntity->GetWeapon(pWeaponCls);
         
         if(m_pClass->bWeapon && !pWeapon)
-            pWeapon = pEntity->AddWeapon(pWeaponCls, m_nCount);
+            pEntity->AddWeapon(pWeaponCls, m_nCount);
         else
             pEntity->AddAmmo(pWeaponCls, m_nCount);
     }

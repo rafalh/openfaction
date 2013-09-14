@@ -38,14 +38,20 @@ using namespace std;
 CEventsHandler CEventsHandler::Default;
 
 CGame::CGame(CConsole *pConsole, irr::IrrlichtDevice *pIrrDevice):
-    m_pConsole(pConsole), m_pEventsHandler(&CEventsHandler::Default), m_pIrrDevice(pIrrDevice)
+    m_pConsole(pConsole), m_pEventsHandler(&CEventsHandler::Default), m_pIrrDevice(pIrrDevice),
+    m_pStringsTbl(NULL), m_pAmmoTbl(NULL), m_pWeaponsTbl(NULL), m_pItemsTbl(NULL), m_pEntitiesTbl(NULL),
+    m_pClutterTbl(NULL), m_pGameTbl(NULL), m_pMpCharactersTbl(NULL), m_pFoleyTbl(NULL)
 {
     m_pMaterialsMgr = new CMaterialsMgr(this);
     m_pMeshMgr = new CMeshMgr(this);
     m_pAnimMgr = new CAnimMgr(this);
 #ifdef OF_CLIENT
     m_pSoundMgr = new CSoundManager(this);
+#else
+    m_pSoundMgr = NULL;
 #endif // OF_CLIENT
+
+    m_pVfs = &CVirtualFileSystem::GetInst();
     m_pLevel = new CLevel(this);
     
     m_pCamera = NULL;
@@ -78,8 +84,6 @@ void CGame::InitVfs()
 #else
     const CString strRootDir = ""; // current directory
 #endif
-    
-    m_pVfs = &CVirtualFileSystem::GetInst();
     
     /* Add custom maps first */
     m_pVfs->AddArchivesDirectory(strRootDir + "user_maps/multi/");
