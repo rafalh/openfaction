@@ -48,8 +48,8 @@ typedef struct _rfl_header_t
     uint32_t signature; /* RFL_SIGNATURE */
     uint32_t version; /* 0xC8 is the last supported version in RF 1.2, standard maps has version 0xB4 */
     uint32_t timestamp; /* last map modification */
-    uint32_t player_start_offset; /* rfl_player_start section */
-    uint32_t level_info_offset; /* rfl_level_info section */
+    uint32_t player_start_offset; /* file offset to rfl_player_start section header */
+    uint32_t level_info_offset; /* file offset to rfl_level_info section header */
     uint32_t sections_count;
     uint32_t unknown; // sections data size - 8
     //rfl_string level_name;

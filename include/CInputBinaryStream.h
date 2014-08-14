@@ -123,8 +123,8 @@ class CInputBinaryStream: public std::istream
             char *pBuf = new char[cBytes];
             read(pBuf, cBytes);
             std::string StrResult = std::string(pBuf, cBytes);
-			delete pBuf;
-			return StrResult;
+            delete pBuf;
+            return StrResult;
         }
 };
 
