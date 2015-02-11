@@ -206,7 +206,7 @@ typedef struct _rfJoinRequest
     uint8_t version; /* Supported version of protocol */
     char rest[];
     /*char name[];
-    uint32_t unknown; * 0x5 *
+    uint32_t entity_type; * 0x5 *
     char password[];
     uint32_t connection_speed; * In bytes/second *
     uint32_t meshes_vpp_checksum; * exists only if version==RF_VER_10_11 *
@@ -215,7 +215,8 @@ typedef struct _rfJoinRequest
     uint32_t motions_vpp_size; * exists only if version==RF_VER_10_11 *
     uint32_t tables_vpp_checksum; * not a public algorithm, for 1.2 it's 7e 40 c2 1a *
     uint32_t tables_vpp_size; * Size of tables.vpp *
-    char unknown3[8]; * Ie. 00 00 ... *
+    uint32_t mod_vpp_checksum; * Checksum of mod VPP if exists (modname.vpp) *
+    uint32_t mod_vpp_size; * Size of mod VPP if exists (modname.vpp) *
     [struct rfJoinEx joinEx;]*/
 } rfJoinRequest;
 
@@ -655,12 +656,12 @@ typedef struct _rfEntityKill
     uint8_t type; /* RF_ENTITY_KILL */
     uint16_t size; /* Size of the following part */
     uint32_t entity_handle; /* Entity handle */
-    uint32_t unknown2; /* Ie. 0xC47A0000 */
+    float unknown; /* Ie. 0xC47A0000 (life?) */
     uint8_t id_killer; /* Player ID of killer */
     uint8_t id_killed; /* Player ID of killed player, probably 0xFF if entity is not player */
     uint16_t animation; /* For suicide - 0x5, headshot - 0x9 */
     uint8_t flags; /* Bitfield (RF_KF_*) */
-    uint16_t unknown3; /* Ie. 0x0000,                                                           exists if RF_KF_ITEM or RF_KF_ITEM_UNKNOWN is set */
+    uint16_t unknown2; /* Ie. 0x0000,  (its char unknown2[]; char unknown3;)                    exists if RF_KF_ITEM or RF_KF_ITEM_UNKNOWN is set */
     uint32_t item_type; /* Type of item in place of killed player, Note: it must not be weapon, exists if RF_KF_ITEM or RF_KF_ITEM_UNKNOWN is set */
     char unknown4[8]; /* Ie. FF FF FF FF 80 00 00 00,                                           exists if RF_KF_ITEM or RF_KF_ITEM_UNKNOWN is set */
     uint32_t item_handle; /* Item handle,                                                       exists if RF_KF_ITEM or RF_KF_ITEM_UNKNOWN is set */
@@ -778,7 +779,7 @@ typedef struct _rfSound
     uint8_t type; /* RF_SOUND */
     uint16_t size; /* Size of the following part */
     uint16_t sound_id; /* Sound ID from sounds.tbl */
-    uint32_t unknown[3]; /* FF FF FF FF FF FF FF FF FF FF FF FF */
+    float x, y, z; /* FF FF FF FF FF FF FF FF FF FF FF FF */
 } rfSound;
 
 typedef struct _rfTeamsScores
