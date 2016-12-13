@@ -18,6 +18,7 @@
 #include "CMesh.h"
 #include "CMeshMgr.h"
 #include "CException.h"
+#include <algorithm>
 #ifdef OF_CLIENT
 # include "CSoundManager.h"
 #endif // OF_CLIENT

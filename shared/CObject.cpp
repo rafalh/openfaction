@@ -10,6 +10,7 @@
 
 #include "CObject.h"
 #include "CLevel.h"
+#include <cassert>
 
 #ifdef OF_CLIENT
 using namespace irr;

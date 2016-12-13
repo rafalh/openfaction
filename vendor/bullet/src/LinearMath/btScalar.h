@@ -68,7 +68,7 @@ inline int	btGetVersion()
 		#else
 
 #if (defined (_WIN32) && (_MSC_VER) && _MSC_VER >= 1400) && (!defined (BT_USE_DOUBLE_PRECISION))
-			#define BT_USE_SSE
+			//#define BT_USE_SSE // FIXME: std::vector in MSVC doesnt align memory properly
 			#ifdef BT_USE_SSE
 			//BT_USE_SSE_IN_API is disabled under Windows by default, because 
 			//it makes it harder to integrate Bullet into your application under Windows 

@@ -32,6 +32,7 @@ void CLogger::PrintStatus(const char *pFormat, ...)
         va_start(pArgList, pFormat);
         vfprintf(m_pFile, pFormat, pArgList);
         fprintf(m_pFile, "\n");
+        fflush(m_pFile);
     }
 }
         
@@ -53,6 +54,7 @@ void CLogger::PrintError(const char *pFormat, ...)
         va_start(pArgList, pFormat);
         vfprintf(m_pFile, pFormat, pArgList);
         fprintf(m_pFile, "\n");
+        fflush(m_pFile);
     }
 }
 

@@ -41,7 +41,7 @@ class CObject: public CElement
         void Update(unsigned nDeltaTime);
         void AddToWorld();
         void RemoveFromWorld();
-        
+
         inline btCollisionObject *GetColObject() const
         {
             return m_pColObj;
@@ -101,6 +101,9 @@ class CObject: public CElement
             m_pColObj->setCollisionShape(pShape);
             m_bTransformChanged = true;
         }
+
+        // 16-byte alignment is needed for Bullet objects
+        BT_DECLARE_ALIGNED_ALLOCATOR()
     
     protected:
         btCollisionObject *m_pColObj;

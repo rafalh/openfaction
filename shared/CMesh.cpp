@@ -107,8 +107,8 @@ btMultiSphereShape *CMesh::GetMultiColSphere()
 {
     if(!m_pMultiColSphere && !m_ColSpheres.empty())
     {
-        btVector3 Pos[m_ColSpheres.size()];
-        float Radius[m_ColSpheres.size()];
+        std::vector<btVector3> Pos(m_ColSpheres.size());
+		std::vector<float> Radius(m_ColSpheres.size());
         
         for(unsigned i = 0; i < m_ColSpheres.size(); ++i)
         {
@@ -122,7 +122,7 @@ btMultiSphereShape *CMesh::GetMultiColSphere()
             }
         }
         
-        m_pMultiColSphere = new btMultiSphereShape(Pos, Radius, m_ColSpheres.size());
+        m_pMultiColSphere = new btMultiSphereShape(Pos.data(), Radius.data(), m_ColSpheres.size());
     }
     
     return m_pMultiColSphere;
@@ -238,7 +238,7 @@ void CMesh::DbgDraw(const CObject *pObj) const
         // Draw bone name
         core::position2di vPosScr = m_pMeshMgr->GetGame()->GetSceneMgr()->getSceneCollisionManager()->getScreenCoordinatesFrom3DPosition(vIrrBonePos, m_pMeshMgr->GetGame()->GetCamera()->GetSceneNode());
         wchar_t wszBuf[32];
-        swprintf(wszBuf, sizeof(wszBuf), L"%hs", Bone.strName.c_str());
+        swprintf(wszBuf, sizeof(wszBuf)/sizeof(wszBuf[0]), L"%hs", Bone.strName.c_str());
         m_pMeshMgr->GetGame()->GetGuiEnv()->getBuiltInFont()->draw(wszBuf, core::recti(vPosScr, vPosScr), video::SColor(255, 255, 255, 255));
     }
     
@@ -343,7 +343,7 @@ void CSubMesh::LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrr
     
     //CConsole::GetInst().DbgPrint("Flags 0x%x cVertices %u cBatches %u\n", uFlags, cVertices, cBatches);
     
-    unsigned uDataOffset = Stream.tellg();
+    unsigned uDataOffset = (unsigned)Stream.tellg();
     //CConsole::GetInst().DbgPrint("Data starts at 0x%x\n", uDataOffset);
     
     char *pData = new char[cbData];
@@ -354,8 +354,8 @@ void CSubMesh::LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrr
     int32_t Unknown = Stream.ReadInt32(); // unknown
     //assert(Unknown == -1);
     
-    v3d_batch_info_t Batches[cBatches];
-    Stream.ReadBinary(Batches, sizeof(Batches));
+    std::vector<v3d_batch_info_t> Batches(cBatches);
+    Stream.ReadBinary(Batches.data(), Batches.size()*sizeof(v3d_batch_info_t));
     for(unsigned i = 0; i < cBatches; ++i)
     {
         assert(Batches[i].positions_size >= Batches[i].vertices_count * 3 * sizeof(float));
@@ -366,6 +366,7 @@ void CSubMesh::LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrr
     uint32_t Unknown2 = Stream.ReadUInt32(); // unknown2 (0, 1)
     
     uint32_t cTextures = Stream.ReadUInt32();
+	assert(cTextures < 65000);
     //CConsole::GetInst().DbgPrint("Textures %u at 0x%x\n", cTextures, Stream.tellg());
     //assert(cTextures <= cBatches);
     if(bIrrMesh)

@@ -49,6 +49,9 @@ class CColWorld
         {
             return m_pColWorld;
         }
+
+        // 16-byte alignment is needed for Bullet objects
+        BT_DECLARE_ALIGNED_ALLOCATOR()
         
     private:
         btBroadphaseInterface *m_pBroadPhase;

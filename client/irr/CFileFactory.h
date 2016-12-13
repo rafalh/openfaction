@@ -34,7 +34,7 @@ class CIrrKlangReadFile: public irrklang::IFileReader
         
         bool seek(irrklang::ik_s32 finalPos, bool relativeMovement = false)
         {
-            return m_File.seekg(finalPos, relativeMovement ? std::istream::cur : std::istream::beg);
+            return (bool) m_File.seekg(finalPos, relativeMovement ? std::istream::cur : std::istream::beg);
         }
         
         irrklang::ik_s32 getSize()

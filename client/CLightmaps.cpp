@@ -10,6 +10,7 @@
 
 #include "CLightmaps.h"
 #include "CGame.h"
+#include <cassert>
 
 using namespace std;
 using namespace irr;

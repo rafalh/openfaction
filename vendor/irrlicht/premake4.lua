@@ -19,6 +19,10 @@ project "Irrlicht"
 	
 	defines { "IRRLICHT_EXPORTS" }
 	
+	local DXSDK_DIR = os.getenv("DXSDK_DIR")
+	includedirs { DXSDK_DIR.."/Include" }
+	libdirs { DXSDK_DIR.."/Lib/x86" }
+	
 	links { "kernel32",  "gdi32", "winmm", "opengl32", "bzip2", "jpeglib", "libpng", "zlib" }
 	
 	configuration "Debug"

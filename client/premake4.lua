@@ -1,5 +1,5 @@
 project "OfClient"
-	kind "ConsoleApp"
+	kind "WindowedApp"
 	language "C++"
 	files {
 		"*.h", "*.cpp",
@@ -35,6 +35,7 @@ project "OfClient"
 		libdirs { "../vendor/irrklang/lib/Win32-gcc" }
 	
 	configuration "windows"
+		flags { "WinMain" }
 		links { "ws2_32" }
 	
 	configuration "linux"

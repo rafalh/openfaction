@@ -13,6 +13,7 @@
 #include <cstdarg>
 #include <cstdio>
 #include <cctype>
+#include <algorithm>
 
 using namespace irr;
 using namespace std;

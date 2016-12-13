@@ -35,7 +35,7 @@ void CAnimation::Load(CInputBinaryStream &Stream)
     assert(Stream);
     uint32_t MorphVerticesOffset = Stream.ReadUInt32();
     uint32_t MorphKeyframesOffset = Stream.ReadUInt32();
-    uint32_t BoneOffsets[Hdr.cBones];
+    std::vector<uint32_t> BoneOffsets(Hdr.cBones);
     for(unsigned i = 0; i < Hdr.cBones; ++i)
         BoneOffsets[i] = Stream.ReadUInt32();
     
@@ -43,7 +43,7 @@ void CAnimation::Load(CInputBinaryStream &Stream)
     for(unsigned i = 0; i < Hdr.cBones; ++i)
     {
         SBone Bone;
-        assert(Stream && Stream.tellg() == BoneOffsets[i]);
+        assert(Stream && (uint32_t)Stream.tellg() == BoneOffsets[i]);
         
         Stream.ignore(4);
         uint16_t cRotKeys = Stream.ReadUInt16();
@@ -78,7 +78,7 @@ void CAnimation::Load(CInputBinaryStream &Stream)
     // rfa_morph_vertices_t
     if(Hdr.cMorphVertices)
     {
-        assert(Stream && Stream.tellg() == MorphVerticesOffset);
+        assert(Stream && (uint32_t)Stream.tellg() == MorphVerticesOffset);
         Stream.ignore(Hdr.cMorphVertices * 2);
     }
     
@@ -88,7 +88,7 @@ void CAnimation::Load(CInputBinaryStream &Stream)
     
     if(Hdr.cMorphKeyframes * Hdr.cMorphVertices > 0)
     {
-        assert(Stream && Stream.tellg() == MorphKeyframesOffset);
+        assert(Stream && (uint32_t)Stream.tellg() == MorphKeyframesOffset);
         
         if(Hdr.version == RFA_VERSION8)
         {

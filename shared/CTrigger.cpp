@@ -21,7 +21,7 @@ CTrigger::CTrigger(CLevel *pLevel, CInputBinaryStream &Stream):
     CObject(OFET_TRIGGER, pLevel), m_nWait(0)
 {
     m_iColGroup = COL_TRIGGER;
-    m_iColMask = COL_NONE;
+    m_iColMask = (short)COL_NONE;
     
     m_pColObj = new btCollisionObject();
     m_pColObj->setUserPointer(this);

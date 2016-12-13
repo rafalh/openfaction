@@ -30,6 +30,8 @@ int main(int argc, char **argv)
 #endif
 {
     srand(time(NULL));
+    CLogger::GetInst().SetPath("of-client.log");
+    CLogger::GetInst().PrintStatus("Open Faction started...");
     
     try
     {

@@ -14,6 +14,7 @@
 #include <cstdlib>
 #include <cstdarg>
 #include <cassert>
+#include <algorithm>
 
 using namespace std;
 

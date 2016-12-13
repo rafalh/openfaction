@@ -69,7 +69,7 @@ CMaterial::CMaterial(CMaterialsMgr *pMaterialsMgr, const CString &strFilename):
     }
     catch(const CException &e)
     {
-        m_pMaterialsMgr->GetGame()->GetConsole()->DbgPrint("Failed to load texture %s\n", strFilename.c_str());
+        m_pMaterialsMgr->GetGame()->GetConsole()->DbgPrint("Failed to load texture %s (%s)\n", strFilename.c_str(), e.what());
         // TODO
     }
 #endif // OF_CLIENT

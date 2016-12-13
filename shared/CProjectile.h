@@ -13,6 +13,7 @@
 
 #include "CWeaponsTable.h"
 #include "CObject.h"
+#include <algorithm>
 
 class CEntity;
 

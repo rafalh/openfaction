@@ -1,0 +1,13 @@
+bin
+obj
+docs
+research
+vendor/irrklang/examples
+vendor/irrklang/media
+vendor/libpng/lib
+vendor/bullet/src/*/ibmsdk
+vendor/bullet/lib
+vendor/zlib/lib
+*.gch
+/*.cmd
+/premake-build

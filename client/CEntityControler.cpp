@@ -15,6 +15,7 @@
 #include "CLevel.h"
 #include "CGame.h"
 #include "CConsole.h"
+#include <algorithm>
 
 using namespace std;
 using namespace irr;

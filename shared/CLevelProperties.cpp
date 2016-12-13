@@ -11,6 +11,7 @@
 #include "CLevelProperties.h"
 #include "CLevel.h"
 #include "CGame.h"
+#include <cassert>
 
 #define RFL_FIX_COLOR(clr) (((clr) & 0xFF00FF00) | (((clr) & 0x00FF0000) >> 16) | (((clr) & 0x000000FF) << 16))
 

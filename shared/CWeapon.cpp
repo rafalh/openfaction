@@ -168,14 +168,14 @@ void CWeapon::Update(unsigned nDeltaTime)
         
         if(m_State == WS_FIRE || m_bQueuedShoot)
 		{
-            if(!Shoot(false, vPos, vDir, m_pEntity))
+            if(!Shoot(false, vPos, vDir, false))
 				break; // Nothing to do
 			
             m_bQueuedShoot = false;
         }
         else if(m_State == WS_ALT_FIRE || m_bQueuedAltShoot)
         {
-            if(!Shoot(true, vPos, vDir, m_pEntity))
+            if(!Shoot(true, vPos, vDir, false))
 				break; // Nothing to do
 
             m_bQueuedAltShoot = false;

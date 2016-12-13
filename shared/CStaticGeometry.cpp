@@ -117,7 +117,7 @@ void CStaticGeometry::Load(CLevel *pLevel, CInputBinaryStream &Stream, unsigned 
     unsigned cRooms = Stream.ReadUInt32();
     m_Rooms.reserve(cRooms);
 #ifdef OF_CLIENT
-    SIrrRoom IrrRooms[cRooms];
+    std::vector<SIrrRoom> IrrRooms(cRooms);
 #endif // OF_CLIENT
     
     unsigned iGlass = 0;
@@ -176,17 +176,17 @@ void CStaticGeometry::Load(CLevel *pLevel, CInputBinaryStream &Stream, unsigned 
     Stream.ignore(cUnknown2 * 32); // unknown3
     
     unsigned cVertices = Stream.ReadUInt32();
-    btVector3 Vertices[cVertices];
+    std::vector<btVector3> Vertices(cVertices);
     for(unsigned i = 0; i < cVertices; ++i)
         Vertices[i] = Stream.ReadVector();
     
     unsigned cFaces = Stream.ReadUInt32();
-    SFace Faces[cFaces];
+	std::vector<SFace> Faces(cFaces);
     
     //CGame::GetInst().GetSceneMgr()->getParameters()->setAttribute(scene::ALLOW_ZWRITE_ON_TRANSPARENT, true);
     for(unsigned i = 0; i < cFaces; ++i)
     {
-        unsigned nPos = Stream.tellg();
+        unsigned nPos = (unsigned)Stream.tellg();
         SFace &Face = Faces[i];
         
         // Use normal from unknown plane
@@ -260,7 +260,7 @@ void CStaticGeometry::Load(CLevel *pLevel, CInputBinaryStream &Stream, unsigned 
     
     unsigned cLightmapVertices = Stream.ReadUInt32();
 #ifdef OF_CLIENT
-    unsigned LightmapVertices[cLightmapVertices];
+    std::vector<unsigned> LightmapVertices(cLightmapVertices);
 #endif // OF_CLIENT
 
     for(unsigned i = 0; i < cLightmapVertices; ++i)

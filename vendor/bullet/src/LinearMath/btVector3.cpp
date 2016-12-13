@@ -20,6 +20,7 @@
 #endif
 
 #include "btVector3.h"
+#include <cstring>
 
 #if defined (BT_USE_SSE) || defined (BT_USE_NEON)
 

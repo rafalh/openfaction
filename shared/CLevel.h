@@ -92,6 +92,9 @@ class CLevel
         void AddElement(CElement *pElement);
         void RemoveElement(CElement *pElement);
         
+        // 16-byte alignment is needed for Bullet objects
+        BT_DECLARE_ALIGNED_ALLOCATOR()
+
     private:
         int ReadRflString(CString &strDest, CInputBinaryStream &Stream);
         int IgnoreRflString(CInputBinaryStream &Stream);

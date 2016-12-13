@@ -34,7 +34,7 @@ class CIrrReadFile: public irr::io::IReadFile
         
         bool seek(long finalPos, bool relativeMovement = false)
         {
-            return m_File.seekg(finalPos, relativeMovement ? std::istream::cur : std::istream::beg);
+            return (bool) m_File.seekg(finalPos, relativeMovement ? std::istream::cur : std::istream::beg);
         }
         
         long getSize() const
