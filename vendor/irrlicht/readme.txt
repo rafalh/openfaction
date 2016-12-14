@@ -1,5 +1,5 @@
 ==========================================================================
-The Irrlicht Engine SDK version 1.8
+The Irrlicht Engine SDK version 1.8.4
 ==========================================================================
 
   Welcome the Irrlicht Engine SDK.
@@ -54,11 +54,10 @@ The Irrlicht Engine SDK version 1.8
   easily comprehensible.
 
   The Irrlicht Engine is a static lib under linux. A precompiled version can be
-  generated from the sources using the Makefile in source/Irrlicht. Unzip the
-  file source.zip in the /source directory. Run 'make' in the newly created
-  subfolder source/Irrlicht. After this you should be able to 'make' all
-  example applications in /examples. You can run the examples directly from the
-  directory they are created in.
+  generated from the sources using the Makefile in source/Irrlicht. Run 'make' in 
+  that subfolder. After this you should be able to 'make' all
+  example applications in /examples by calling the buildAllExamples script. You 
+  can run the examples then from the bin folder.
 
   It is also possible to use Irrlicht as shared object
   (libIrrlicht.so.versionNumber). Use the proper makefile target for this by
@@ -76,7 +75,7 @@ The Irrlicht Engine SDK version 1.8
   work as well, we simply didn't test them.
 
   * gcc 4.x
-  * Visual Studio 2008(9.0)-2012(11.0)
+  * Visual Studio 2010(10.0)-2013(12.0)
   * Code::Blocks (& gcc or visual studio toolkit)
   
   If you ever want to (re)compile the engine yourself (which means you don't
@@ -130,7 +129,7 @@ The Irrlicht Engine SDK version 1.8
   The Irrlicht Engine License
   ===========================
 
-  Copyright (C) 2002-2012 Nikolaus Gebhardt
+  Copyright (C) 2002-2015 Nikolaus Gebhardt
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -171,7 +170,7 @@ The Irrlicht Engine SDK version 1.8
   See http://irrlicht.sourceforge.net/author.html for more informations)
 
   Christian Stehno (hybrid)   Contribution Coordinator/Developer
-  Michael Zeilfelder (cutealien) GUI Developer
+  Michael Zeilfelder (cutealien) Developer
   Patryk Nadrowski (Nadro)    Developer  
   Yoran Bosman (Yoran)        Webserver administrator
   Gareth Davidson (bitplane)  Developer/ Forum admin

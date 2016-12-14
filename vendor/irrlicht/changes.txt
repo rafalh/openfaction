@@ -1,3 +1,75 @@
+--------------------------
+Changes in 1.8.4 (9th July 2016, svn r5321)
+ - Tests on Unix now have a short pause between switching drivers to avoid certain X11 errors.
+ - Fix CEnumAttribute::getInt() which could crash  (thx @ luthyr for reporting)
+ - No longer try to run tests for drivers not supported on a platform
+ - Update lights and renderTargetTexture tests to work with Windows 10 (can't have so tiny Windows anymore).
+ - Deprecate CMatrix4::transformBox as the result is no longer a boundingbox. Use CMatrix4::transformBoxEx instead (which has been available for a long time).
+ - Fix CSceneCollisionManager::getPickedNodeBB which could sometimes miss collisions.
+ - Add -U__STRICT_ANSI__ option to c::b project files to allow compiling with -std=c++11 and add an error when trying to compile with Irrlicht with __STRICT_ANSI__
+ - Update libpng to 1.6.21
+ - Update zlib to 1.2.8
+ - Fix some compile warnings in aes which got handled as errors by some c++11 compilers.
+ - Get rid of some misleading-indentation warnings in gcc6
+ - Fix serialization of the InputReceiverEnabled flag in CCameraSceneNode
+ - Fix pasting text from X11 applications to Irrlicht. Thanks @est31 for the patch.
+ - Tests give now a warning when stabilizing screenshots failed. Aslo trying more often now (a hack as taking screenshots otherwise fails often in windowed mode on some systems).
+
+--------------------------
+Changes in 1.8.3 (13.9.2015)
+ - Fix the fix for compiling on GCC5 (thanks to est31 for report and patch)
+
+--------------------------
+Changes in 1.8.2 (30.8.2015)
+
+ - Add VS2013 project files
+ - Fix compiling with IRR_LINUX_XCURSOR_
+ - Fix compiling with NO_IRR_COMPILE_WITH_LIBJPEG_  (thx to anontypist for report and patch).
+ - Fix compiling on GCC5 on MinGW (thanks to Slipxy for finding the bug and to osense for reporting it).
+ - Fix loading of .X and .B3D models with non-normalized quaternion rotations (thanks to JLouisB for a test-model).
+ - Fix compiling on Free BSD (thanks to leper for reporting and patch)
+ - Fix bug with multiple SetPixelFormat calls. (reported and fixed by anontypist)
+ - Fix bug related to memory release in PNG image loader. Thanks elephoenix for it.
+ - Fix crash in CGUIListBox when users pressed end key folled by any other key in an empty, focused list box (thanks at porcus for report and patch).
+ - Fix use of enabling defines for wal2 (halflife) image loader. Thanks to hendu for noticing.
+ - Fix userClipPlane test by inserting the stabilizeScreenBackground call
+ - Demo enables antialiasing now correct (thanks to Mel for noticing).
+ - Update glext.h (bug #429)
+ - Example 22 no longer select a random texture after loading a new texture (thanks at mongoose7 for reporting).
+ - Fix bug in IGUISkin serialization which messed up serialization of the button-pressed offsets (thanks at Midnight for reporting).
+ - IGUIStaticText::getTextHeight returns now the correct height for texts with newlines even WordWrap is not set.
+ - Crashfix for CGUIEditBox. CGUIEditBox::setMultiLine must break text when changed or other functions like getTextDimension can crash afterward for strings with newline characters.
+ - CGUIEditBox and the GUI-Editor now convert pasted text correctly using mbstowcs.
+ - C::B project files work again on newer Linux-distributions which have cleaned up their dev-lib dependencies.
+ - Makefile for the new IrrFontTool links now correctly to libfontconfig
+
+--------------------------
+Changes in 1.8.1 (17.11.2013)
+
+ - Improved OpenGL performance under OSX (Thanks devonsoft for reporting).
+ - Fixed OSX compilation issues.
+ - [KNOWN BUG] Software driver doesn't work properly under OSX 10.9.
+ - For speed improvement the following attributes accessible by ISceneManager::getParameters() are no longer updated in release: 
+   "culled", "calls", "drawn_solid", "drawn_transparent", "drawn_transparent_effect".
+   They can be enabled by compiling Irrlicht with the define _IRR_SCENEMANAGER_DEBUG. 
+   Thanks @hendu for reporting, see http://irrlicht.sourceforge.net/forum/viewtopic.php?f=2&t=48211 for the discussion.
+ - Fix compile problem with CIrrDeviceSDL on VS2008 (and maybe other systems). Thanks @HellFlip for reporting.
+ - Fix quaternion::rotationFromTo() (Thanks @takamoto for reporting)
+ - Fix iszero for s64 (Thanks @chronologicaldot for reporting)
+ - Fix crash in SoftwareDriver2 when Material was EMT_DETAIL_MAP but texture[1] was not set (Thanks for fix by chronologicaldot)
+ - Fix buffer overrun in x-loader (Thanks for fix by Otaka)
+ - Fix cursor visibility update problem under Windows 8 (Thanks @luthyr for reporting)
+ - Fix irredit links in loadScene/saveScene docs.
+ - Fix issue in CAnimatedMeshSceneNode::clone which caused a crash. (reported and fixed by luthyr)
+ - Fix compiling errors for c++ builder (thx @Greatwolf for many patches and @cfanderek for reminding)
+ - Initialized IColladaMeshWriter::GeometryWriting which was uninitialized.
+ - Fix linker trouble with irr::core::equalsByUl when compiling Irrlicht as managed code (thx @  Memorial76 for a report + testcase)
+ - Fix crashes in CCubeSceneNode::clone and CSphereSceneNode::clone (reported by  marsupial)
+ - Fix the clipping in the listbox drawing which was only showing the right line of the sunken pane (reported by Mloren and Abraxas).
+ - Initialize slider in example 05 correct (reported by Zerochen)
+ - Fix crash in CMeshSceneNode::clone when the mesh had no shadow (reported by  christianclavet, bug-fix found by Nadro)
+
+--------------------------
 Changes in 1.8 (7.11.2012)
 
  - Let sphere mesh use full opaque color, just as all the other ones do
@@ -575,7 +647,13 @@ The following names can be queried for the given types:
  - Support new OpenGL 2.x shader creation
 
 -----------------------------
-Changes in 1.7.4
+Changes in 1.7.4 (not yet released)
+
+ - fixed getDepthFunction in IQ3Shader which always returned ECFN_EQUAL due to missing break (found by the cppcheck tool)
+
+ - STL loader improved to handle arbitrary file starts
+
+ - Compiler problem with gcc4.6 and big endian systems fixed
 
  - Change include order to get example 21 compiling on MinGW.
 

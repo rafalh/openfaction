@@ -1586,10 +1586,10 @@ public:
 
 	virtual s32 getInt()
 	{
-		for (s32 i=0; EnumLiterals.size(); ++i)
+		for (u32 i=0; i < EnumLiterals.size(); ++i)
 			if (Value.equals_ignore_case(EnumLiterals[i]))
 			{
-				return i;
+				return (s32)i;
 			}
 
 		return -1;
@@ -1900,15 +1900,26 @@ public:
 
 	virtual core::stringw getStringW()
 	{
-		return core::stringw(OverrideName.size()?OverrideName:
-			Value ? Value->getName().getPath().c_str() : 0);
+		// (note: don't try to put all this in some ?: operators, or c++ builder will choke)
+		if ( OverrideName.size() )
+			return core::stringw(OverrideName);
+
+		if ( Value )
+			return core::stringw(Value->getName().getPath().c_str());
+
+		return core::stringw(0);
 	}
 
 	virtual core::stringc getString()
 	{
 		// since texture names can be stringw we are careful with the types
-		return core::stringc(OverrideName.size()?OverrideName:
-			Value ? Value->getName().getPath().c_str() : 0);
+		if ( OverrideName.size() )
+			return core::stringc(OverrideName);
+
+		if ( Value )
+			return core::stringc(Value->getName().getPath().c_str());
+		
+		return core::stringc(0);
 	}
 
 	virtual void setString(const char* text)
