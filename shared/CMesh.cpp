@@ -416,6 +416,7 @@ void CSubMesh::LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrr
             {
                 /* Create new buffer */
                 pIrrMeshBuf = new scene::SMeshBuffer;
+                pIrrMeshBuf->setHardwareMappingHint(scene::EHM_STATIC); // Note: it has to be changed for animated meshes
                 ((scene::SMesh*)m_pIrrMesh)->addMeshBuffer(pIrrMeshBuf);
                 
                 pIrrMeshBuf->Material.setFlag(video::EMF_LIGHTING, false);

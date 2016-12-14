@@ -321,6 +321,7 @@ void CStaticGeometry::Load(CLevel *pLevel, CInputBinaryStream &Stream, unsigned 
             {
                 // Create new buffer and prepare it
                 pIrrBuf = new scene::SMeshBufferLightMap;
+                pIrrBuf->setHardwareMappingHint(scene::EHM_STATIC);
                 
                 // Setup material flags
                 pIrrBuf->Material.setFlag(video::EMF_FOG_ENABLE, pLevel->GetProperties()->IsFogEnabled());
