@@ -97,7 +97,7 @@ void CClientApp::Init()
     
     // Load font
     m_pFontFace = new gui::CGUITTFace;
-    if(!m_pFontFace->load("arial.ttf"))
+    if(!m_pFontFace->load("../fonts/DejaVuSans.ttf"))
     {
         CLogger::GetInst().PrintError("Failed to load font. Using built in font...\n");
         delete m_pFontFace;
