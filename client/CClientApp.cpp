@@ -80,8 +80,11 @@ CClientApp::~CClientApp()
 
 void CClientApp::Init()
 {
+#ifdef _WIN32
+    m_pDevice = createDevice(video::EDT_DIRECT3D9, core::dimension2d<u32>(800, 600), 32, false, false, false, this);
+#else
     m_pDevice = createDevice(video::EDT_OPENGL, core::dimension2d<u32>(800, 600), 32, false, false, false, this);
-    //m_pDevice = createDevice(video::EDT_DIRECT3D9, core::dimension2d<u32>(800, 600), 32, false, false, false, 0);
+#endif
     if(!m_pDevice)
         THROW_EXCEPTION("Failed to create Irrlicht device");
     
