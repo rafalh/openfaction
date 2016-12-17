@@ -96,6 +96,7 @@ CEntity::CEntity(CLevel *pLevel, const SEntityClass *pClass, unsigned nUid):
     scene::IMesh *pIrrMesh = m_pMesh->GetIrrMesh();
     assert(pIrrMesh);
     m_pSceneNode = m_pLevel->GetGame()->GetSceneMgr()->addMeshSceneNode(pIrrMesh);
+    m_pSceneNode->addAnimator(m_pMesh->CreateLodAnimator());
 #endif // OF_CLIENT
     
     LoadAnimations();
@@ -128,6 +129,7 @@ CEntity::CEntity(CLevel *pLevel, CInputBinaryStream &Stream):
     matRot[0] = Stream.ReadVector();
     matRot[1] = Stream.ReadVector();
     m_CamRotMatrix = matRot.transpose();
+    //TODO m_pSceneNode->setRotation
     
     Stream.ReadString2(); // script name
     Stream.ignore(13); // unknown, cooperation, friendliness, team_id
@@ -222,6 +224,7 @@ CEntity::CEntity(CLevel *pLevel, CInputBinaryStream &Stream):
     scene::IMesh *pIrrMesh = m_pMesh->GetIrrMesh();
     assert(pIrrMesh);
     m_pSceneNode = m_pLevel->GetGame()->GetSceneMgr()->addMeshSceneNode(pIrrMesh);
+    m_pSceneNode->addAnimator(m_pMesh->CreateLodAnimator());
 #endif // OF_CLIENT
     
     LoadAnimations();

@@ -31,6 +31,11 @@ class CAnimatedMesh
         {
             return m_pIrrMesh;
         }
+
+        irr::scene::ISceneNodeAnimator *CreateLodAnimator() const
+        {
+            return m_pMesh->GetSubMesh(0)->CreateLodAnimator();
+        }
 #endif // OF_CLIENT
     
     private:

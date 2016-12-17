@@ -35,10 +35,22 @@ class CSubMesh
             return m_pColShape;
         }
 #ifdef OF_CLIENT
-        irr::scene::IMesh *GetIrrMesh()
+        irr::scene::IMesh *GetIrrMesh(int LodIndex = 0) const
         {
-            return m_pIrrMesh;
+            return m_LodIrrMeshes[LodIndex];
         }
+
+        float GetLodMinDist(int LodIndex) const
+        {
+            return m_LodDistances[LodIndex];
+        }
+
+        int GetLodCount() const
+        {
+            return m_LodIrrMeshes.size();
+        }
+
+        irr::scene::ISceneNodeAnimator *CreateLodAnimator() const;
 #endif // OF_CLIENT
     
     private:
@@ -46,7 +58,8 @@ class CSubMesh
         btTriangleMesh *m_pColMesh;
         btBvhTriangleMeshShape *m_pColShape;
 #ifdef OF_CLIENT
-        irr::scene::IMesh *m_pIrrMesh;
+        std::vector<irr::scene::IMesh*> m_LodIrrMeshes;
+        std::vector<float> m_LodDistances;
 #endif // OF_CLIENT
         std::vector<CMaterial*> m_Materials;
         

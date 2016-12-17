@@ -68,6 +68,7 @@ CClutter::CClutter(CLevel *pLevel, CInputBinaryStream &Stream):
         scene::IMesh *pIrrMesh = m_pMesh->GetSubMesh(0)->GetIrrMesh();
         assert(pIrrMesh);
         m_pSceneNode = m_pLevel->GetGame()->GetSceneMgr()->addMeshSceneNode(pIrrMesh);
+        m_pSceneNode->addAnimator(m_pMesh->GetSubMesh(0)->CreateLodAnimator());
 #endif // OF_CLIENT
     }
         

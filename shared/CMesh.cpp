@@ -21,9 +21,13 @@
 # include "irr/CReadFile.h"
 # include "CLevel.h"
 # include "camera/CCamera.h"
+#include "irr/CLodSceneNodeAnimator.h"
 #endif // OF_CLIENT
 
+#define USE_LOD_MODELS
+
 #define ALIGN(num, alignment) (((num) + (alignment) - 1) - ((num) + (alignment) - 1) % (alignment))
+
 
 using namespace std;
 #ifdef OF_CLIENT
@@ -254,9 +258,6 @@ void CMesh::DbgDraw(const CObject *pObj) const
 CSubMesh::CSubMesh(CMeshMgr *pMeshMgr):
     m_pMeshMgr(pMeshMgr),
     m_pColMesh(NULL), m_pColShape(NULL)
-#ifdef OF_CLIENT
-    , m_pIrrMesh(NULL)
-#endif // OF_CLIENT
 {}
 
 CSubMesh::~CSubMesh()
@@ -272,9 +273,10 @@ CSubMesh::~CSubMesh()
     
 #ifdef OF_CLIENT
     // Cleanup Irrlicht mesh
-    if(m_pIrrMesh)
-        m_pIrrMesh->drop();
-    m_pIrrMesh = NULL;
+    for (irr::scene::IMesh *pMesh : m_LodIrrMeshes)
+        pMesh->drop();
+    m_LodIrrMeshes.clear();
+    m_LodDistances.clear();
 #endif // OF_CLIENT
     
     // Cleanup materials
@@ -299,6 +301,9 @@ void CSubMesh::Load(CInputBinaryStream &Stream)
             assert(fDist == 0.0f);
         else
             assert(fDist >= fPrevDist); // some models has 3 x 0.0f (see grab.v3c)
+#ifdef OF_CLIENT
+        m_LodDistances.push_back(fDist);
+#endif
         fPrevDist = fDist;
     }
     
@@ -315,7 +320,7 @@ void CSubMesh::Load(CInputBinaryStream &Stream)
     {
         //CConsole::GetInst().DbgPrint("LOD model %u at 0x%x\n", i, Stream.tellg());
         bool bColMesh = (i == cLodModels - 1); // use last model as collision model
-        bool bIrrMesh = (i == 0); // use first model for rendering
+        bool bIrrMesh = true; // use all models for rendering
         LoadLodModel(Stream, bColMesh, bIrrMesh);
     }
     
@@ -369,8 +374,8 @@ void CSubMesh::LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrr
 	assert(cTextures < 65000);
     //CConsole::GetInst().DbgPrint("Textures %u at 0x%x\n", cTextures, Stream.tellg());
     //assert(cTextures <= cBatches);
-    if(bIrrMesh)
-        assert(m_Materials.empty());
+    //if(bIrrMesh)
+    //    assert(m_Materials.empty()); // FIXME
     for(unsigned i = 0; i < cTextures; ++i)
     {
         //CConsole::GetInst().DbgPrint("Texture %u at 0x%x\n", i, Stream.tellg());
@@ -393,11 +398,7 @@ void CSubMesh::LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrr
         unsigned uOffset = ALIGN(cBatches * 56, V3D_ALIGNMENT);
         
 #ifdef OF_CLIENT
-        if(bIrrMesh)
-        {
-            assert(!m_pIrrMesh);
-            m_pIrrMesh = new scene::SMesh;
-        }
+        irr::scene::SMesh *pMesh = new scene::SMesh;
 #endif // OF_CLIENT
         
         if(bColMesh)
@@ -417,7 +418,7 @@ void CSubMesh::LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrr
                 /* Create new buffer */
                 pIrrMeshBuf = new scene::SMeshBuffer;
                 pIrrMeshBuf->setHardwareMappingHint(scene::EHM_STATIC); // Note: it has to be changed for animated meshes
-                ((scene::SMesh*)m_pIrrMesh)->addMeshBuffer(pIrrMeshBuf);
+                pMesh->addMeshBuffer(pIrrMeshBuf);
                 
                 pIrrMeshBuf->Material.setFlag(video::EMF_LIGHTING, false);
                 pIrrMeshBuf->Material.FogEnable = m_pMeshMgr->GetGame()->GetLevel()->GetProperties()->IsFogEnabled();
@@ -538,7 +539,8 @@ void CSubMesh::LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrr
         
 #ifdef OF_CLIENT
         if(bIrrMesh)
-            ((scene::SMesh*)m_pIrrMesh)->recalculateBoundingBox();
+            pMesh->recalculateBoundingBox();
+        m_LodIrrMeshes.push_back(pMesh);
 #endif // OF_CLIENT
     }
     
@@ -546,3 +548,18 @@ void CSubMesh::LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrr
     
     assert(Stream);
 }
+
+#ifdef OF_CLIENT
+irr::scene::ISceneNodeAnimator *CSubMesh::CreateLodAnimator() const
+{
+    assert(m_LodDistances.size() == m_LodIrrMeshes.size());
+    CLodSceneNodeAnimator *pAnim = new CLodSceneNodeAnimator();
+#ifdef USE_LOD_MODELS
+    for (int i = 0; i < m_LodDistances.size(); ++i)
+        pAnim->addLevelOfDetail(m_LodIrrMeshes[i], m_LodDistances[i]);
+#else
+    pAnim->addLevelOfDetail(m_LodIrrMeshes[0], m_LodDistances[0]);
+#endif
+    return pAnim;
+}
+#endif // OF_CLIENT
