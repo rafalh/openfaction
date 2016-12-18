@@ -29,7 +29,7 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT)
 int main(int argc, char **argv)
 #endif
 {
-    srand(time(NULL));
+    srand((unsigned)time(NULL));
     CLogger::GetInst().SetPath("of-client.log");
     CLogger::GetInst().PrintStatus("Open Faction started...");
     

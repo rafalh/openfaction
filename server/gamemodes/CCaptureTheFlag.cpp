@@ -190,6 +190,7 @@ bool CCaptureTheFlag::CaptureFlag(CPlayer *pPlayer)
         FlagCapturePacket.Send(pPlayer2);
     
     CLogger::GetInst().PrintStatus("%s flag has been captured by %s!", pPlayer->IsBlueTeam() ? "Red" : "Blue", pPlayer->GetName());
+    // TODO: end match if score == limit
     return true;
 }
 

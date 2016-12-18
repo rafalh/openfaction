@@ -74,9 +74,9 @@ void CFreeCamera::Update(unsigned uDeltaTime)
     {
         core::vector2df vOffset = m_vCursorPos - m_vCursorCenter;
         
-        m_fYaw = fmod(m_fYaw + vOffset.X, 2.0f * M_PI);
+        m_fYaw = fmod(m_fYaw + vOffset.X, 2.0f * (float)M_PI);
         
-        const float fPitchMax = M_PI_2 - 0.1f;
+        const float fPitchMax = (float)M_PI_2 - 0.1f;
         m_fPitch -= vOffset.Y;
         if(m_fPitch > fPitchMax)
             m_fPitch = fPitchMax;

@@ -50,7 +50,7 @@ void CObject::Update(unsigned nDeltaTime)
         
         btScalar fRotX, fRotY, fRotZ;
         m_pColObj->getWorldTransform().getBasis().getEulerYPR(fRotZ, fRotY, fRotX);
-        core::vector3df IrrRot(fRotX / M_PI * 180, fRotY / M_PI * 180, fRotZ / M_PI * 180);
+        core::vector3df IrrRot(fRotX / (float)M_PI * 180.0f, fRotY / (float)M_PI * 180.0f, fRotZ / (float)M_PI * 180.0f);
         m_pSceneNode->setRotation(IrrRot);
     }
 #endif // OF_CLIENT

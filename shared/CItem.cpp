@@ -249,7 +249,7 @@ void CItem::Update(unsigned nDeltaTime)
         /*btMatrix3x3 matRot;
         matRot.setEulerYPR(0, m_fRotMulti, 0);
         SetRotMatrix(matRot);*/
-        m_pSceneNode->setRotation(core::vector3df(0.0f, m_fRotMulti / M_PI * 180.0f, 0.0f));
+        m_pSceneNode->setRotation(core::vector3df(0.0f, m_fRotMulti / (float)M_PI * 180.0f, 0.0f));
     }
 #endif // OF_CLIENT
     

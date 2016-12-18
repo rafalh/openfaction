@@ -97,6 +97,9 @@ class CCaptureTheFlag: public CGamemode
         {
             return "ctf";
         }
+
+        // 16-byte alignment is needed for Bullet objects
+        BT_DECLARE_ALIGNED_ALLOCATOR()
     
     private:
         unsigned m_RedScore, m_BlueScore;

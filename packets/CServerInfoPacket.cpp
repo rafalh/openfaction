@@ -35,7 +35,7 @@ void CServerInfoPacket::Send(CServer *pServer, const CSocketAddress &Addr) const
     
     Stream2.WriteUInt8(RF_GAME);
     Stream2.WriteUInt8(RF_SERVER_INFO);
-    Stream2.WriteUInt16(Stream.str().size());
+    Stream2.WriteUInt16((uint16_t)Stream.str().size());
     
     Stream2.WriteBinary(Stream.str());
     

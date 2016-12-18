@@ -173,34 +173,35 @@ bool CCmdHandler::HandleCmd(const char *pCommand, const char *pArg, CConsole::TU
         {
             CString strLevel = pArg;
             strLevel += ".rfl";
-            bool bFailed = false;
             try
             {
                 m_pServer->LoadLevel(strLevel.c_str());
             }
             catch(const CException &e)
             {
-                bFailed = true;
-            }
-            if(bFailed)
-            {
                 vector<CString> Files = CVirtualFileSystem::GetInst().FindFiles(pArg, ".rfl");
-                
-                if(Files.size() > 1)
+
+                if (Files.size() > 1)
                 {
                     m_pConsole->CmdOutput(pCaller, "More than one level found:");
-                    for(unsigned i = 0; i < Files.size(); ++i)
+                    for (unsigned i = 0; i < Files.size(); ++i)
                         m_pConsole->CmdOutput(pCaller, "%s", Files[i].c_str());
                 }
-                else if(Files.size() == 1)
+                else if (Files.size() == 1)
                 {
-                    try
-                    {
-                        m_pServer->LoadLevel(Files[0].c_str());
-                    }
-                    catch(const CException &e)
-                    {
+                    if (Files[0] == strLevel)
                         m_pConsole->CmdOutput(pCaller, "Failed to load level \"%s\"! %s", Files[0].c_str(), e.what());
+                    else
+                    {
+                        try
+                        {
+                            // Try to load level found
+                            m_pServer->LoadLevel(Files[0].c_str());
+                        }
+                        catch (const CException &e2)
+                        {
+                            m_pConsole->CmdOutput(pCaller, "Failed to load level \"%s\"! %s", Files[0].c_str(), e2.what());
+                        }
                     }
                 }
                 else

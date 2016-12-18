@@ -97,7 +97,7 @@ inline CServer::~CServer()
     m_pBanlist = NULL;
 }
 
-void CServer::Init() throw(CException)
+void CServer::Init()
 {
     CGame::SConfig GameConfig;
     GameConfig.bWeaponsStay = m_pConf->GetWeaponsStay();
@@ -118,7 +118,7 @@ void CServer::Init() throw(CException)
     m_TablesVppChecksum.Compute(Stream);
     Stream.clear();
     Stream.seekg(0, ifstream::end);
-    m_cbTablesVpp = Stream.tellg();
+    m_cbTablesVpp = (unsigned) Stream.tellg();
     
     /* Create socket */
     iStatus = m_Sock.Create();
@@ -197,7 +197,7 @@ void CServer::Stop()
     g_Lock.Release();
 }
 
-void CServer::LoadLevel(const char *pszFilename) throw(CException)
+void CServer::LoadLevel(const char *pszFilename)
 {
     /* Load level */
     m_pGame->LoadLevel(pszFilename);
@@ -211,7 +211,7 @@ void CServer::LoadLevel(const char *pszFilename) throw(CException)
     m_LoadingLevelTimestamp = time(NULL);
 }
 
-void CServer::LoadNextLevel() throw(CException)
+void CServer::LoadNextLevel()
 {
     ++m_nCurrentLevel;
     

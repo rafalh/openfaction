@@ -41,11 +41,11 @@ class CServer: public CEventsHandler
     public:
         CServer(CServerConfig *pServerConfig);
         ~CServer();
-        void Init() throw(CException);
+        void Init();
         void Start(bool bBlock);
         void Stop();
-        void LoadLevel(const char *pFileName) throw(CException);
-        void LoadNextLevel() throw(CException);
+        void LoadLevel(const char *pFileName);
+        void LoadNextLevel();
         void SendGlobalMessage(const char *pMsg) const;
         
         inline CSocket &GetSocket()

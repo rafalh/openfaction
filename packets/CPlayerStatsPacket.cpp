@@ -15,7 +15,7 @@ void CPlayerStatsPacket::Send(CPlayer *pPlayer) const
     COutputBinaryStringStream Stream;
     
     Stream.WriteUInt8(0x07);
-    Stream.WriteUInt8(m_Players.size());
+    Stream.WriteUInt8((uint8_t)m_Players.size());
     for(std::vector<CPlayer*>::const_iterator it = m_Players.begin(); it < m_Players.end(); ++it)
     {
         CPlayer * const pPlayer = *it;

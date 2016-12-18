@@ -11,8 +11,6 @@
 #ifndef PRECOMP_H_INCLUDED
 #define PRECOMP_H_INCLUDED
 
-#define _USE_MATH_DEFINES // MSVC needs it
-
 #include "config.h"
 #include <cstdlib>
 #include <cstdio>

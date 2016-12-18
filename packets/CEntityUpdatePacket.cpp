@@ -68,7 +68,7 @@ void CEntityUpdatePacket::Send(CPlayer *pPlayer, bool bSyncAll) const
                 btVector3 vFw = pEntity->GetRotMatrix().getColumn(2);
                 float fYaw = atan2f(vFw[0], vFw[2]); // Factor doesn't change yaw
                 
-                float fPitchSgn = vFw[1] >= 0 ? 1 : -1;
+                float fPitchSgn = vFw[1] >= 0 ? 1.0f : -1.0f;
                 float fFactor = vFw[0] / (vFw[0] + fPitchSgn * vFw[1] * sinf(fYaw));
                 assert(fFactor >= 0.0f);
                 vFw[0] /= fFactor;
@@ -100,8 +100,8 @@ void CEntityUpdatePacket::Send(CPlayer *pPlayer, bool bSyncAll) const
             
             if(nFlags & RF_EDF_HEATH_ARMOR)
             {
-                Stream2.WriteUInt8(pEntity->GetLife());
-                Stream2.WriteUInt8(pEntity->GetArmor());
+                Stream2.WriteUInt8((uint8_t)pEntity->GetLife());
+                Stream2.WriteUInt8((uint8_t)pEntity->GetArmor());
                 Stream2.WriteUInt8(0);
             }
             
@@ -167,11 +167,11 @@ void CEntityUpdatePacket::Process(CInputBinaryStream &Stream, CPlayer *pPlayer)
             // Update rotation matrix
             int iPitch = Stream.ReadInt16();
             assert(-32168 <= iPitch && iPitch <= 32168);
-            float fPitch = iPitch / 32168.001f * M_PI_2;
+            float fPitch = iPitch / 32168.001f * (float)M_PI_2;
             
             int iYaw = Stream.ReadInt16();
             assert(-32510 <= iYaw && iYaw <= 32510);
-            float fYaw = iYaw / 32510.0f * 2.0f * M_PI;
+            float fYaw = iYaw / 32510.0f * 2.0f * (float)M_PI;
             
             // This is how RF created forward vector
             btVector3 vFw;

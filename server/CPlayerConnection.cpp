@@ -38,7 +38,7 @@ void CPlayerConnection::AddPacket(unsigned nType, CString strData, bool bReliabl
         m_PacketsStream.WriteUInt8(RF_GAME);
     
     m_PacketsStream.WriteUInt8(nType);
-    m_PacketsStream.WriteUInt16(strData.size());
+    m_PacketsStream.WriteUInt16((uint16_t)strData.size());
     m_PacketsStream.WriteBinary(strData.data(), strData.size());
 
 #if !PACKETS_BUFFERING
@@ -100,7 +100,7 @@ void CPlayerConnection::AddSpecialReliablePacket(unsigned nType, CString strData
     m_PacketsStream.WriteUInt8(nType);
     m_PacketsStream.WriteUInt8(0);
     m_PacketsStream.WriteUInt16(nId);
-    m_PacketsStream.WriteUInt16(strData.size());
+    m_PacketsStream.WriteUInt16((uint16_t)strData.size());
     m_PacketsStream.WriteUInt32(nTicks);
     m_PacketsStream.WriteBinary(strData.data(), strData.size());
     
@@ -115,7 +115,7 @@ void CPlayerConnection::SendReliablePacket(unsigned nId, SReliablePacketDesc *pD
     Stream.WriteUInt8(RF_REL_PACKETS);
     Stream.WriteUInt8(0);
     Stream.WriteUInt16(nId);
-    Stream.WriteUInt16(pDesc->strData.size());
+    Stream.WriteUInt16((uint16_t)pDesc->strData.size());
     Stream.WriteUInt32(pDesc->nTicks);
     Stream.WriteBinary(pDesc->strData.data(), pDesc->strData.size());
     

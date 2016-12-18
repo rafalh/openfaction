@@ -47,9 +47,9 @@ void CEntityController::Update(unsigned uDeltaTime)
     {
         core::vector2df vOffset = m_vCursorPos - m_vCursorCenter;
         
-        m_fYaw = fmod(m_fYaw + vOffset.X, 2.0f * M_PI);
+        m_fYaw = fmod(m_fYaw + vOffset.X, 2.0f * (float)M_PI);
         
-        const float fPitchMax = M_PI_2 - 0.1f;
+        const float fPitchMax = (float)M_PI_2 - 0.1f;
         m_fPitch += vOffset.Y;
         if(m_fPitch > fPitchMax)
             m_fPitch = fPitchMax;
@@ -106,7 +106,7 @@ void CEntityController::Update(unsigned uDeltaTime)
         pBody->setCenterOfMassTransform(Transform);
     }
     else
-        m_pEntity->GetCharacter()->setWalkDirection(vDir * uDeltaTime / 200.0f);
+        m_pEntity->GetCharacter()->setWalkDirection(vDir * (float)uDeltaTime / 200.0f);
 }
 
 void CEntityController::Jump()

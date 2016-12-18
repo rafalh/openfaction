@@ -223,7 +223,7 @@ void CMesh::DbgDraw(const CObject *pObj) const
         // Draw box in center of each bone
         pVideoDrv->setMaterial(Material);
         pVideoDrv->setTransform(video::ETS_WORLD, core::IdentityMatrix);
-        pVideoDrv->draw3DBox(core::aabbox3df(vIrrBonePos - core::vector3df(0.01, 0.01, 0.01), vIrrBonePos + core::vector3df(0.01, 0.01, 0.01)), video::SColor(128, 255, 255, 0));
+        pVideoDrv->draw3DBox(core::aabbox3df(vIrrBonePos - core::vector3df(0.01f, 0.01f, 0.01f), vIrrBonePos + core::vector3df(0.01f, 0.01f, 0.01f)), video::SColor(128, 255, 255, 0));
         
         if(Bone.iParent >= 0)
         {
@@ -251,7 +251,7 @@ void CMesh::DbgDraw(const CObject *pObj) const
     vTestPos = q * vTestPos;
     pVideoDrv->setMaterial(video::SMaterial());
     pVideoDrv->setTransform(video::ETS_WORLD, core::IdentityMatrix);
-    pVideoDrv->draw3DBox(core::aabbox3df(vTestPos - core::vector3df(0.01, 0.01, 0.01), vTestPos + core::vector3df(0.01, 0.01, 0.01)), video::SColor(255, 0, 255, 0));
+    pVideoDrv->draw3DBox(core::aabbox3df(vTestPos - core::vector3df(0.01f, 0.01f, 0.01f), vTestPos + core::vector3df(0.01f, 0.01f, 0.01f)), video::SColor(255, 0, 255, 0));
 }
 #endif // OF_CLIENT
 
@@ -344,7 +344,7 @@ void CSubMesh::LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrr
     assert(cBatches > 0 && cBatches < 256);
     
     uint32_t cbData = Stream.ReadUInt32();
-    assert(cbData > cBatches * 56 && cbData < 0x1000000); // 1MB
+    assert(cbData > cBatches * 56u && cbData < 0x1000000u); // 1MB
     
     //CConsole::GetInst().DbgPrint("Flags 0x%x cVertices %u cBatches %u\n", uFlags, cVertices, cBatches);
     
@@ -555,7 +555,7 @@ irr::scene::ISceneNodeAnimator *CSubMesh::CreateLodAnimator() const
     assert(m_LodDistances.size() == m_LodIrrMeshes.size());
     CLodSceneNodeAnimator *pAnim = new CLodSceneNodeAnimator();
 #ifdef USE_LOD_MODELS
-    for (int i = 0; i < m_LodDistances.size(); ++i)
+    for (unsigned i = 0; i < m_LodDistances.size(); ++i)
         pAnim->addLevelOfDetail(m_LodIrrMeshes[i], m_LodDistances[i]);
 #else
     pAnim->addLevelOfDetail(m_LodIrrMeshes[0], m_LodDistances[0]);

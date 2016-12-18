@@ -18,5 +18,5 @@ void CDeathmatch::OnPlayerKill(CPlayer *pPlayer, CPlayer *pKiller)
 {
     CGamemode::OnPlayerKill(pPlayer, pKiller);
     if(pKiller && pKiller->GetScore() >= (int)m_pServer->GetConf()->GetKillsLimit())
-        ; // end game
+        CLogger::GetInst().PrintStatus("Player %s is winning!", pKiller->GetName()); // TODO: end game
 }

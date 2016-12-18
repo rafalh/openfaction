@@ -35,7 +35,7 @@ class COfDebugDrawer: public btIDebugDraw
         video::SMaterial m_Material;
     
     public:
-        inline COfDebugDrawer(CGame *pGame):
+        COfDebugDrawer(CGame *pGame):
             m_pGame(pGame)
         {
             m_DebugMode =
@@ -72,7 +72,7 @@ class COfDebugDrawer: public btIDebugDraw
             core::vector3df vTo(to.x(), to.y(), to.z());
             if(IsPointVisible(vFrom) && IsPointVisible(vTo))
             {
-                video::SColor Clr(255, color.x()*255, color.y()*255, color.z()*255);
+                video::SColor Clr(255, (unsigned)color.x()*255u, (unsigned)color.y()*255u, (unsigned)color.z()*255u);
                 m_pGame->GetVideoDriver()->setMaterial(m_Material);
                 m_pGame->GetVideoDriver()->setTransform(video::ETS_WORLD, core::IdentityMatrix);
                 m_pGame->GetVideoDriver()->draw3DLine(vFrom, vTo, Clr);
@@ -85,7 +85,7 @@ class COfDebugDrawer: public btIDebugDraw
             core::vector3df vMax(bbMax.x(), bbMax.y(), bbMax.z());
             if(IsPointVisible(vMin) && IsPointVisible(vMax))
             {
-                video::SColor Clr(255, color.x()*255, color.y()*255, color.z()*255);
+                video::SColor Clr(255u, (unsigned)color.x()*255u, (unsigned)color.y()*255u, (unsigned)color.z()*255u);
                 m_pGame->GetVideoDriver()->setMaterial(m_Material);
                 m_pGame->GetVideoDriver()->setTransform(video::ETS_WORLD, core::IdentityMatrix);
                 m_pGame->GetVideoDriver()->draw3DBox(core::aabbox3df(vMin, vMax), Clr);

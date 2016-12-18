@@ -210,8 +210,8 @@ void CClientApp::Run()
         
         // Display FPS
         wchar_t wszDbgBuf[256];
-        float fFps = m_pDriver->getFPS();
-        swprintf(wszDbgBuf, L"FPS: %.1f (frame took %.0f ms)", fFps, 1.0f / fFps * 1000);
+        int Fps = m_pDriver->getFPS();
+        swprintf(wszDbgBuf, L"FPS: %d (frame took %.0f ms)", Fps, 1.0f / Fps * 1000.0f);
         DbgLabels[0]->setText(wszDbgBuf);
         
         // Display level update time

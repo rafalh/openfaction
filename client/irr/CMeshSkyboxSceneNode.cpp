@@ -67,7 +67,7 @@ void CMeshSkyboxSceneNode::render()
     // Draw the sky box between the near and far clip plane
     const core::aabbox3d<f32> &Aabb = Mesh->getBoundingBox();
     float fMaxDist = max(Aabb.MinEdge.getLength(), Aabb.MaxEdge.getLength());
-    const f32 viewDistance = (0.1f * camera->getNearValue() + 0.9 * camera->getFarValue()) / fMaxDist;
+    const f32 viewDistance = (0.1f * camera->getNearValue() + 0.9f * camera->getFarValue()) / fMaxDist;
     core::matrix4 scale;
     scale.setScale(core::vector3df(viewDistance, viewDistance, viewDistance));
 

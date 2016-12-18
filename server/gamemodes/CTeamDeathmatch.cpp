@@ -25,13 +25,13 @@ void CTeamDeathmatch::OnPlayerKill(CPlayer *pPlayer, CPlayer *pKiller)
         {
             ++m_BlueScore;
             if(m_BlueScore >= m_pServer->GetConf()->GetKillsLimit())
-                ; // end game
+                CLogger::GetInst().PrintStatus("Blue Team is winning!"); // TODO: end game
         }
         else
         {
             ++m_RedScore;
             if(m_RedScore >= m_pServer->GetConf()->GetKillsLimit())
-                ; // end game
+                CLogger::GetInst().PrintStatus("Red Team is winning!"); // TODO: end game
         }
     }
 }

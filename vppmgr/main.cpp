@@ -13,6 +13,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <algorithm>
 #include <vpp_format.h>
 #include <utils.h>
 #include <CFileList.h>
@@ -215,7 +216,7 @@ class CVpp
                 return 0;
             
             File.seekg(0, ios::end);
-            return File.tellg();
+            return (unsigned)File.tellg();
         }
         
         int ReadFileList()

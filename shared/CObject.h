@@ -112,7 +112,7 @@ class CObject: public CElement
 #endif
         bool m_bTransformChanged;
         bool m_bIsInWorld;
-        short m_iColGroup, m_iColMask;
+        unsigned short m_iColGroup, m_iColMask;
 };
 
 #endif // COBJECT_H

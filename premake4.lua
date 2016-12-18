@@ -1,6 +1,12 @@
 (workspace or solution) "Open Faction"
 	configurations { "Debug", "Release" }
-	defines { "_CRT_SECURE_NO_WARNINGS", "_CRT_NONSTDC_NO_WARNINGS", "NOMINMAX", "_USE_MATH_DEFINES" }
+	defines {
+		"_CRT_SECURE_NO_WARNINGS",
+		"_CRT_NONSTDC_NO_WARNINGS",
+		"_WINSOCK_DEPRECATED_NO_WARNINGS", -- deprecated functions are needed to support old platforms like WinXP
+		"NOMINMAX",                        -- use algorithm header instead of defines from Windows
+		"_USE_MATH_DEFINES",               -- needed for M_PI
+	}
 	includedirs "include"
 	language "C++" -- default
 	if location then
