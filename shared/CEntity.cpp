@@ -19,7 +19,7 @@
 #include "CLevel.h"
 #include "CMesh.h"
 #include "CMeshMgr.h"
-#include "CEntitiesTable.h"
+#include "tables/CEntitiesTable.h"
 #include "CException.h"
 #include "CAnimMgr.h"
 #include "CAnimatedMesh.h"
@@ -84,12 +84,12 @@ CEntity::CEntity(CLevel *pLevel, const SEntityClass *pClass, unsigned nUid):
     m_pColObj->setFriction(0.1f);
     m_pColObj->setRestitution(0.0f);
     
-    CAmmoTable *pAmmoTbl = m_pLevel->GetGame()->GetAmmoTbl();
+    CAmmoTable *pAmmoTbl = m_pLevel->GetGame()->GetTables()->ammo();
     m_Ammo = new unsigned[pAmmoTbl->GetCount()];
     for(unsigned i = 0; i < pAmmoTbl->GetCount(); ++i)
         m_Ammo[i] = 0;
     
-    const SWeaponClass *pWeaponCls = m_pLevel->GetGame()->GetWeaponsTbl()->Get(RF_PISTOL);
+    const SWeaponClass *pWeaponCls = m_pLevel->GetGame()->GetTables()->weapons()->Get(RF_PISTOL);
     m_pWeapon = AddWeapon(pWeaponCls, 0);
     
 #ifdef OF_CLIENT
@@ -161,7 +161,7 @@ CEntity::CEntity(CLevel *pLevel, CInputBinaryStream &Stream):
     Stream.ReadString2(); // left hand holding
     Stream.ReadString2(); // right hand holding
     
-    m_pClass = m_pLevel->GetGame()->GetEntitiesTbl()->Get(strClassName);
+    m_pClass = m_pLevel->GetGame()->GetTables()->entities()->Get(strClassName);
     if(!m_pClass)
         THROW_EXCEPTION("Unknown class %s", strClassName.c_str());
     
@@ -204,16 +204,16 @@ CEntity::CEntity(CLevel *pLevel, CInputBinaryStream &Stream):
     
     SetPos(vPos);
     
-    CAmmoTable *pAmmoTbl = m_pLevel->GetGame()->GetAmmoTbl();
+    CAmmoTable *pAmmoTbl = m_pLevel->GetGame()->GetTables()->ammo();
     m_Ammo = new unsigned[pAmmoTbl->GetCount()];
     for(unsigned i = 0; i < pAmmoTbl->GetCount(); ++i)
         m_Ammo[i] = 0;
     
     unsigned cAmmo;
-    const SWeaponClass *pWeaponCls = m_pLevel->GetGame()->GetWeaponsTbl()->Get(strPrimaryWeapon);
+    const SWeaponClass *pWeaponCls = m_pLevel->GetGame()->GetTables()->weapons()->Get(strPrimaryWeapon);
     if(!pWeaponCls)
     {
-        pWeaponCls = m_pLevel->GetGame()->GetWeaponsTbl()->Get(RF_PISTOL);
+        pWeaponCls = m_pLevel->GetGame()->GetTables()->weapons()->Get(RF_PISTOL);
         cAmmo = 0;
     } else
         cAmmo = (pWeaponCls->nId == RF_PISTOL ? 64 : pWeaponCls->nClipSize);
@@ -390,7 +390,7 @@ void CEntity::RemoveWeapons()
         delete it->second;
     m_Weapons.clear();
     
-    for(unsigned i = 0; i < m_pLevel->GetGame()->GetAmmoTbl()->GetCount(); ++i)
+    for(unsigned i = 0; i < m_pLevel->GetGame()->GetTables()->ammo()->GetCount(); ++i)
         m_Ammo[i] = 0;
     
     m_pWeapon = NULL;
@@ -468,7 +468,7 @@ void CEntity::LoadAnimations()
         const SWeaponClass *pWeaponCls = 0;
         if(!itWeapon->first.empty())
         {
-            pWeaponCls = m_pLevel->GetGame()->GetWeaponsTbl()->Get(itWeapon->first);
+            pWeaponCls = m_pLevel->GetGame()->GetTables()->weapons()->Get(itWeapon->first);
             assert(pWeaponCls);
         }
             
@@ -489,7 +489,7 @@ void CEntity::LoadAnimations()
     {
         const SWeaponClass *pWeaponCls = 0;
         if(!itWeapon2->first.empty())
-            pWeaponCls = m_pLevel->GetGame()->GetWeaponsTbl()->Get(itWeapon2->first);
+            pWeaponCls = m_pLevel->GetGame()->GetTables()->weapons()->Get(itWeapon2->first);
         int WeaponClsId = pWeaponCls ? pWeaponCls->nId : -1;
         
         map<CEntityAction, CString>::const_iterator itAction;

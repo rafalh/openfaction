@@ -10,7 +10,7 @@
 
 #include "CPlayer.h"
 #include "CServer.h"
-#include "CMpCharactersTable.h"
+#include "tables/CMpCharactersTable.h"
 #include "CLevel.h"
 #include "CEntity.h"
 

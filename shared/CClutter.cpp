@@ -10,7 +10,7 @@
 
 #include "CClutter.h"
 #include "CColWorld.h"
-#include "CClutterTable.h"
+#include "tables/CClutterTable.h"
 #include "CMesh.h"
 #include "CMeshMgr.h"
 #include "CLevel.h"
@@ -37,7 +37,7 @@ CClutter::CClutter(CLevel *pLevel, CInputBinaryStream &Stream):
     m_nUid = Stream.ReadUInt32();
     
     CString strClassName = Stream.ReadString2();
-    m_pClass = m_pLevel->GetGame()->GetClutterTbl()->Get(strClassName);
+    m_pClass = m_pLevel->GetGame()->GetTables()->clutter()->Get(strClassName);
     
     SetPos(Stream.ReadVector());
     

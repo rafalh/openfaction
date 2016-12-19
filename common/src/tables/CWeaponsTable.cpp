@@ -9,9 +9,9 @@
 *****************************************************************************/
 
 #include "utils.h"
-#include "CWeaponsTable.h"
-#include "CTblReader.h"
-#include "CGame.h"
+#include "tables/CWeaponsTable.h"
+#include "tables/CTblReader.h"
+#include "tables/CTablesMgr.h"
 
 using namespace std;
 
@@ -87,7 +87,7 @@ int CWeaponsTable::Load(istream &Stream)
         {
             if(!StrCmpI(pName, "$Display Name"))
             {
-                Reader.GetString(m_Weapons.back().strDisplayName, m_pGame->GetStringsTbl());
+                Reader.GetString(m_Weapons.back().strDisplayName, m_tablesMgr->strings());
                 if(m_Weapons.back().strDisplayName.empty())
                     m_Weapons.back().strDisplayName = "(empty)";
             }
@@ -123,7 +123,7 @@ int CWeaponsTable::Load(istream &Stream)
                 CString strAmmoType;
                 Reader.GetString(strAmmoType);
                 if(!strAmmoType.empty())
-                    m_Weapons.back().pAmmoType = m_pGame->GetAmmoTbl()->Get(strAmmoType);
+                    m_Weapons.back().pAmmoType = m_tablesMgr->ammo()->Get(strAmmoType);
             }
             else if(!StrCmpI(pName, "$Max Ammo"))
             {

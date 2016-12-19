@@ -20,15 +20,7 @@
 #include "CConsole.h"
 #include "CString.h"
 
-#include "CStringsTable.h"
-#include "CAmmoTable.h"
-#include "CWeaponsTable.h"
-#include "CItemsTable.h"
-#include "CEntitiesTable.h"
-#include "CClutterTable.h"
-#include "CGameTable.h"
-#include "CMpCharactersTable.h"
-#include "CFoleyTable.h"
+#include "tables/CTablesMgr.h"
 #ifdef OF_CLIENT
 # include "CSoundManager.h"
 #endif // OF_CLIENT
@@ -39,12 +31,12 @@ CEventsHandler CEventsHandler::Default;
 
 CGame::CGame(CConsole *pConsole, irr::IrrlichtDevice *pIrrDevice):
     m_pConsole(pConsole), m_pEventsHandler(&CEventsHandler::Default), m_pIrrDevice(pIrrDevice),
-    m_pStringsTbl(NULL), m_pAmmoTbl(NULL), m_pWeaponsTbl(NULL), m_pItemsTbl(NULL), m_pEntitiesTbl(NULL),
-    m_pClutterTbl(NULL), m_pGameTbl(NULL), m_pMpCharactersTbl(NULL), m_pFoleyTbl(NULL)
+    m_pTablesMgr(nullptr)
 {
     m_pMaterialsMgr = new CMaterialsMgr(this);
     m_pMeshMgr = new CMeshMgr(this);
     m_pAnimMgr = new CAnimMgr(this);
+    m_pTablesMgr = new CTablesMgr();
 #ifdef OF_CLIENT
     m_pSoundMgr = new CSoundManager(this);
 #else
@@ -68,6 +60,7 @@ CGame::~CGame()
     delete m_pMeshMgr;
     delete m_pMaterialsMgr;
     delete m_pAnimMgr;
+    delete m_pTablesMgr;
     
 #ifdef OF_CLIENT
     delete m_pSoundMgr;
@@ -112,77 +105,11 @@ void CGame::InitVfs()
         m_pVfs->AddArchive(strRootDir + pGameArchives[i]);
         m_pConsole->DbgPrint("Loaded %s\n", pGameArchives[i]);
     }
-        
 }
 
 void CGame::LoadTables()
 {
-    CVfsFileStream Stream;
-    
-    /* Load strings table */
-    m_pStringsTbl = new CStringsTable;
-    Stream.Open("strings.tbl");
-    assert(Stream.good());
-    int iStatus = m_pStringsTbl->Load(Stream);
-    if(iStatus < 0)
-        THROW_EXCEPTION("Failed to load strings.tbl");
-    
-    /* Load ammo table */
-    m_pAmmoTbl = new CAmmoTable;
-    Stream.Open("ammo.tbl");
-    assert(Stream.good());
-    iStatus = m_pAmmoTbl->Load(Stream);
-    if(iStatus < 0)
-        THROW_EXCEPTION("Failed to load ammo.tbl");
-    
-    /* Load weapons table */
-    m_pWeaponsTbl = new CWeaponsTable(this);
-    Stream.Open("weapons.tbl");
-    iStatus = m_pWeaponsTbl->Load(Stream);
-    if(iStatus < 0)
-        THROW_EXCEPTION("Failed to load weapons.tbl");
-    
-    /* Load items table */
-    m_pItemsTbl = new CItemsTable(this);
-    Stream.Open("items.tbl");
-    iStatus = m_pItemsTbl->Load(Stream);
-    if(iStatus < 0)
-        THROW_EXCEPTION("Failed to load items.tbl");
-    
-    /* Load entities table */
-    m_pEntitiesTbl = new CEntitiesTable;
-    Stream.Open("entity.tbl");
-    iStatus = m_pEntitiesTbl->Load(Stream);
-    if(iStatus < 0)
-        THROW_EXCEPTION("Failed to load entity.tbl");
-    
-    /* Load clutter table */
-    m_pClutterTbl = new CClutterTable;
-    Stream.Open("clutter.tbl");
-    iStatus = m_pClutterTbl->Load(Stream);
-    if(iStatus < 0)
-        THROW_EXCEPTION("Failed to load clutter.tbl");
-    
-    /* Load game table */
-    m_pGameTbl = new CGameTable;
-    Stream.Open("game.tbl");
-    iStatus = m_pGameTbl->Load(Stream);
-    if(iStatus < 0)
-        THROW_EXCEPTION("Failed to load game.tbl");
-    
-    /* Load multiplayer characters table */
-    m_pMpCharactersTbl = new CMpCharactersTable(this);
-    Stream.Open("pc_multi.tbl");
-    iStatus = m_pMpCharactersTbl->Load(Stream);
-    if(iStatus < 0)
-        THROW_EXCEPTION("Failed to load pc_multi.tbl");
-    
-    /* Load foley sounds table */
-    m_pFoleyTbl = new CFoleyTable;
-    Stream.Open("foley.tbl");
-    iStatus = m_pFoleyTbl->Load(Stream);
-    if(iStatus < 0)
-        THROW_EXCEPTION("Failed to load pc_multi.tbl");
+    m_pTablesMgr->LoadTables();
 }
 
 void CGame::LoadMod(const char *pszModName)

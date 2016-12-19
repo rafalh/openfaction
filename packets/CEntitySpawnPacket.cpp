@@ -9,8 +9,8 @@
 *****************************************************************************/
 
 #include "CEntitySpawnPacket.h"
-#include "CEntitiesTable.h"
-#include "CMpCharactersTable.h"
+#include "tables/CEntitiesTable.h"
+#include "tables/CMpCharactersTable.h"
 #include "CWeapon.h"
 
 using namespace std;

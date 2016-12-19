@@ -8,13 +8,11 @@
 *
 *****************************************************************************/
 
-#ifndef CVIRTUALFILESYSTEM_H
-#define CVIRTUALFILESYSTEM_H
+#pragma once
 
-#include "vpp_format.h"
 #include "CInputBinaryStream.h"
-#include <vector>
 #include "CString.h"
+#include <vector>
 #include <map>
 
 class CVirtualFileSystem
@@ -133,5 +131,3 @@ class CVfsFileStream: private CVfsFileBuf, public CInputBinaryStream
             return CVfsFileBuf::GetSize();
         }
 };
-
-#endif // CVIRTUALFILESYSTEM_H

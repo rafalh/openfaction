@@ -21,7 +21,7 @@
 #include "version.h"
 #include "main.h"
 #include "CLock.h"
-#include "CWeaponsTable.h"
+#include "tables/CWeaponsTable.h"
 
 using namespace std;
 
@@ -274,9 +274,9 @@ bool CCmdHandler::HandleCmd(const char *pCommand, const char *pArg, CConsole::TU
     {
         if(pArg[0])
         {
-            const SWeaponClass *pWeaponCls = m_pServer->GetGame()->GetWeaponsTbl()->Get(pArg);
+            const SWeaponClass *pWeaponCls = m_pServer->GetGame()->GetTables()->weapons()->Get(pArg);
             if(!pWeaponCls)
-                pWeaponCls = m_pServer->GetGame()->GetWeaponsTbl()->Get(strtoul(pArg, NULL, 0));
+                pWeaponCls = m_pServer->GetGame()->GetTables()->weapons()->Get(strtoul(pArg, NULL, 0));
             if(pWeaponCls)
                 m_pServer->GetConf()->SetDefaultWeapon(pWeaponCls->strName.c_str());
         }

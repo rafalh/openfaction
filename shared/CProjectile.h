@@ -11,7 +11,7 @@
 #ifndef CPROJECTILE_H
 #define CPROJECTILE_H
 
-#include "CWeaponsTable.h"
+#include "tables/CWeaponsTable.h"
 #include "CObject.h"
 #include <algorithm>
 

@@ -9,10 +9,10 @@
 *****************************************************************************/
 
 #include "utils.h"
-#include "CItemsTable.h"
-#include "CTblReader.h"
+#include "tables/CItemsTable.h"
+#include "tables/CTblReader.h"
 #include "CLogger.h"
-#include "CGame.h"
+#include "tables/CTablesMgr.h"
 #include "CException.h"
 
 using namespace std;
@@ -70,7 +70,7 @@ int CItemsTable::Load(istream &Stream)
             {
                 CString strWeapon;
                 Reader.GetString(strWeapon);
-                const SWeaponClass *pWeaponClasss = m_pGame->GetWeaponsTbl()->Get(strWeapon);
+                const SWeaponClass *pWeaponClasss = m_pTablesMgr->weapons()->Get(strWeapon);
                 if(pWeaponClasss)
                 {
                     m_Items.back().pWeaponClass = pWeaponClasss;
@@ -81,7 +81,7 @@ int CItemsTable::Load(istream &Stream)
             {
                 CString strWeapon;
                 Reader.GetString(strWeapon);
-                m_Items.back().pWeaponClass = m_pGame->GetWeaponsTbl()->Get(strWeapon);
+                m_Items.back().pWeaponClass = m_pTablesMgr->weapons()->Get(strWeapon);
             }
             else if(!StrCmpI(pName, "$Count"))
             {

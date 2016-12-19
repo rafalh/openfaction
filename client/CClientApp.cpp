@@ -28,9 +28,9 @@
 #include "CHud.h"
 #include "CWeaponSelection.h"
 
-#include "CWeaponsTable.h"
-#include "CEntitiesTable.h"
-#include "CGameTable.h"
+#include "tables/CWeaponsTable.h"
+#include "tables/CEntitiesTable.h"
+#include "tables/CGameTable.h"
 
 #include <irrKlang.h>
 
@@ -80,6 +80,7 @@ CClientApp::~CClientApp()
 
 void CClientApp::Init()
 {
+    CTimer DbgTimer;
 #ifdef _WIN32
     m_pDevice = createDevice(video::EDT_DIRECT3D9, core::dimension2d<u32>(800, 600), 32, false, false, false, this);
 #else
@@ -141,6 +142,7 @@ void CClientApp::Init()
     m_pWeaponSel = new CWeaponSelection(m_pGame);
     
     m_pConsole->Print("Game initialized!\n");
+    CLogger::GetInst().PrintStatus("Initialized game in %u ms", DbgTimer.GetValue());
 }
 
 bool CClientApp::OnEvent(const SEvent &Event)
@@ -277,15 +279,17 @@ void CClientApp::Run()
 void CClientApp::LoadLevel(const char *pszName)
 {
     // Load new level
+    CTimer DbgTimer;
     m_pGame->LoadLevel(pszName);
+    CLogger::GetInst().PrintStatus("Loading level from RFL took %u ms", DbgTimer.GetValue());
     
     // Recreate local entity (last one was deleted when level has been loaded)
-    const SEntityClass *pEntityCls = m_pGame->GetEntitiesTbl()->Get(5u);
+    const SEntityClass *pEntityCls = m_pGame->GetTables()->entities()->Get(5u);
     m_pLocalEntity = new CEntity(m_pGame->GetLevel(), pEntityCls);
     btVector3 vPos = m_pGame->GetLevel()->GetStartPos();
     m_pLocalEntity->SetPos(vPos);
-    const char *pszDefaultWeapon = m_pGame->GetGameTbl()->GetDefaultWeapon();
-    const SWeaponClass *pWeaponCls = m_pGame->GetWeaponsTbl()->Get(pszDefaultWeapon);
+    const char *pszDefaultWeapon = m_pGame->GetTables()->game()->GetDefaultWeapon();
+    const SWeaponClass *pWeaponCls = m_pGame->GetTables()->weapons()->Get(pszDefaultWeapon);
     
     m_pLocalEntity->RemoveWeapons();
     m_pLocalEntity->AddWeapon(pWeaponCls, 64);
@@ -296,6 +300,7 @@ void CClientApp::LoadLevel(const char *pszName)
     SetCameraType(false);
     
     m_pConsole->Print("Level %s has been loaded.\n", pszName);
+    CLogger::GetInst().PrintStatus("Loaded level %s in %u ms", pszName, DbgTimer.GetValue());
 }
 
 void CClientApp::SetCameraType(bool bFreeCamera)

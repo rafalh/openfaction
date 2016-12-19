@@ -12,7 +12,7 @@
 #define CWEAPON_H
 
 #include "CTimer.h"
-#include "CWeaponsTable.h"
+#include "tables/CWeaponsTable.h"
 #include <btBulletCollisionCommon.h>
 #include <algorithm>
 

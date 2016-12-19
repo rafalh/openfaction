@@ -13,7 +13,7 @@
 
 #include "CPlayer.h"
 #include "CInputBinaryStream.h"
-#include "CMpCharactersTable.h"
+#include "tables/CMpCharactersTable.h"
 #include "CServer.h"
 
 class CSpawnRequestPacket
@@ -21,7 +21,7 @@ class CSpawnRequestPacket
     public:
         inline CSpawnRequestPacket(CServer *pServer, CInputBinaryStream &Stream)
         {
-            m_pCharacter = pServer->GetGame()->GetMpCharactersTbl()->Get(Stream.ReadUInt32());
+            m_pCharacter = pServer->GetGame()->GetTables()->characters()->Get(Stream.ReadUInt32());
             m_pPlayer = pServer->GetPlayersMgr()->Get(Stream.ReadUInt8());
         }
         

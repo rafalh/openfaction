@@ -11,6 +11,7 @@
 #ifndef CGAME_H
 #define CGAME_H
 
+#include "tables/CTablesMgr.h"
 #ifdef OF_CLIENT
 # include <irrlicht.h>
 #endif // OF_CLIENT
@@ -24,16 +25,7 @@ class CConsole;
 class CVirtualFileSystem;
 class CEventsHandler;
 class CCamera;
-
-class CStringsTable;
-class CAmmoTable;
-class CWeaponsTable;
-class CEntitiesTable;
-class CItemsTable;
-class CClutterTable;
-class CGameTable;
-class CMpCharactersTable;
-class CFoleyTable;
+class CTablesMgr;
 
 namespace irr
 {
@@ -125,52 +117,10 @@ class CGame
         {
             m_Config = Config;
         }
-        
-        // TABLES
-        
-        CStringsTable *GetStringsTbl() const
+
+        CTablesMgr *GetTables() const
         {
-            return m_pStringsTbl;
-        }
-        
-        CAmmoTable *GetAmmoTbl() const
-        {
-            return m_pAmmoTbl;
-        }
-        
-        CWeaponsTable *GetWeaponsTbl() const
-        {
-            return m_pWeaponsTbl;
-        }
-        
-        CItemsTable *GetItemsTbl() const
-        {
-            return m_pItemsTbl;
-        }
-        
-        CEntitiesTable *GetEntitiesTbl() const
-        {
-            return m_pEntitiesTbl;
-        }
-        
-        CClutterTable *GetClutterTbl() const
-        {
-            return m_pClutterTbl;
-        }
-        
-        CGameTable *GetGameTbl() const
-        {
-            return m_pGameTbl;
-        }
-        
-        CMpCharactersTable *GetMpCharactersTbl() const
-        {
-            return m_pMpCharactersTbl;
-        }
-        
-        CFoleyTable *GetFoleyTbl() const
-        {
-            return m_pFoleyTbl;
+            return m_pTablesMgr;
         }
         
         // IRRLICHT
@@ -224,16 +174,7 @@ class CGame
         SConfig m_Config;
         CCamera *m_pCamera;
         irr::IrrlichtDevice *m_pIrrDevice;
-        
-        CStringsTable *m_pStringsTbl;
-        CAmmoTable *m_pAmmoTbl;
-        CWeaponsTable *m_pWeaponsTbl;
-        CItemsTable *m_pItemsTbl;
-        CEntitiesTable *m_pEntitiesTbl;
-        CClutterTable *m_pClutterTbl;
-        CGameTable *m_pGameTbl;
-        CMpCharactersTable *m_pMpCharactersTbl;
-        CFoleyTable *m_pFoleyTbl;
+        CTablesMgr *m_pTablesMgr;
 };
 
 #endif // CGAME_H

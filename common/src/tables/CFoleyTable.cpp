@@ -8,8 +8,8 @@
 *
 *****************************************************************************/
 
-#include "CFoleyTable.h"
-#include "CTblReader.h"
+#include "tables/CFoleyTable.h"
+#include "tables/CTblReader.h"
 #include "utils.h"
 
 using namespace std;

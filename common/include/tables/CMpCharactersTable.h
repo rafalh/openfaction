@@ -8,14 +8,13 @@
 *
 *****************************************************************************/
 
-#ifndef CMPCHARACTERSTABLE_H
-#define CMPCHARACTERSTABLE_H
+#pragma once
 
 #include <vector>
 #include "CString.h"
 #include "CEntitiesTable.h"
 
-class CGame;
+class CTablesMgr;
 
 struct SMpCharacter
 {
@@ -29,8 +28,8 @@ struct SMpCharacter
 class CMpCharactersTable
 {
     public:
-        CMpCharactersTable(CGame *pGame):
-            m_pGame(pGame) {}
+        CMpCharactersTable(CTablesMgr *pTablesMgr):
+            m_pTablesMgr(pTablesMgr) {}
         
         int Load(std::istream &Stream);
         
@@ -43,8 +42,6 @@ class CMpCharactersTable
         }
     
     private:
-        CGame *m_pGame;
+        CTablesMgr *m_pTablesMgr;
         std::vector<SMpCharacter> m_MpCharacters;
 };
-
-#endif // CMPCHARACTERSTABLE_H

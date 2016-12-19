@@ -12,7 +12,7 @@
 #define CITEM_H
 
 #include "CObject.h"
-#include "CItemsTable.h"
+#include "tables/CItemsTable.h"
 #include "CInputBinaryStream.h"
 
 class CEntity;

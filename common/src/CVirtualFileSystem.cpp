@@ -13,6 +13,7 @@
 #include "utils.h"
 #include "CException.h"
 #include "errors.h"
+#include "vpp_format.h"
 
 #define ALIGN(offset, alignment) (((offset) + (alignment) - 1) & (~(alignment - 1)))
 

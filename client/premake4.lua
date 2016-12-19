@@ -6,19 +6,19 @@ project "OfClient"
 		"camera/*.h", "camera/*.cpp",
 		"irr/*.h", "irr/*.cpp",
 		"../shared/*.h", "../shared/*.cpp",
-		"../shared/tables/*.h", "../shared/tables/*.cpp",
 		"../include/*.h",
 	}
 	includedirs {
 		".",
 		"../shared",
-		"../shared/tables",
+		"../common/include",
 		"../vendor/bullet/src",
 		"../vendor/irrlicht/include",
 		"../vendor/irrklang/include",
 		"../vendor/freetype/include",
 	}
 	links {
+		"OF-Common",
 		"BulletDynamics",
 		"BulletCollision",
 		"LinearMath",

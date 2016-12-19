@@ -13,7 +13,7 @@
 #include "errors.h"
 #include "CServerConfig.h"
 #include "CLogger.h"
-#include "CTblReader.h"
+#include "tables/CTblReader.h"
 #include "CException.h"
 
 using namespace std;

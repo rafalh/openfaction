@@ -20,8 +20,8 @@
 #include "CFileList.h"
 #include "CBanlist.h"
 #include "CLevel.h"
-#include "CStringsTable.h"
-#include "CGameTable.h"
+#include "tables/CStringsTable.h"
+#include "tables/CGameTable.h"
 #include "CSpawnpoint.h"
 #include "CStaticGeometry.h"
 #include "CColWorld.h"
@@ -528,7 +528,7 @@ void CServer::ProcessGamePacket(unsigned nType, CInputBinaryStream &Stream, cons
                !strcmp(RconReqPacket.GetPassword(), m_pConf->GetRconPassword()))
             {
                 pPlayer->SetAdmin(true);
-                SendGlobalMessage(m_pGame->GetStringsTbl()->GetFormated(909, pPlayer->GetName()));
+                SendGlobalMessage(m_pGame->GetTables()->strings()->GetFormated(909, pPlayer->GetName()));
             }
             break;
         }
@@ -854,12 +854,12 @@ int CServer::SpawnPlayer(CPlayer *pPlayer, const SMpCharacter *pCharacter, btVec
     }
     
     pEntity->RemoveWeapons();
-	pEntity->AddWeapon(m_pGame->GetWeaponsTbl()->Get(RF_PISTOL), 64);
-	pEntity->AddWeapon(m_pGame->GetWeaponsTbl()->Get(RF_CONTROL_BATON), 200);
+	pEntity->AddWeapon(m_pGame->GetTables()->weapons()->Get(RF_PISTOL), 64);
+	pEntity->AddWeapon(m_pGame->GetTables()->weapons()->Get(RF_CONTROL_BATON), 200);
 	const char *pszDefaultWeapon = m_pConf->GetDefaultWeapon();
 	if(!pszDefaultWeapon || !pszDefaultWeapon[0])
-        pszDefaultWeapon = m_pGame->GetGameTbl()->GetDefaultWeapon();
-	const SWeaponClass *pWeaponCls = m_pGame->GetWeaponsTbl()->Get(pszDefaultWeapon);
+        pszDefaultWeapon = m_pGame->GetTables()->game()->GetDefaultWeapon();
+	const SWeaponClass *pWeaponCls = m_pGame->GetTables()->weapons()->Get(pszDefaultWeapon);
 	if(!pWeaponCls)
         CLogger::GetInst().PrintError("Invalid default weapon: %s", pszDefaultWeapon ? pszDefaultWeapon : "");
 	
@@ -871,7 +871,7 @@ int CServer::SpawnPlayer(CPlayer *pPlayer, const SMpCharacter *pCharacter, btVec
         pEntity->SwitchWeapon(pWeaponCls);
 	}
 	else
-        pEntity->SwitchWeapon(m_pGame->GetWeaponsTbl()->Get(RF_PISTOL));
+        pEntity->SwitchWeapon(m_pGame->GetTables()->weapons()->Get(RF_PISTOL));
     
     CEntitySpawnPacket EntitySpawnPacket(pPlayer->GetEntity(), pPlayer);
     for(CPlayer *pPlayer2 = m_PlayersMgr.Enum(NULL); pPlayer2; pPlayer2 = m_PlayersMgr.Enum(pPlayer2))
@@ -1172,7 +1172,7 @@ void CServer::OnEntityKill(CEntity *pEntity, SDamageInfo &DmgInfo)
     CItem *pItem = NULL;
     if(pWeapon->GetAmmo() || pEntity->GetAmmo())
     {
-        const SItemClass *pItemClass = m_pGame->GetItemsTbl()->FindWeapon(pWeapon->GetClass());
+        const SItemClass *pItemClass = m_pGame->GetTables()->items()->FindWeapon(pWeapon->GetClass());
         if(pItemClass)
         {
             CItem *pItem = new CItem(m_pGame->GetLevel(), pItemClass);

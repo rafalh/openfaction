@@ -12,7 +12,7 @@
 #define CWEAPONSELECTION_H
 
 #include <irrlicht.h>
-#include "CWeaponsTable.h"
+#include "tables/CWeaponsTable.h"
 #include "CTimer.h"
 
 class CGame;

@@ -8,8 +8,8 @@
 *
 *****************************************************************************/
 
-#include "CGameTable.h"
-#include "CTblReader.h"
+#include "tables/CGameTable.h"
+#include "tables/CTblReader.h"
 #include "utils.h"
 
 using namespace std;

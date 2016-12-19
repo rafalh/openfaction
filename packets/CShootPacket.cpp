@@ -21,7 +21,7 @@ CShootPacket::CShootPacket(CPlayer *pPlayer, bool bAltFire, const btVector3 &vPo
 CShootPacket::CShootPacket(CInputBinaryStream &Stream, CPlayer *pPlayer):
 	m_pPlayer(pPlayer)
 {
-    m_pWeaponClass = pPlayer->GetServer()->GetGame()->GetWeaponsTbl()->Get(Stream.ReadUInt8());
+    m_pWeaponClass = pPlayer->GetServer()->GetGame()->GetTables()->weapons()->Get(Stream.ReadUInt8());
     unsigned nFlags = Stream.ReadUInt8();
     m_bPosDir = (nFlags & RF_SF_NO_POS_ROT) ? false : true;
     m_bAltFire = (nFlags & RF_SF_ALT_FIRE) ? true : false;

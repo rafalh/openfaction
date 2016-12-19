@@ -8,8 +8,8 @@
 *
 *****************************************************************************/
 
-#include "CEntitiesTable.h"
-#include "CTblReader.h"
+#include "tables/CEntitiesTable.h"
+#include "tables/CTblReader.h"
 #include "CLogger.h"
 #include "utils.h"
 #include "CString.h"

@@ -9,8 +9,8 @@
 *****************************************************************************/
 
 #include "utils.h"
-#include "CTblReader.h"
-#include "CStringsTable.h"
+#include "tables/CTblReader.h"
+#include "tables/CStringsTable.h"
 #include "CException.h"
 #include <cstdlib>
 #include <iostream>

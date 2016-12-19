@@ -85,7 +85,7 @@ CItem::CItem(CLevel *pLevel, CInputBinaryStream &Stream, unsigned nBit):
     m_nRespawnTime = Stream.ReadUInt32();
     Stream.ignore(4); // team id
     
-    m_pClass = m_pLevel->GetGame()->GetItemsTbl()->Get(strClassName);
+    m_pClass = m_pLevel->GetGame()->GetTables()->items()->Get(strClassName);
     if(!m_pClass)
         THROW_EXCEPTION("Unknown class %s", strClassName.c_str());
     

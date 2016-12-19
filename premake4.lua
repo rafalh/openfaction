@@ -40,4 +40,7 @@
 	include "vendor"
 	include "client"
 	include "server"
+	include "common"
 	include "vppmgr"
+	include "tools"
+	include "tests"

@@ -8,8 +8,8 @@
 *
 *****************************************************************************/
 
-#include "CClutterTable.h"
-#include "CTblReader.h"
+#include "tables/CClutterTable.h"
+#include "tables/CTblReader.h"
 #include "CLogger.h"
 #include "utils.h"
 

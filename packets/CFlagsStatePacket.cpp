@@ -26,7 +26,7 @@ void CFlagsStatePacket::Send(CPlayer *pPlayer) const
         Stream.WriteUInt8(m_pCtf->IsRedFlagDropped() ? 0 : 1);
         if(m_pCtf->IsRedFlagDropped())
         {
-            const SItemClass *pRedFlagCls = pPlayer->GetServer()->GetGame()->GetItemsTbl()->Get("flag_red");
+            const SItemClass *pRedFlagCls = pPlayer->GetServer()->GetGame()->GetTables()->items()->Get("flag_red");
             pItem = pPlayer->GetServer()->GetLevel()->GetItemFromClass(pRedFlagCls);
             if(!pItem)
                 return;
@@ -41,7 +41,7 @@ void CFlagsStatePacket::Send(CPlayer *pPlayer) const
         Stream.WriteUInt8(m_pCtf->IsBlueFlagDropped() ? 0 : 1);
         if(m_pCtf->IsBlueFlagDropped())
         {
-            const SItemClass *pBlueFlagCls = pPlayer->GetServer()->GetGame()->GetItemsTbl()->Get("flag_blue");
+            const SItemClass *pBlueFlagCls = pPlayer->GetServer()->GetGame()->GetTables()->items()->Get("flag_blue");
             pItem = pPlayer->GetServer()->GetLevel()->GetItemFromClass(pBlueFlagCls);
             if(!pItem)
                 return;

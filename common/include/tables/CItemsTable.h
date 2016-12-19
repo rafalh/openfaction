@@ -8,8 +8,7 @@
 *
 *****************************************************************************/
 
-#ifndef CITEMSTABLE_H
-#define CITEMSTABLE_H
+#pragma once
 
 #include "CWeaponsTable.h"
 
@@ -44,17 +43,15 @@ struct SItemClass
 class CItemsTable
 {
     public:
-        CItemsTable(CGame *pGame):
-            m_pGame(pGame) {}
+        CItemsTable(CTablesMgr *pTablesMgr):
+            m_pTablesMgr(pTablesMgr) {}
         int Load(std::istream &Stream);
         const SItemClass *Get(const CString &strClassName);
         const SItemClass *FindWeapon(const SWeaponClass *pClass);
     
     private:
-        CGame *m_pGame;
+        CTablesMgr *m_pTablesMgr;
         std::vector<SItemClass> m_Items;
         
         static EItemType GetTypeFromClsName(const CString &strItemClsName);
 };
-
-#endif // CITEMSTABLE_H

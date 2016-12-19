@@ -28,8 +28,8 @@ CCaptureTheFlag::CCaptureTheFlag(CServer *pServer):
     m_RedFlagDropTimestamp(0), m_BlueFlagDropTimestamp(0),
     m_pRedFlagPlayer(NULL), m_pBlueFlagPlayer(NULL)
 {
-    m_pRedFlagCls = m_pServer->GetGame()->GetItemsTbl()->Get("flag_red");
-    m_pBlueFlagCls = m_pServer->GetGame()->GetItemsTbl()->Get("flag_blue");
+    m_pRedFlagCls = m_pServer->GetGame()->GetTables()->items()->Get("flag_red");
+    m_pBlueFlagCls = m_pServer->GetGame()->GetTables()->items()->Get("flag_blue");
 }
 
 void CCaptureTheFlag::Update(unsigned nDeltaTime)

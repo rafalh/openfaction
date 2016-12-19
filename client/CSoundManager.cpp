@@ -10,7 +10,7 @@
 
 #include "CSoundManager.h"
 #include "CGame.h"
-#include "CFoleyTable.h"
+#include "tables/CFoleyTable.h"
 #include "CConsole.h"
 #include <irrKlang.h>
 #include "irr/CFileFactory.h"
@@ -43,7 +43,7 @@ bool CSoundManager::PlayFoleySound(const char *pszName)
         return false;
     
     // Find foley sound set
-    const SFoleySound *pSndSet = m_pGame->GetFoleyTbl()->Get(pszName);
+    const SFoleySound *pSndSet = m_pGame->GetTables()->foley()->Get(pszName);
     if(!pSndSet || pSndSet->Sounds.empty())
         return false;
     

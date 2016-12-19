@@ -45,7 +45,7 @@ bool CWeapon::Shoot(bool bAltFire, const btVector3 &vPos, const btVector3 &vDir,
     {
         // TODO
         m_pEntity->GetLevel()->GetGame()->GetConsole()->DbgPrint("Detonate remote charge...\n");
-        const SWeaponClass *pRemoteChargeCls = m_pEntity->GetLevel()->GetGame()->GetWeaponsTbl()->Get(RF_REMOTE_CHARGE);
+        const SWeaponClass *pRemoteChargeCls = m_pEntity->GetLevel()->GetGame()->GetTables()->weapons()->Get(RF_REMOTE_CHARGE);
         if(pRemoteChargeCls)
             m_pEntity->SwitchWeapon(pRemoteChargeCls);
         return true;
@@ -130,7 +130,7 @@ bool CWeapon::Shoot(bool bAltFire, const btVector3 &vPos, const btVector3 &vDir,
     
     if(m_pClass->nFlags & OFW_REMOTE_CHARGE)
     {
-        const SWeaponClass *pDetonatorCls = m_pEntity->GetLevel()->GetGame()->GetWeaponsTbl()->Get(RF_REMOTE_CHARGE_DETONATOR);
+        const SWeaponClass *pDetonatorCls = m_pEntity->GetLevel()->GetGame()->GetTables()->weapons()->Get(RF_REMOTE_CHARGE_DETONATOR);
         if(pDetonatorCls)
         {
             m_pEntity->AddWeapon(pDetonatorCls);

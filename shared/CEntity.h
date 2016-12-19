@@ -14,7 +14,7 @@
 #include "rfproto.h"
 #include "CKillableObject.h"
 #include "CInputBinaryStream.h"
-#include "CWeaponsTable.h"
+#include "tables/CWeaponsTable.h"
 #include "CEntityState.h"
 #include "CEntityAction.h"
 #include <map>

@@ -5,21 +5,21 @@ project "OfServer"
 		"*.h", "*.cpp",
 		"gamemodes/*.h", "gamemodes/*.cpp",
 		"../shared/*.h", "../shared/*.cpp",
-		"../shared/tables/*.h", "../shared/tables/*.cpp",
 		"../packets/*.h", "../packets/*.cpp",
 		"../include/*.h",
 	}
 	includedirs {
 		".",
 		"../shared",
-		"../shared/tables",
 		"../packets",
-		"../vendor/bullet/src"
+		"../vendor/bullet/src",
+		"../common/include",
 	}
 	links {
+		"OF-Common",
 		"BulletDynamics",
 		"BulletCollision",
-		"LinearMath"
+		"LinearMath",
 	}
 	defines { "OF_SERVER" }
 	

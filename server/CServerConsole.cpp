@@ -14,7 +14,7 @@
 #include "CBanlist.h"
 #include "CPlayer.h"
 #include "CMessagePacket.h"
-#include "CGameTable.h"
+#include "tables/CGameTable.h"
 #include "utils.h"
 #include "CServerConsole.h"
 #include "CLock.h"

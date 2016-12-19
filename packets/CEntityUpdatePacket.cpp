@@ -199,7 +199,7 @@ void CEntityUpdatePacket::Process(CInputBinaryStream &Stream, CPlayer *pPlayer)
         //if(nFlags & RF_ODF_WEAPON_TYPE)
         //{
             unsigned nWeaponType = Stream.ReadUInt8();
-            const SWeaponClass *pWepClass = pPlayer->GetServer()->GetGame()->GetWeaponsTbl()->Get(nWeaponType);
+            const SWeaponClass *pWepClass = pPlayer->GetServer()->GetGame()->GetTables()->weapons()->Get(nWeaponType);
             if(pWepClass && pWepClass != pEntity->GetWeapon()->GetClass())
             {
                 if(!pEntity->SwitchWeapon(pWepClass))

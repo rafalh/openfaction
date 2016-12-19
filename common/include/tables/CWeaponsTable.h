@@ -16,7 +16,7 @@
 #include "CString.h"
 #include "CAmmoTable.h"
 
-class CGame;
+class CTablesMgr;
 
 enum EWeaponFlags
 {
@@ -117,8 +117,8 @@ struct SWeaponClass
 class CWeaponsTable
 {
     public:
-        CWeaponsTable(CGame *pGame):
-            m_pGame(pGame) {}
+        CWeaponsTable(CTablesMgr *tablesMgr):
+            m_tablesMgr(tablesMgr) {}
         int Load(std::istream &Stream);
         const SWeaponClass *Get(const CString &strName) const;
         
@@ -131,7 +131,7 @@ class CWeaponsTable
         }
     
     private:
-        CGame *m_pGame;
+        CTablesMgr *m_tablesMgr;
         std::vector<SWeaponClass> m_Weapons;
 };
 

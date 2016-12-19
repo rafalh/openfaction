@@ -23,9 +23,9 @@
 #include "errors.h"
 #include "CLevel.h"
 #include "CLogger.h"
-#include "CStringsTable.h"
-#include "CEntitiesTable.h"
-#include "CItemsTable.h"
+#include "tables/CStringsTable.h"
+#include "tables/CEntitiesTable.h"
+#include "tables/CItemsTable.h"
 #include "CColWorld.h"
 #include "CElementsMgr.h"
 #include "CLevelProperties.h"
@@ -99,7 +99,7 @@ void CLevel::Load(CInputBinaryStream &Stream)
         THROW_EXCEPTION("Failed to read level name");
     
     if(m_strName.compare(0, 5, "XSTR(") == 0)
-        m_strName = m_pGame->GetStringsTbl()->ParseXStr(m_strName);
+        m_strName = m_pGame->GetTables()->strings()->ParseXStr(m_strName);
     
     IgnoreRflString(Stream); // mod
     

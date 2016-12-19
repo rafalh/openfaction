@@ -8,10 +8,10 @@
 *
 *****************************************************************************/
 
-#include "CMpCharactersTable.h"
-#include "CTblReader.h"
+#include "tables/CMpCharactersTable.h"
+#include "tables/CTblReader.h"
 #include "utils.h"
-#include "CGame.h"
+#include "tables/CTablesMgr.h"
 
 using namespace std;
 
@@ -45,13 +45,13 @@ int CMpCharactersTable::Load(istream &Stream)
             {
                 CString strEntityType;
                 Reader.GetString(strEntityType);
-                m_MpCharacters.back().pEntityClass = m_pGame->GetEntitiesTbl()->Get(strEntityType);
+                m_MpCharacters.back().pEntityClass = m_pTablesMgr->entities()->Get(strEntityType);
             }
             else if(!StrCmpI(pName, "$EntityAnimType"))
             {
                 CString strEntityAnimType;
                 Reader.GetString(strEntityAnimType);
-                m_MpCharacters.back().pEntityAnimClass = m_pGame->GetEntitiesTbl()->Get(strEntityAnimType);
+                m_MpCharacters.back().pEntityAnimClass = m_pTablesMgr->entities()->Get(strEntityAnimType);
             }
         }
     }

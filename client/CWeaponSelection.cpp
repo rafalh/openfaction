@@ -15,7 +15,7 @@
 #include "CEntity.h"
 #include "CGame.h"
 #include "CConsole.h"
-#include "CStringsTable.h"
+#include "tables/CStringsTable.h"
 #include "camera/CCamera.h"
 
 using namespace std;
@@ -59,7 +59,7 @@ void CWeaponSelection::Render()
     
     gui::IGUIFont *pFont = m_pGame->GetGuiEnv()->getBuiltInFont();
     h = pFont->getDimension(L"").Height;
-    const char *pszWeaponType = m_pGame->GetStringsTbl()->Get(779 + (int)m_WeaponType);
+    const char *pszWeaponType = m_pGame->GetTables()->strings()->Get(779 + (int)m_WeaponType);
     swprintf(wszBuf, L"%hs", pszWeaponType);
     pFont->draw(wszBuf, core::recti(x, y, x + w, y + h), video::SColor(255, 0, 255, 0), true, true);
     y += h;
@@ -119,7 +119,7 @@ void CWeaponSelection::Render()
     }
     
     y += 50;
-    pWeaponCls = m_pGame->GetWeaponsTbl()->Get(m_iWeaponCls);
+    pWeaponCls = m_pGame->GetTables()->weapons()->Get(m_iWeaponCls);
     swprintf(wszBuf, L"%hs", pWeaponCls->strDisplayName.c_str());
     pFont->draw(wszBuf, core::recti(x, y, x + w, y), video::SColor(255, 0, 255, 0), true);
 }
@@ -160,7 +160,7 @@ bool CWeaponSelection::OnEvent(const SEvent &Event)
     }
     else if(Event.EventType == EET_MOUSE_INPUT_EVENT && Event.MouseInput.Event == EMIE_LMOUSE_PRESSED_DOWN && m_bVisible)
     {
-        const SWeaponClass *pWeaponCls = m_pGame->GetWeaponsTbl()->Get(m_iWeaponCls);
+        const SWeaponClass *pWeaponCls = m_pGame->GetTables()->weapons()->Get(m_iWeaponCls);
         CEntity *pEntity = dynamic_cast<CEntity*>(m_pGame->GetCamera()->GetTarget());
         if(pEntity)
             pEntity->SwitchWeapon(pWeaponCls);
@@ -185,7 +185,7 @@ CWeapon *CWeaponSelection::FindWeaponFromType(CEntity *pEntity, EWeaponType Type
     
     while(true)
     {
-        const SWeaponClass *pWeaponCls = m_pGame->GetWeaponsTbl()->Get(i++);
+        const SWeaponClass *pWeaponCls = m_pGame->GetTables()->weapons()->Get(i++);
         if(!pWeaponCls)
             break;
         

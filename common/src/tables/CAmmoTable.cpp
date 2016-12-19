@@ -8,8 +8,8 @@
 *
 *****************************************************************************/
 
-#include "CAmmoTable.h"
-#include "CTblReader.h"
+#include "tables/CAmmoTable.h"
+#include "tables/CTblReader.h"
 #include "CLogger.h"
 #include "utils.h"
 
