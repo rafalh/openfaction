@@ -13,8 +13,8 @@
 
 #include <vector>
 #include <btBulletDynamicsCommon.h>
-#include "CInputBinaryStream.h"
-#include "CSharedObject.h"
+#include "util/CInputBinaryStream.h"
+#include "util/CSharedObject.h"
 #ifdef OF_CLIENT
 # include <irrlicht.h>
 #endif // OF_CLIENT

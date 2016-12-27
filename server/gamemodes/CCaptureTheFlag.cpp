@@ -18,9 +18,9 @@
 #include "CEntity.h"
 #include "CServer.h"
 #include "CItem.h"
-#include "utils.h"
+#include "util/utils.h"
 #include "CLevel.h"
-#include "CLogger.h"
+#include "util/CLogger.h"
 
 CCaptureTheFlag::CCaptureTheFlag(CServer *pServer):
     CGamemode(pServer),

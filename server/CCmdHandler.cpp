@@ -16,11 +16,11 @@
 #include "CBanlist.h"
 #include "CLevel.h"
 #include "CVirtualFileSystem.h"
-#include "CException.h"
-#include "utils.h"
+#include "util/CException.h"
+#include "util/utils.h"
 #include "version.h"
 #include "main.h"
-#include "CLock.h"
+#include "util/CLock.h"
 #include "tables/CWeaponsTable.h"
 
 using namespace std;

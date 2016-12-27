@@ -10,11 +10,10 @@ project "OfServer"
 	}
 	includedirs {
 		".",
+		"../common/include",
 		"../shared",
 		"../packets",
 		"../vendor/bullet/src",
-		"../common/include",
-		"../common/include/util",
 	}
 	links {
 		"OF-Common",

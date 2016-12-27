@@ -12,7 +12,7 @@
 #include "CServer.h"
 #include "CItem.h"
 #include "gamemodes/CCaptureTheFlag.h"
-#include "utils.h"
+#include "util/utils.h"
 
 void CItemSpawnPacket::Send(CPlayer *pPlayer) const
 {

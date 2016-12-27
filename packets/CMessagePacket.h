@@ -13,7 +13,7 @@
 
 #include "precomp.h"
 #include "CPlayer.h"
-#include "CInputBinaryStream.h"
+#include "util/CInputBinaryStream.h"
 
 class CMessagePacket
 {

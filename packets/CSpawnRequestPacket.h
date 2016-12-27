@@ -12,7 +12,7 @@
 #define CSPAWNREQUESTPACKET_H
 
 #include "CPlayer.h"
-#include "CInputBinaryStream.h"
+#include "util/CInputBinaryStream.h"
 #include "tables/CMpCharactersTable.h"
 #include "CServer.h"
 

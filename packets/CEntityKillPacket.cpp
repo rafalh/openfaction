@@ -10,6 +10,7 @@
 
 #include "CEntityKillPacket.h"
 #include "CEntity.h"
+#include "formats/rfproto.h"
 
 using namespace std;
 

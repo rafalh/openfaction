@@ -12,8 +12,8 @@
 #define CENTITIESTABLE_H
 
 #include <vector>
-#include "CString.h"
 #include <map>
+#include "util/CString.h"
 #include "CEntityState.h"
 #include "CEntityAction.h"
 

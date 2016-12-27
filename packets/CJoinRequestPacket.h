@@ -12,7 +12,7 @@
 #define CJOINREQUESTPACKET_H
 
 #include "precomp.h"
-#include "CInputBinaryStream.h"
+#include "util/CInputBinaryStream.h"
 
 class CJoinRequestPacket
 {

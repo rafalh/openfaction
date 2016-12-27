@@ -12,7 +12,7 @@
 #define CSTRINGSTABLE_H
 
 #include <map>
-#include "CString.h"
+#include "util/CString.h"
 
 class CStringsTable
 {

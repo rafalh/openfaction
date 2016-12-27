@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "CString.h"
+#include "util/CString.h"
 #include <map>
 #include <irrlicht.h>
 #include "CMultiTexture.h"

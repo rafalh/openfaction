@@ -11,7 +11,7 @@
 #ifndef CJOINFAILEDPACKET_H
 #define CJOINFAILEDPACKET_H
 
-#include "rfproto.h"
+#include "formats/rfproto.h"
 #include "CPlayer.h"
 
 class CServer;

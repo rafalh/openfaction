@@ -11,7 +11,7 @@
 #ifndef CFALLDAMAGEPACKET_H
 #define CFALLDAMAGEPACKET_H
 
-#include "CInputBinaryStream.h"
+#include "util/CInputBinaryStream.h"
 
 class CFallDamagePacket
 {

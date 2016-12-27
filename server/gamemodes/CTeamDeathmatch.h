@@ -12,7 +12,7 @@
 #define CTEAMDEATHMATCH_H
 
 #include "CGamemode.h"
-#include "rfproto.h"
+#include "formats/rfproto.h"
 
 class CTeamDeathmatch: public CGamemode
 {

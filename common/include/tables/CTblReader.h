@@ -11,7 +11,7 @@
 #ifndef CTBLREADER_H
 #define CTBLREADER_H
 
-#include "CString.h"
+#include "util/CString.h"
 
 class CStringsTable;
 

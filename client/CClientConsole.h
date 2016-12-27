@@ -13,9 +13,9 @@
 
 #include <irrlicht.h>
 #include <vector>
-#include "CString.h"
+#include "util/CString.h"
 #include <cstdarg>
-#include "CTimer.h"
+#include "util/CTimer.h"
 #include "CConsole.h"
 
 class CClientConsole: public irr::IEventReceiver, public CConsole

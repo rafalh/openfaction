@@ -12,8 +12,8 @@
 #define CPLAYERLEFTPACKET_H
 
 #include "CPlayer.h"
-#include "CInputBinaryStream.h"
-#include "rfproto.h"
+#include "util/CInputBinaryStream.h"
+#include "formats/rfproto.h"
 
 class CPlayerLeftPacket
 {

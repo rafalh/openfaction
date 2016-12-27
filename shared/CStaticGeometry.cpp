@@ -12,7 +12,7 @@
 #include "CLevel.h"
 #include "CLevelProperties.h"
 #include "CConsole.h"
-#include "rfl_format.h"
+#include "formats/rfl_format.h"
 #include "CGame.h"
 #include "CEventsHandler.h"
 #ifdef OF_CLIENT
@@ -22,7 +22,7 @@
 # include "irr/CMeshSkyboxSceneNode.h"
 # include "irr/CVbmAnimator.h"
 #endif // OF_CLIENT
-#include <utils.h>
+#include <util/utils.h>
 #include <cmath>
 #include <cassert>
 

@@ -12,7 +12,7 @@
 #define CCLUTTERTABLE_H
 
 #include <vector>
-#include "CString.h"
+#include "util/CString.h"
 
 struct SClutterClass
 {

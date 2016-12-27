@@ -11,7 +11,7 @@
 #include "CFlagDropPacket.h"
 #include "CEntity.h"
 #include "gamemodes/CCaptureTheFlag.h"
-#include "COutputBinaryStream.h"
+#include "util/COutputBinaryStream.h"
 #include "CPlayer.h"
 
 void CFlagDropPacket::Send(CPlayer *pPlayer) const

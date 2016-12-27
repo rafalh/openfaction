@@ -11,7 +11,6 @@
 #ifndef CWEAPON_H
 #define CWEAPON_H
 
-#include "CTimer.h"
 #include "tables/CWeaponsTable.h"
 #include <btBulletCollisionCommon.h>
 #include <algorithm>

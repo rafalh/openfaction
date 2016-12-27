@@ -12,7 +12,7 @@
 #define CANIMATION_H
 
 #include "util/CSharedObject.h"
-#include "CInputBinaryStream.h"
+#include "util/CInputBinaryStream.h"
 #include <vector>
 
 class CAnimMgr;

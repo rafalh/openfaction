@@ -18,11 +18,11 @@
 # include "camera/CCamera.h"
 # include <irrlicht.h>
 #endif // OF_SERVER
-#include "rfl_format.h"
-#include "utils.h"
+#include "formats/rfl_format.h"
+#include "util/utils.h"
 #include "errors.h"
 #include "CLevel.h"
-#include "CLogger.h"
+#include "util/CLogger.h"
 #include "tables/CStringsTable.h"
 #include "tables/CEntitiesTable.h"
 #include "tables/CItemsTable.h"
@@ -31,7 +31,7 @@
 #include "CLevelProperties.h"
 #include "CConsole.h"
 #include "CStaticGeometry.h"
-#include "CException.h"
+#include "util/CException.h"
 #include "CGame.h"
 
 #include "CClutter.h"

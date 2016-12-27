@@ -12,8 +12,8 @@
 #define CCLUTTER_H
 
 #include "CKillableObject.h"
-#include "CInputBinaryStream.h"
 
+class CInputBinaryStream;
 class CMesh;
 struct SClutterClass;
 

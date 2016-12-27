@@ -14,7 +14,7 @@
 #include "CEntity.h"
 #include "CColWorld.h"
 #include "CElementsMgr.h"
-#include "utils.h"
+#include "util/utils.h"
 #include "CConsole.h"
 #include "CStaticGeometry.h"
 #include "CGame.h"

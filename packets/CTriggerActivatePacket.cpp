@@ -10,7 +10,8 @@
 
 #include "CPlayer.h"
 #include "CTriggerActivatePacket.h"
-#include "COutputBinaryStream.h"
+#include "util/COutputBinaryStream.h"
+#include "formats/rfproto.h"
 
 void CTriggerActivatePacket::Send(CPlayer *pPlayer) const
 {

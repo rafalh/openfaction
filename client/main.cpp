@@ -13,8 +13,8 @@
 #include "CClientApp.h"
 #include "CVirtualFileSystem.h"
 #include "CConsole.h"
-#include "CException.h"
-#include "CLogger.h"
+#include "util/CException.h"
+#include "util/CLogger.h"
 
 #include <stdint.h>
 

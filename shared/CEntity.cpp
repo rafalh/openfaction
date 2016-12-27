@@ -12,7 +12,7 @@
 #include "CEventsHandler.h"
 #include "CEntity.h"
 #include "CWeapon.h"
-#include "CHandleManager.h"
+#include "util/CHandleManager.h"
 #include "CTrigger.h"
 #include "CItem.h"
 #include "CColWorld.h"
@@ -20,11 +20,12 @@
 #include "CMesh.h"
 #include "CMeshMgr.h"
 #include "tables/CEntitiesTable.h"
-#include "CException.h"
+#include "util/CException.h"
 #include "CAnimMgr.h"
 #include "CAnimatedMesh.h"
 #include "BulletCollision/CollisionDispatch/btGhostObject.h"
 #include "BulletDynamics/Character/btKinematicCharacterController.h"
+#include "formats/rfproto.h" // FIXME
 
 using namespace std;
 #ifdef OF_CLIENT

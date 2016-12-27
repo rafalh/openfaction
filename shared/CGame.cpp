@@ -17,7 +17,7 @@
 #include "util/utils.h"
 #include "CEventsHandler.h"
 #include "CConsole.h"
-#include "CString.h"
+#include "util/CString.h"
 
 #include "tables/CTablesMgr.h"
 #ifdef OF_CLIENT

@@ -11,7 +11,7 @@
 #include "CGamemode.h"
 #include "CEntity.h"
 #include "CPlayer.h"
-#include "rfproto.h"
+#include "formats/rfproto.h"
 #include "CServer.h"
 
 #include "CDeathmatch.h"

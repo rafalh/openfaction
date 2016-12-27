@@ -12,9 +12,9 @@
 #define CPLAYER_H
 
 #include "precomp.h"
-#include "CTimer.h"
-#include "CSocket.h"
-#include "COutputBinaryStream.h"
+#include "util/CTimer.h"
+#include "util/CSocket.h"
+#include "util/COutputBinaryStream.h"
 #include "CPlayerConnection.h"
 
 class CServer;

@@ -11,6 +11,7 @@
 #include "CLightmaps.h"
 #include "CGame.h"
 #include <cassert>
+#include <util/CInputBinaryStream.h>
 
 using namespace std;
 using namespace irr;

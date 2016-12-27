@@ -9,7 +9,7 @@
 *****************************************************************************/
 
 #include "CClientConsole.h"
-#include "CTimer.h"
+#include "util/CTimer.h"
 #include <cstdarg>
 #include <cstdio>
 #include <cctype>

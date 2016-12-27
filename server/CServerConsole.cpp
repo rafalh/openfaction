@@ -15,9 +15,9 @@
 #include "CPlayer.h"
 #include "CMessagePacket.h"
 #include "tables/CGameTable.h"
-#include "utils.h"
+#include "util/utils.h"
 #include "CServerConsole.h"
-#include "CLock.h"
+#include "util/CLock.h"
 #include "CLevel.h"
 #include "CVirtualFileSystem.h"
 

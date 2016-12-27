@@ -13,7 +13,7 @@
 #endif
 #include "CTrigger.h"
 #include "CEvent.h"
-#include "CLogger.h"
+#include "util/CLogger.h"
 #include "CLevel.h"
 #include "CElementsMgr.h"
 

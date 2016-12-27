@@ -10,7 +10,7 @@
 
 #include "CFlagStealPacket.h"
 #include "gamemodes/CCaptureTheFlag.h"
-#include "rfproto.h"
+#include "formats/rfproto.h"
 
 void CFlagStealPacket::Send(CPlayer *pPlayer) const
 {

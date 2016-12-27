@@ -11,9 +11,9 @@
 #ifndef CPLAYERCONNECTION_H
 #define CPLAYERCONNECTION_H
 
-#include "CString.h"
-#include "CSocket.h"
-#include "COutputBinaryStream.h"
+#include "util/CString.h"
+#include "util/CSocket.h"
+#include "util/COutputBinaryStream.h"
 #include "main.h"
 
 class CPlayer;

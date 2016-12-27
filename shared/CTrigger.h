@@ -12,7 +12,7 @@
 #define CTRIGGER_H
 
 #include "CObject.h"
-#include "CInputBinaryStream.h"
+#include "util/CInputBinaryStream.h"
 
 class CEntity;
 

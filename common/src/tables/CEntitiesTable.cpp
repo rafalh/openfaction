@@ -12,7 +12,7 @@
 #include "tables/CTblReader.h"
 #include "util/CLogger.h"
 #include "util/utils.h"
-#include "CString.h"
+#include "util/CString.h"
 
 using namespace std;
 

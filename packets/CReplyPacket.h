@@ -12,7 +12,7 @@
 #define _CREPLYPACKET_H
 
 #include "precomp.h"
-#include "rfproto.h"
+#include "formats/rfproto.h"
 
 class CReplyPacket
 {

@@ -13,8 +13,8 @@
 
 #include <vector>
 #include <irrlicht.h>
-#include "CInputBinaryStream.h"
 
+class CInputBinaryStream;
 class CGame;
 
 class CLightmaps

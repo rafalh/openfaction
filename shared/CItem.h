@@ -13,7 +13,7 @@
 
 #include "CObject.h"
 #include "tables/CItemsTable.h"
-#include "CInputBinaryStream.h"
+#include "util/CInputBinaryStream.h"
 
 class CEntity;
 class CMesh;

@@ -12,7 +12,7 @@
 #define CDEATHMATCH_H
 
 #include "gamemodes/CGamemode.h"
-#include "rfproto.h"
+#include "formats/rfproto.h"
 
 class CDeathmatch: public CGamemode
 {

@@ -9,7 +9,7 @@
 *****************************************************************************/
 
 #include "CClutterKillPacket.h"
-#include "rfproto.h"
+#include "formats/rfproto.h"
 
 void CClutterKillPacket::Send(CPlayer *pPlayer) const
 {

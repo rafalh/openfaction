@@ -12,9 +12,9 @@
 #define _CSERVERINFOPACKET_H
 
 #include "precomp.h"
-#include "rfproto.h"
+#include "formats/rfproto.h"
 #include "main.h"
-#include "CSocket.h"
+#include "util/CSocket.h"
 #include "CServer.h"
 
 extern CSocket g_Sock;

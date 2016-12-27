@@ -9,7 +9,7 @@
 *****************************************************************************/
 
 #include "CWeaponSelection.h"
-#include "utils.h"
+#include "util/utils.h"
 #include "CTextureMgr.h"
 #include "CWeapon.h"
 #include "CEntity.h"

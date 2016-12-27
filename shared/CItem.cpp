@@ -10,14 +10,14 @@
 
 #include "CGame.h"
 #include "CEventsHandler.h"
-#include "utils.h"
+#include "util/utils.h"
 #include "CItem.h"
 #include "CEntity.h"
-#include "CHandleManager.h"
+#include "util/CHandleManager.h"
 #include "CLevel.h"
 #include "CMesh.h"
 #include "CMeshMgr.h"
-#include "CException.h"
+#include "util/CException.h"
 #include <algorithm>
 #ifdef OF_CLIENT
 # include "CSoundManager.h"

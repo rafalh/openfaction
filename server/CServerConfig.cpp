@@ -9,12 +9,12 @@
 *****************************************************************************/
 
 #include "precomp.h"
-#include "utils.h"
+#include "util/utils.h"
 #include "errors.h"
 #include "CServerConfig.h"
-#include "CLogger.h"
+#include "util/CLogger.h"
 #include "tables/CTblReader.h"
-#include "CException.h"
+#include "util/CException.h"
 
 using namespace std;
 

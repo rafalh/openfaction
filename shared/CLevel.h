@@ -12,7 +12,7 @@
 #define CLEVEL_H
 
 #include <vector>
-#include "CInputBinaryStream.h"
+#include "util/CInputBinaryStream.h"
 #ifdef OF_SERVER
 # include "CChecksum.h"
 #endif

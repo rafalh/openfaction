@@ -11,7 +11,7 @@
 #ifndef CRCONCOMMANDPACKET_H
 #define CRCONCOMMANDPACKET_H
 
-#include "CInputBinaryStream.h"
+#include "util/CInputBinaryStream.h"
 
 class CRconCommandPacket
 {

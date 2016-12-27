@@ -12,7 +12,7 @@
 #define _CPINGPACKET_H
 
 #include "precomp.h"
-#include "rfproto.h"
+#include "formats/rfproto.h"
 #include "CPlayer.h"
 
 class CPingPacket

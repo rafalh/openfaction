@@ -13,7 +13,7 @@
 
 #include <irrlicht.h>
 #include "tables/CWeaponsTable.h"
-#include "CTimer.h"
+#include "util/CTimer.h"
 
 class CGame;
 class CEntity;

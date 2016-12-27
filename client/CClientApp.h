@@ -12,7 +12,6 @@
 #define CCLIENTAPP_H
 
 #include <Irrlicht.h>
-#include "CTimer.h"
 #include "irr/CGUITTFont.h"
 #include "camera/CCamera.h"
 

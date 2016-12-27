@@ -12,8 +12,8 @@
 #define CFOLEYTABLE_H
 
 #include <vector>
-#include "CString.h"
 #include <map>
+#include "util/CString.h"
 
 struct SFoleySound
 {

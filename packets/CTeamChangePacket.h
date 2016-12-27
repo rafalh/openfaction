@@ -12,7 +12,7 @@
 #define CTEAMCHANGEPACKET_H
 
 #include "CPlayer.h"
-#include "CInputBinaryStream.h"
+#include "util/CInputBinaryStream.h"
 
 class CTeamChangePacket
 {

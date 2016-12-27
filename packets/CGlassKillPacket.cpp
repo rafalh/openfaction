@@ -10,7 +10,7 @@
 
 #include "CGlassKillPacket.h"
 #include "CStaticGeometry.h"
-#include "rfproto.h"
+#include "formats/rfproto.h"
 
 void CGlassKillPacket::Send(CPlayer *pPlayer) const
 {

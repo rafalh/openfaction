@@ -10,7 +10,7 @@
 
 #include "precomp.h"
 #include "CBanlist.h"
-#include "CLogger.h"
+#include "util/CLogger.h"
 #include "CServer.h"
 #include "main.h"
 

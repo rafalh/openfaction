@@ -12,9 +12,9 @@
 #define CEVENT_H
 
 #include "CElement.h"
-#include "CInputBinaryStream.h"
+#include "util/CInputBinaryStream.h"
 #include <vector>
-#include "CString.h"
+#include "util/CString.h"
 
 class CEntity;
 

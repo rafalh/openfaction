@@ -12,7 +12,6 @@ project "OfClient"
 		".",
 		"../shared",
 		"../common/include",
-		"../common/include/util",
 		"../vendor/bullet/src",
 		"../vendor/irrlicht/include",
 		"../vendor/irrklang/include",

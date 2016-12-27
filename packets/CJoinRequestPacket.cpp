@@ -9,7 +9,7 @@
 *****************************************************************************/
 
 #include "CJoinRequestPacket.h"
-#include "rfproto.h"
+#include "formats/rfproto.h"
 
 CJoinRequestPacket::CJoinRequestPacket(CInputBinaryStream &Stream)
 {

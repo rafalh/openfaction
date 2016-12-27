@@ -11,12 +11,13 @@
 #ifndef CSTATICGEOMETRY_H
 #define CSTATICGEOMETRY_H
 
-#include "CInputBinaryStream.h"
 #include "CKillableObject.h"
 #include <btBulletCollisionCommon.h>
 #include <vector>
 #include <algorithm>
+#include <util/CString.h>
 
+class CInputBinaryStream;
 class CMultiTexture;
 
 class CRoom: public CKillableObject

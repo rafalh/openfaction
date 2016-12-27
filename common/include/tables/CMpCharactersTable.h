@@ -11,8 +11,8 @@
 #pragma once
 
 #include <vector>
-#include "CString.h"
-#include "CEntitiesTable.h"
+#include "util/CString.h"
+#include "tables/CEntitiesTable.h"
 
 class CTablesMgr;
 

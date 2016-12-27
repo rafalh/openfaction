@@ -9,7 +9,7 @@
 *****************************************************************************/
 
 #include "CPlayerConnection.h"
-#include "rfproto.h"
+#include "formats/rfproto.h"
 #include "CPlayer.h"
 #include "CServer.h"
 

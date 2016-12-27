@@ -10,8 +10,8 @@
 
 #pragma once
 
-#include "CInputBinaryStream.h"
-#include "CString.h"
+#include "util/CInputBinaryStream.h"
+#include "util/CString.h"
 #include <vector>
 #include <map>
 

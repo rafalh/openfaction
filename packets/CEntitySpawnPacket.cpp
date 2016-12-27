@@ -12,6 +12,7 @@
 #include "tables/CEntitiesTable.h"
 #include "tables/CMpCharactersTable.h"
 #include "CWeapon.h"
+#include "formats/rfproto.h"
 
 using namespace std;
 

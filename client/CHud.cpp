@@ -10,11 +10,11 @@
 
 #include "CHud.h"
 #include "CTextureMgr.h"
-#include "CException.h"
+#include "util/CException.h"
 #include "CGame.h"
 #include "CEntity.h"
 #include "CWeapon.h"
-#include "CString.h"
+#include "util/CString.h"
 #include "camera/CCamera.h"
 
 using namespace std;

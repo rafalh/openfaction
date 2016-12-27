@@ -12,7 +12,7 @@
 #define CSPAWNPOINT_H
 
 #include "CObject.h"
-#include "CInputBinaryStream.h"
+#include "util/CInputBinaryStream.h"
 
 class CSpawnpoint: public CObject
 {

@@ -12,8 +12,8 @@
 #define CSERVERCONFIG_H
 
 #include "precomp.h"
-#include "rfproto.h"
-#include "CLogger.h"
+#include "formats/rfproto.h"
+#include "util/CLogger.h"
 
 class CServerConfig
 {

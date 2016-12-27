@@ -9,8 +9,9 @@
 *****************************************************************************/
 
 #include "CAnimation.h"
-#include "rfa_format.h"
+#include "formats/rfa_format.h"
 #include "util/CException.h"
+#include "util/utils.h"
 #include "CAnimMgr.h"
 
 using namespace std;
@@ -32,7 +33,7 @@ void CAnimation::Load(CInputBinaryStream &Stream)
         THROW_EXCEPTION("Unknown RFA version: %u", Hdr.version);
     
     // Offsets
-    assert(Stream);
+    ASSERT(Stream);
     uint32_t MorphVerticesOffset = Stream.ReadUInt32();
     uint32_t MorphKeyframesOffset = Stream.ReadUInt32();
     std::vector<uint32_t> BoneOffsets(Hdr.cBones);
@@ -43,7 +44,7 @@ void CAnimation::Load(CInputBinaryStream &Stream)
     for(unsigned i = 0; i < Hdr.cBones; ++i)
     {
         SBone Bone;
-        assert(Stream && (uint32_t)Stream.tellg() == BoneOffsets[i]);
+        ASSERT(Stream && (uint32_t)Stream.tellg() == BoneOffsets[i]);
         
         Stream.ignore(4);
         uint16_t cRotKeys = Stream.ReadUInt16();
@@ -78,7 +79,7 @@ void CAnimation::Load(CInputBinaryStream &Stream)
     // rfa_morph_vertices_t
     if(Hdr.cMorphVertices)
     {
-        assert(Stream && (uint32_t)Stream.tellg() == MorphVerticesOffset);
+        ASSERT(Stream && (uint32_t)Stream.tellg() == MorphVerticesOffset);
         Stream.ignore(Hdr.cMorphVertices * 2);
     }
     
@@ -88,7 +89,7 @@ void CAnimation::Load(CInputBinaryStream &Stream)
     
     if(Hdr.cMorphKeyframes * Hdr.cMorphVertices > 0)
     {
-        assert(Stream && (uint32_t)Stream.tellg() == MorphKeyframesOffset);
+        ASSERT(Stream && (uint32_t)Stream.tellg() == MorphKeyframesOffset);
         
         if(Hdr.version == RFA_VERSION8)
         {
@@ -98,7 +99,7 @@ void CAnimation::Load(CInputBinaryStream &Stream)
             // rfa_morph_keyframes8_t::Aabb
             btVector3 vAabbMin = Stream.ReadVector();
             btVector3 vAabbMax = Stream.ReadVector();
-            assert(vAabbMin[0] <= vAabbMax[0] && vAabbMin[1] <= vAabbMax[1] && vAabbMin[2] <= vAabbMax[2]);
+            ASSERT(vAabbMin[0] <= vAabbMax[0] && vAabbMin[1] <= vAabbMax[1] && vAabbMin[2] <= vAabbMax[2]);
             
             // rfa_morph_keyframes8_t::Positions
             Stream.ignore(Hdr.cMorphKeyframes * Hdr.cMorphVertices * 3);

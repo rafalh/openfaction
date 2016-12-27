@@ -9,7 +9,7 @@
 *****************************************************************************/
 
 #include "CServerInfoPacket.h"
-#include "COutputBinaryStream.h"
+#include "util/COutputBinaryStream.h"
 #include "CServer.h"
 #include "CPlayersManager.h"
 #include "CLevel.h"

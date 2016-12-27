@@ -11,9 +11,9 @@
 #ifdef OF_SERVER
 # include "CServer.h"
 #endif // OF_SERVER
-#include "utils.h"
+#include "util/utils.h"
 #include "CEvent.h"
-#include "CLogger.h"
+#include "util/CLogger.h"
 #include "CLevel.h"
 #include "CEntity.h"
 #include "CElementsMgr.h"

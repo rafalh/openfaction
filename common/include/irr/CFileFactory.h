@@ -12,7 +12,7 @@
 #define CFILEFACTORY_H
 
 #include <irrKlang.h>
-#include "CString.h"
+#include "util/CString.h"
 #include "CVirtualFileSystem.h"
 
 class CIrrKlangReadFile: public irrklang::IFileReader

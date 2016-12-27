@@ -11,6 +11,7 @@
 #include "CItemApplyPacket.h"
 #include "CEntity.h"
 #include "CWeapon.h"
+#include "formats/rfproto.h"
 
 void CItemApplyPacket::Send(CPlayer *pPlayer) const
 {

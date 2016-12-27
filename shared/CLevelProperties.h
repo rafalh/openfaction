@@ -11,9 +11,9 @@
 #ifndef CLEVELPROPERTIES_H
 #define CLEVELPROPERTIES_H
 
-#include "CString.h"
-#include "CInputBinaryStream.h"
+#include "util/CString.h"
 
+class CInputBinaryStream;
 class CLevel;
 
 class CLevelProperties

@@ -10,7 +10,7 @@
 
 #include "CMessagePacket.h"
 #include "CServer.h"
-#include "CLogger.h"
+#include "util/CLogger.h"
 
 using namespace std;
 

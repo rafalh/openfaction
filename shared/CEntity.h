@@ -11,14 +11,13 @@
 #ifndef CENTITY_H
 #define CENTITY_H
 
-#include "rfproto.h"
 #include "CKillableObject.h"
-#include "CInputBinaryStream.h"
 #include "tables/CWeaponsTable.h"
 #include "CEntityState.h"
 #include "CEntityAction.h"
 #include <map>
 
+class CInputBinaryStream;
 class CPlayer;
 class CAnimatedMesh;
 class CWeapon;

@@ -9,11 +9,11 @@
 *****************************************************************************/
 
 #include "CVirtualFileSystem.h"
-#include "CFileList.h"
+#include "util/CFileList.h"
 #include "util/utils.h"
 #include "util/CException.h"
-#include "errors.h"
-#include "vpp_format.h"
+//#include "errors.h"
+#include "formats/vpp_format.h"
 
 using namespace std;
 

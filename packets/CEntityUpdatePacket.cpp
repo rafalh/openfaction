@@ -10,7 +10,7 @@
 
 #include "CEntityUpdatePacket.h"
 #include "CServer.h"
-#include "CLogger.h"
+#include "util/CLogger.h"
 #include "CWeapon.h"
 #include "CGame.h"
 

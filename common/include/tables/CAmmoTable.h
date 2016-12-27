@@ -11,7 +11,7 @@
 #ifndef CAMMOTABLE_H
 #define CAMMOTABLE_H
 
-#include "CString.h"
+#include "util/CString.h"
 #include <vector>
 
 struct SAmmoType

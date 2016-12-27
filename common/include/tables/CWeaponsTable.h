@@ -13,8 +13,8 @@
 
 #include <vector>
 #include <map>
-#include "CString.h"
-#include "CAmmoTable.h"
+#include "util/CString.h"
+#include "tables/CAmmoTable.h"
 
 class CTablesMgr;
 

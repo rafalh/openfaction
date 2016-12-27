@@ -12,8 +12,8 @@
 #define CPLAYERSTATSPACKET_H
 
 #include "precomp.h"
-#include "rfproto.h"
-#include "COutputBinaryStream.h"
+#include "formats/rfproto.h"
+#include "util/COutputBinaryStream.h"
 #include "CPlayer.h"
 
 class CPlayerStatsPacket

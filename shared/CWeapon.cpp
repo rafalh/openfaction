@@ -9,8 +9,8 @@
 *****************************************************************************/
 
 #include "CGame.h"
-#include "rfproto.h"
-#include "utils.h"
+#include "formats/rfproto.h" // FIXME
+#include "util/utils.h"
 #include "CWeapon.h"
 #include "CConsole.h"
 #include "CProjectile.h"

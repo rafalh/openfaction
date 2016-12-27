@@ -11,7 +11,7 @@
 #ifndef CANIMMGR_H
 #define CANIMMGR_H
 
-#include "CString.h"
+#include "util/CString.h"
 #include <map>
 #include "CAnimation.h"
 

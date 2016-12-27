@@ -11,7 +11,7 @@
 #ifndef CCMDHANDLER_H
 #define CCMDHANDLER_H
 
-#include "CString.h"
+#include "util/CString.h"
 #include "CConsole.h"
 
 class CServer;

@@ -12,8 +12,8 @@
 #define CSERVERENDPACKET_H
 
 #include "precomp.h"
-#include "rfproto.h"
-#include "CSocket.h"
+#include "formats/rfproto.h"
+#include "util/CSocket.h"
 
 class CServerEndPacket
 { 

@@ -13,7 +13,7 @@
 
 #include "precomp.h"
 #include "CGamemode.h"
-#include "rfproto.h"
+#include "formats/rfproto.h"
 
 class CServer;
 struct SItemClass;

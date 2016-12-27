@@ -11,18 +11,18 @@
 #ifndef CSERVER_H
 #define CSERVER_H
 
-#include "CSocket.h"
+#include "util/CSocket.h"
 #include "precomp.h"
 #include "main.h"
-#include "CThread.h"
-#include "CTimer.h"
+#include "util/CThread.h"
+#include "util/CTimer.h"
 #include "CPlayersManager.h"
-#include "CInputBinaryStream.h"
+#include "util/CInputBinaryStream.h"
 #include "CChecksum.h"
-#include "rfproto.h"
+#include "formats/rfproto.h"
 #include "CGame.h"
 #include "CEventsHandler.h"
-#include "CException.h"
+#include "util/CException.h"
 
 class CPlayer;
 class CClutter;

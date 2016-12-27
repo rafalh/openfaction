@@ -11,7 +11,7 @@
 #ifndef CGAMETABLE_H
 #define CGAMETABLE_H
 
-#include "CString.h"
+#include "util/CString.h"
 
 class CGameTable
 {

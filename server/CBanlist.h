@@ -14,7 +14,7 @@
 #include "precomp.h"
 #include "main.h"
 #include "CConsole.h"
-#include "CSocket.h"
+#include "util/CSocket.h"
 
 typedef struct _SIpRange
 {

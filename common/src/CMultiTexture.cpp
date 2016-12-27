@@ -9,7 +9,7 @@
 *****************************************************************************/
 
 #include "CMultiTexture.h"
-#include "vbm_format.h"
+#include "formats/vbm_format.h"
 #include "CTextureMgr.h"
 #include "util/CException.h"
 #include "CConsole.h"

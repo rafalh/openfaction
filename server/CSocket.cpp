@@ -8,7 +8,7 @@
 *
 *****************************************************************************/
 
-#include "CSocket.h"
+#include "util/CSocket.h"
 
 #ifdef _DEBUG
 void DumpBinData(const void *pData, unsigned cbData, FILE *File)

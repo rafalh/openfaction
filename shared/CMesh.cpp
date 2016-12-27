@@ -9,13 +9,13 @@
 *****************************************************************************/
 
 #include "CMesh.h"
-#include "v3d_format.h"
+#include "formats/v3d_format.h"
 #include "CConsole.h"
 #include "CLevelProperties.h"
 #include "CMeshMgr.h"
 #include "CGame.h"
 #include "CObject.h"
-#include "CException.h"
+#include "util/CException.h"
 #ifdef OF_CLIENT
 # include "irr/CReadFile.h"
 # include "CLevel.h"
