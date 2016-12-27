@@ -8,12 +8,12 @@
 *
 *****************************************************************************/
 
-#include "utils.h"
+#include "util/utils.h"
 #include "tables/CItemsTable.h"
 #include "tables/CTblReader.h"
-#include "CLogger.h"
+#include "util/CLogger.h"
 #include "tables/CTablesMgr.h"
-#include "CException.h"
+#include "util/CException.h"
 
 using namespace std;
 

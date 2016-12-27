@@ -10,7 +10,7 @@
 
 #include "tables/CMpCharactersTable.h"
 #include "tables/CTblReader.h"
-#include "utils.h"
+#include "util/utils.h"
 #include "tables/CTablesMgr.h"
 
 using namespace std;

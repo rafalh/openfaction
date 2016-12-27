@@ -10,7 +10,7 @@
 
 #include "CAnimation.h"
 #include "rfa_format.h"
-#include "CException.h"
+#include "util/CException.h"
 #include "CAnimMgr.h"
 
 using namespace std;

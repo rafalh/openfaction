@@ -11,9 +11,9 @@
 #include "CMultiTexture.h"
 #include "vbm_format.h"
 #include "CTextureMgr.h"
-#include "CException.h"
+#include "util/CException.h"
 #include "CConsole.h"
-#include "CLogger.h"
+#include "util/CLogger.h"
 #include "irr/CReadFile.h"
 #include "irr/CVbmAnimator.h"
 

@@ -12,7 +12,7 @@
 #define EENTITYSTATE_H_INCLUDED
 
 #include <cassert>
-#include "utils.h"
+#include "util/utils.h"
 
 class CEntityState
 {

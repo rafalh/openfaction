@@ -10,7 +10,7 @@
 
 #include "tables/CGameTable.h"
 #include "tables/CTblReader.h"
-#include "utils.h"
+#include "util/utils.h"
 
 using namespace std;
 

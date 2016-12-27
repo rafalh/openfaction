@@ -8,7 +8,7 @@
 *
 *****************************************************************************/
 
-#include "CLogger.h"
+#include "util/CLogger.h"
 #include "CConsole.h"
 #include <ctime>
 

@@ -9,7 +9,7 @@
 *****************************************************************************/
 
 #include "irr/CLodSceneNodeAnimator.h"
-#include "CLogger.h"
+#include "util/CLogger.h"
 
 using namespace std;
 using namespace irr;

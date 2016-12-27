@@ -13,14 +13,14 @@
 #include "CVirtualFileSystem.h"
 #include "CConsole.h"
 #include "CGame.h"
-#include "CException.h"
-#include "utils.h"
+#include "util/CException.h"
+#include "util/utils.h"
 
 using namespace std;
 
 CMeshMgr::~CMeshMgr()
 {
-    assert(m_Meshes.size() == 0);
+    ASSERT(m_Meshes.size() == 0);
 }
 
 CString CMeshMgr::FixFilename(const CString &strFilename)

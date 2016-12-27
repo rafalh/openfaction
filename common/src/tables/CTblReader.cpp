@@ -8,10 +8,10 @@
 *
 *****************************************************************************/
 
-#include "utils.h"
+#include "util/utils.h"
 #include "tables/CTblReader.h"
 #include "tables/CStringsTable.h"
-#include "CException.h"
+#include "util/CException.h"
 #include <cstdlib>
 #include <iostream>
 

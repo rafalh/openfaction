@@ -11,7 +11,7 @@
 #ifndef CANIMATION_H
 #define CANIMATION_H
 
-#include "CSharedObject.h"
+#include "util/CSharedObject.h"
 #include "CInputBinaryStream.h"
 #include <vector>
 

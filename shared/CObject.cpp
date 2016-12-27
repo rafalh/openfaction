@@ -69,6 +69,7 @@ void CObject::AddToWorld()
 #ifdef OF_CLIENT
     if(m_pSceneNode)
         m_pSceneNode->setVisible(true);
+        
 #endif // OF_CLIENT
 }
 

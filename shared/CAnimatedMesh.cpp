@@ -10,6 +10,7 @@ CAnimatedMesh::CAnimatedMesh(CMesh *pMesh):
 #if OF_CLIENT
     irr::scene::IMesh *pIrrMesh = m_pMesh->GetSubMesh(0)->GetIrrMesh();
     m_pIrrMesh = new irr::scene::SAnimatedMesh(pIrrMesh);
+    //m_pIrrMesh = pIrrMesh;
     
     for(unsigned i = 0; i < pIrrMesh->getMeshBufferCount(); ++i)
     {

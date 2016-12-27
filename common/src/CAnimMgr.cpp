@@ -10,9 +10,9 @@
 
 #include "CAnimMgr.h"
 #include "CVirtualFileSystem.h"
-#include "CException.h"
-#include "CGame.h"
-#include "CConsole.h"
+#include "util/CException.h"
+#include "util/CLogger.h"
+#include "util/utils.h"
 
 using namespace std;
 
@@ -43,7 +43,7 @@ CAnimation *CAnimMgr::Load(const CString &strFilename)
     CAnimation *pAnim = new CAnimation(this);
     m_Animations.insert(pair<CString, CAnimation*>(strFilename, pAnim));
     
-    //m_pGame->GetConsole()->DbgPrint("Loading animation %s\n", strFilename.c_str());
+    //CLogger::GetInst().PrintStatus("Loading animation %s\n", strFilename.c_str());
     
     try
     {
@@ -70,5 +70,5 @@ void CAnimMgr::Remove(CAnimation *pAnim)
             return;
         }
     
-    assert(false);
+    ASSERT(false);
 }

@@ -15,26 +15,15 @@
 #include <map>
 #include "CAnimation.h"
 
-class CGame;
-
 class CAnimMgr
 {
     public:
-        CAnimMgr(CGame *pGame):
-            m_pGame(pGame) {}
-        
         ~CAnimMgr();
         CString FixFilename(const CString &strFilename);
         CAnimation *Load(const CString &strFilename);
         
-        CGame *GetGame() const
-        {
-            return m_pGame;
-        }
-        
     private:
         std::map<CString, CAnimation*> m_Animations;
-        CGame *m_pGame;
         
         void Remove(CAnimation *pAnim);
         

@@ -8,7 +8,7 @@
 *
 *****************************************************************************/
 
-#include "utils.h"
+#include "util/utils.h"
 #include "tables/CWeaponsTable.h"
 #include "tables/CTblReader.h"
 #include "tables/CTablesMgr.h"

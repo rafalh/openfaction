@@ -13,7 +13,7 @@
 #include <vector>
 #include <irrlicht.h>
 #include "CInputBinaryStream.h"
-#include "CSharedObject.h"
+#include "util/CSharedObject.h"
 
 class CTextureMgr;
 

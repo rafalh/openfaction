@@ -14,6 +14,7 @@ project "OfServer"
 		"../packets",
 		"../vendor/bullet/src",
 		"../common/include",
+		"../common/include/util",
 	}
 	links {
 		"OF-Common",

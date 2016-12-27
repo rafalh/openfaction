@@ -9,7 +9,7 @@
 #include <tables/CGameTable.h>
 #include <tables/CMpCharactersTable.h>
 #include <tables/CFoleyTable.h>
-#include <CException.h>
+#include <util/CException.h>
 
 CTablesMgr::~CTablesMgr()
 {

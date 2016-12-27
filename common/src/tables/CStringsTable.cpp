@@ -8,7 +8,7 @@
 *
 *****************************************************************************/
 
-#include "utils.h"
+#include "util/utils.h"
 #include "tables/CStringsTable.h"
 #include "tables/CTblReader.h"
 #include <cstdlib>

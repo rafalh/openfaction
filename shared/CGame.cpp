@@ -13,8 +13,8 @@
 #include "CMeshMgr.h"
 #include "CAnimMgr.h"
 #include "CVirtualFileSystem.h"
-#include "CException.h"
-#include "utils.h"
+#include "util/CException.h"
+#include "util/utils.h"
 #include "CEventsHandler.h"
 #include "CConsole.h"
 #include "CString.h"
@@ -34,7 +34,7 @@ CGame::CGame(CConsole *pConsole, irr::IrrlichtDevice *pIrrDevice):
     m_pTablesMgr(nullptr)
 {
     m_pMeshMgr = new CMeshMgr(this);
-    m_pAnimMgr = new CAnimMgr(this);
+    m_pAnimMgr = new CAnimMgr();
     m_pTablesMgr = new CTablesMgr();
 #ifdef OF_CLIENT
     m_pTextureMgr = new CTextureMgr(m_pIrrDevice->getVideoDriver());

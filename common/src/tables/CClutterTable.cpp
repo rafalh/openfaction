@@ -10,8 +10,8 @@
 
 #include "tables/CClutterTable.h"
 #include "tables/CTblReader.h"
-#include "CLogger.h"
-#include "utils.h"
+#include "util/CLogger.h"
+#include "util/utils.h"
 
 using namespace std;
 
