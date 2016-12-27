@@ -11,7 +11,6 @@
 #include "CGame.h"
 #include "CLevel.h"
 #include "CMeshMgr.h"
-#include "CMaterialsMgr.h"
 #include "CAnimMgr.h"
 #include "CVirtualFileSystem.h"
 #include "CException.h"
@@ -22,6 +21,7 @@
 
 #include "tables/CTablesMgr.h"
 #ifdef OF_CLIENT
+# include "CTextureMgr.h"
 # include "CSoundManager.h"
 #endif // OF_CLIENT
 
@@ -33,13 +33,14 @@ CGame::CGame(CConsole *pConsole, irr::IrrlichtDevice *pIrrDevice):
     m_pConsole(pConsole), m_pEventsHandler(&CEventsHandler::Default), m_pIrrDevice(pIrrDevice),
     m_pTablesMgr(nullptr)
 {
-    m_pMaterialsMgr = new CMaterialsMgr(this);
     m_pMeshMgr = new CMeshMgr(this);
     m_pAnimMgr = new CAnimMgr(this);
     m_pTablesMgr = new CTablesMgr();
 #ifdef OF_CLIENT
+    m_pTextureMgr = new CTextureMgr(m_pIrrDevice->getVideoDriver());
     m_pSoundMgr = new CSoundManager(this);
 #else
+    m_pTextureMgr = NULL;
     m_pSoundMgr = NULL;
 #endif // OF_CLIENT
 
@@ -58,11 +59,11 @@ CGame::~CGame()
 {
     delete m_pLevel;
     delete m_pMeshMgr;
-    delete m_pMaterialsMgr;
     delete m_pAnimMgr;
     delete m_pTablesMgr;
     
 #ifdef OF_CLIENT
+    delete m_pTextureMgr;
     delete m_pSoundMgr;
     
     if(m_pIrrDevice)

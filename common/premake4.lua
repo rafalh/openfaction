@@ -8,4 +8,6 @@ project "OF-Common"
 	includedirs {
 		"include",
 		"../vendor/bullet/src",
+		"../vendor/irrlicht/include",
+		"../vendor/freetype/include",
 	}

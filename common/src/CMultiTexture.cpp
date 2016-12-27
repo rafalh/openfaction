@@ -8,35 +8,24 @@
 *
 *****************************************************************************/
 
-#include "CMaterial.h"
+#include "CMultiTexture.h"
 #include "vbm_format.h"
-#include "CMaterialsMgr.h"
+#include "CTextureMgr.h"
 #include "CException.h"
 #include "CConsole.h"
-#include "CGame.h"
-#ifdef OF_CLIENT
-# include "irr/CReadFile.h"
-# include "irr/CVbmAnimator.h"
-#endif // OF_CLIENT
+#include "CLogger.h"
+#include "irr/CReadFile.h"
+#include "irr/CVbmAnimator.h"
 
-using namespace std;
-#ifdef OF_CLIENT
-using namespace irr;
-#endif // OF_CLIENT
+unsigned CMultiTexture::m_UniqueId = 0;
 
-unsigned CMaterial::m_UniqueId = 0;
-
-CMaterial::CMaterial(CMaterialsMgr *pMaterialsMgr, const CString &strFilename):
-    m_pMaterialsMgr(pMaterialsMgr),
-#ifdef OF_CLIENT
+CMultiTexture::CMultiTexture(CTextureMgr *pTextureMgr, const CString &strFilename):
+    m_pTextureMgr(pTextureMgr),
     m_Fps(0), m_bAnimated(false), m_bAlpha(false),
-#endif // OF_CLIENT
     m_bInvisible(false)
 {
     if(strFilename == "sld_invisible01.tga" || strFilename == "mtl_invisible02.tga" || strFilename == "cem_invisible03.tga" || strFilename == "rck_invisible04.tga")
         m_bInvisible = true;
-    
-#ifdef OF_CLIENT
     
     try
     {
@@ -44,7 +33,7 @@ CMaterial::CMaterial(CMaterialsMgr *pMaterialsMgr, const CString &strFilename):
         CIrrReadFile IrrReadFile(strFilename);
         
         // Load standard image
-        video::IImage *pImg = m_pMaterialsMgr->GetGame()->GetVideoDriver()->createImageFromFile(&IrrReadFile);
+        irr::video::IImage *pImg = m_pTextureMgr->GetVideoDriver()->createImageFromFile(&IrrReadFile);
         
         if(pImg)
         {
@@ -54,7 +43,7 @@ CMaterial::CMaterial(CMaterialsMgr *pMaterialsMgr, const CString &strFilename):
                 m_bAlpha = true;
             
             // Create texture
-            video::ITexture *pTexture = m_pMaterialsMgr->GetGame()->GetVideoDriver()->addTexture(strFilename.c_str(), pImg);
+            irr::video::ITexture *pTexture = m_pTextureMgr->GetVideoDriver()->addTexture(strFilename.c_str(), pImg);
             pImg->drop();
             assert(pTexture);
             m_Frames.push_back(pTexture);
@@ -69,28 +58,23 @@ CMaterial::CMaterial(CMaterialsMgr *pMaterialsMgr, const CString &strFilename):
     }
     catch(const CException &e)
     {
-        m_pMaterialsMgr->GetGame()->GetConsole()->DbgPrint("Failed to load texture %s (%s)\n", strFilename.c_str(), e.what());
+        CLogger::GetInst().PrintError("Failed to load texture %s (%s)\n", strFilename.c_str(), e.what());
         // TODO
     }
-#endif // OF_CLIENT
 }
 
-CMaterial::~CMaterial()
+CMultiTexture::~CMultiTexture()
 {
-#ifdef OF_CLIENT
     // Destroy frames
     for(unsigned i = 0; i < m_Frames.size(); ++i)
-        m_pMaterialsMgr->GetGame()->GetVideoDriver()->removeTexture(m_Frames[i]);
+        m_pTextureMgr->GetVideoDriver()->removeTexture(m_Frames[i]);
     m_Frames.clear();
-#endif // OF_CLIENT
     
     // Remove ourself from materials manager
-    m_pMaterialsMgr->Remove(this);
+    m_pTextureMgr->Remove(this);
 }
 
-#ifdef OF_CLIENT
-
-bool CMaterial::LoadVbm(CInputBinaryStream &Stream)
+bool CMultiTexture::LoadVbm(CInputBinaryStream &Stream)
 {
     vbm_header_t Hdr;
     Stream.ReadBinary(&Hdr, sizeof(Hdr));
@@ -115,8 +99,9 @@ bool CMaterial::LoadVbm(CInputBinaryStream &Stream)
         vbm_pixel_t *pBuf = new vbm_pixel_t[Hdr.width * Hdr.height];
         Stream.ReadBinary(pBuf, Hdr.width * Hdr.height * sizeof(vbm_pixel_t));
         
-        video::IImage *pImg = m_pMaterialsMgr->GetGame()->GetVideoDriver()->createImage(video::ECF_A8R8G8B8, core::dimension2d<u32>(Hdr.width, Hdr.height)); // ECF_R5G6B5 doesnt work
-        for(unsigned y = 0; y < Hdr.height; ++y)
+        irr::video::IImage *pImg = m_pTextureMgr->GetVideoDriver()->createImage(
+            irr::video::ECF_A8R8G8B8, irr::core::dimension2d<irr::u32>(Hdr.width, Hdr.height)); // ECF_R5G6B5 doesnt work
+        for (unsigned y = 0; y < Hdr.height; ++y)
             for(unsigned x = 0; x < Hdr.width; ++x)
             {
                 unsigned r, g, b, a;
@@ -146,12 +131,12 @@ bool CMaterial::LoadVbm(CInputBinaryStream &Stream)
                         assert(false);
                 }
                 
-                pImg->setPixel(x, y, video::SColor(a, r, g, b));
+                pImg->setPixel(x, y, irr::video::SColor(a, r, g, b));
             }
         
         char szName[32];
         sprintf(szName, "__%u", m_UniqueId++);
-        video::ITexture *pTexture = m_pMaterialsMgr->GetGame()->GetVideoDriver()->addTexture(szName, pImg);
+        irr::video::ITexture *pTexture = m_pTextureMgr->GetVideoDriver()->addTexture(szName, pImg);
         
         m_Frames.push_back(pTexture);
         
@@ -166,9 +151,7 @@ bool CMaterial::LoadVbm(CInputBinaryStream &Stream)
     return true;
 }
 
-irr::scene::ISceneNodeAnimator *CMaterial::CreateAnimator(unsigned iNodeMaterial)
+irr::scene::ISceneNodeAnimator *CMultiTexture::CreateAnimator(unsigned iNodeMaterial)
 {
     return new CIrrVbmAnimator(this, iNodeMaterial);
 }
-
-#endif // OF_CLIENT

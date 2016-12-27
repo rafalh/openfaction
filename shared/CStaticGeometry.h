@@ -17,7 +17,7 @@
 #include <vector>
 #include <algorithm>
 
-class CMaterial;
+class CMultiTexture;
 
 class CRoom: public CKillableObject
 {
@@ -72,7 +72,13 @@ class CStaticGeometry
     
     private:
         std::vector<CRoom*> m_Rooms;
-        std::vector<CMaterial*> m_Materials;
+        std::vector<CMultiTexture*> m_Materials;
+
+        bool IsInvisibleLevelTexture(const CString &strFilename)
+        {
+            return strFilename == "sld_invisible01.tga" || strFilename == "mtl_invisible02.tga" ||
+                strFilename == "cem_invisible03.tga" || strFilename == "rck_invisible04.tga";
+        }
 };
 
 #endif // CSTATICGEOMETRY_H

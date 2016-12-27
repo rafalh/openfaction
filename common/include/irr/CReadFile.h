@@ -12,7 +12,6 @@
 #define CIRRREADFILE_H
 
 #include <irrlicht.h>
-#include <irrKlang.h>
 #include "CVirtualFileSystem.h"
 
 class CIrrReadFile: public irr::io::IReadFile

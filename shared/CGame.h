@@ -18,7 +18,7 @@
 
 class CLevel;
 class CMeshMgr;
-class CMaterialsMgr;
+class CTextureMgr;
 class CAnimMgr;
 class CSoundManager;
 class CConsole;
@@ -78,10 +78,12 @@ class CGame
             return m_pMeshMgr;
         }
         
-        CMaterialsMgr *GetMaterialsMgr() const
+#ifdef OF_CLIENT
+        CTextureMgr *GetTextureMgr() const
         {
-            return m_pMaterialsMgr;
+            return m_pTextureMgr;
         }
+#endif
         
         CAnimMgr *GetAnimMgr() const
         {
@@ -166,7 +168,7 @@ class CGame
         CConsole *m_pConsole;
         CLevel *m_pLevel;
         CMeshMgr *m_pMeshMgr;
-        CMaterialsMgr *m_pMaterialsMgr;
+        CTextureMgr *m_pTextureMgr;
         CAnimMgr *m_pAnimMgr;
         CSoundManager *m_pSoundMgr;
         CVirtualFileSystem *m_pVfs;

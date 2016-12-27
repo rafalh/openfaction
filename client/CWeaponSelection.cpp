@@ -10,7 +10,7 @@
 
 #include "CWeaponSelection.h"
 #include "utils.h"
-#include "CMaterialsMgr.h"
+#include "CTextureMgr.h"
 #include "CWeapon.h"
 #include "CEntity.h"
 #include "CGame.h"
@@ -90,9 +90,9 @@ void CWeaponSelection::Render()
         pWeaponCls = pWeapon->GetClass();
         
         if(!m_Textures[pWeaponCls->nId])
-            m_Textures[pWeaponCls->nId] = m_pGame->GetMaterialsMgr()->Load(pWeaponCls->strWeaponIcon);
+            m_Textures[pWeaponCls->nId] = m_pGame->GetTextureMgr()->Load(pWeaponCls->strWeaponIcon);
         
-        CMaterial *pTex = m_Textures[pWeaponCls->nId];
+        CMultiTexture *pTex = m_Textures[pWeaponCls->nId];
         if(pTex)
         {
             const core::dimension2du &ImgSize = pTex->GetFrame(0)->getSize();

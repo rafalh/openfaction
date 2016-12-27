@@ -10,7 +10,7 @@
 
 #include <irrlicht.h>
 using namespace irr;
-#include "CGUITTFont.h"
+#include "irr/CGUITTFont.h"
 
 namespace irr
 {

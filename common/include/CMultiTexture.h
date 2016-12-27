@@ -8,26 +8,20 @@
 *
 *****************************************************************************/
 
-#ifndef CVBM_H
-#define CVBM_H
+#pragma once
 
 #include <vector>
-#ifdef OF_CLIENT
-# include <irrlicht.h>
-#endif // OF_CLIENT
+#include <irrlicht.h>
 #include "CInputBinaryStream.h"
 #include "CSharedObject.h"
 
-class CMaterialsMgr;
+class CTextureMgr;
 
-class CMaterial: public CSharedObject
+class CMultiTexture: public CSharedObject
 {
     public:
-#ifdef OF_CLIENT
         irr::scene::ISceneNodeAnimator *CreateAnimator(unsigned iNodeMaterial);
-#endif // OF_CLIENT
         
-#ifdef OF_CLIENT
         irr::video::ITexture *GetFrame(unsigned i)
         {
             return i < m_Frames.size() ? m_Frames[i] : NULL;
@@ -52,7 +46,6 @@ class CMaterial: public CSharedObject
         {
             return m_bAlpha;
         }
-#endif // OF_CLIENT
 
         bool IsInvisible() const
         {
@@ -60,23 +53,17 @@ class CMaterial: public CSharedObject
         }
     
     private:
-        CMaterialsMgr *m_pMaterialsMgr;
-#ifdef OF_CLIENT
+        CTextureMgr *m_pTextureMgr;
         std::vector<irr::video::ITexture*> m_Frames;
         unsigned m_Fps;
         bool m_bAnimated, m_bAlpha;
-#endif // OF_CLIENT
         bool m_bInvisible;
         
         static unsigned m_UniqueId;
         
-        CMaterial(CMaterialsMgr *pMaterialsMgr, const CString &strFilename);
-        ~CMaterial();
-#ifdef OF_CLIENT
+        CMultiTexture(CTextureMgr *pTextureMgr, const CString &strFilename);
+        ~CMultiTexture();
         bool LoadVbm(CInputBinaryStream &Stream);
-#endif // OF_CLIENT
     
-    friend class CMaterialsMgr;
+    friend class CTextureMgr;
 };
-
-#endif // CVBM_H

@@ -17,7 +17,7 @@
 
 class CGame;
 class CEntity;
-class CMaterial;
+class CMultiTexture;
 class CWeapon;
 
 class CWeaponSelection: public irr::IEventReceiver
@@ -30,7 +30,7 @@ class CWeaponSelection: public irr::IEventReceiver
     
     private:
         CGame *m_pGame;
-        CMaterial *m_Textures[256];
+        CMultiTexture *m_Textures[256];
         
         EWeaponType m_WeaponType;
         unsigned m_iWeaponCls;

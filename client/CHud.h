@@ -15,7 +15,7 @@
 
 class CGame;
 class CEntity;
-class CMaterial;
+class CMultiTexture;
 
 class CHud
 {
@@ -35,13 +35,13 @@ class CHud
     
     private:
         CGame *m_pGame;
-        CMaterial *m_pReticleTexture;
-        CMaterial *m_HealthTextures[11];
-        CMaterial *m_EnviroTextures[11];
-        CMaterial *m_pAmmoBarTex;
-        CMaterial *m_pAmmoBarPowerTex;
-        CMaterial *m_pAmmoSignalGreenTex;
-        CMaterial *m_pAmmoSignalRedTex;
+        CMultiTexture *m_pReticleTexture;
+        CMultiTexture *m_HealthTextures[11];
+        CMultiTexture *m_EnviroTextures[11];
+        CMultiTexture *m_pAmmoBarTex;
+        CMultiTexture *m_pAmmoBarPowerTex;
+        CMultiTexture *m_pAmmoSignalGreenTex;
+        CMultiTexture *m_pAmmoSignalRedTex;
         irr::gui::IGUIFont *m_pFont;
         
         void RenderReticle(CEntity *pEntity);

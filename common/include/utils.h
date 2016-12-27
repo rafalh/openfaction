@@ -16,6 +16,8 @@
 #include <cctype>
 
 #define COUNTOF(array) (sizeof(array)/sizeof(array[0]))
+#define ALIGN(num, alignment) (((num) + (alignment) - 1) - ((num) + (alignment) - 1) % (alignment))
+#define ASSERT assert
 
 inline int StrCmpI(const char *pStr1, const char *pStr2)
 {

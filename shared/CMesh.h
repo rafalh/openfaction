@@ -20,7 +20,7 @@
 #endif // OF_CLIENT
 
 class CMeshMgr;
-class CMaterial;
+class CMultiTexture;
 class CObject;
 
 class CSubMesh
@@ -61,7 +61,7 @@ class CSubMesh
         std::vector<irr::scene::IMesh*> m_LodIrrMeshes;
         std::vector<float> m_LodDistances;
 #endif // OF_CLIENT
-        std::vector<CMaterial*> m_Materials;
+        std::vector<CMultiTexture*> m_Materials;
         
         void LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrrMesh);
 };

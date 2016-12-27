@@ -9,7 +9,7 @@
 *****************************************************************************/
 
 #include "CHud.h"
-#include "CMaterialsMgr.h"
+#include "CTextureMgr.h"
 #include "CException.h"
 #include "CGame.h"
 #include "CEntity.h"
@@ -29,22 +29,22 @@ CHud::CHud(CGame *pGame):
     {
         CString strFilename;
         strFilename.Format("health%u_0.tga", i * 10);
-        m_HealthTextures[i] = m_pGame->GetMaterialsMgr()->Load(strFilename);
+        m_HealthTextures[i] = m_pGame->GetTextureMgr()->Load(strFilename);
     }
     
     for(unsigned i = 0; i <= 10; ++i)
     {
         CString strFilename;
         strFilename.Format("enviro%u_0.tga", i * 10);
-        m_EnviroTextures[i] = m_pGame->GetMaterialsMgr()->Load(strFilename);
+        m_EnviroTextures[i] = m_pGame->GetTextureMgr()->Load(strFilename);
     }
     
-    m_pAmmoBarTex = m_pGame->GetMaterialsMgr()->Load("ammo_bar_0.tga");
-    m_pAmmoBarPowerTex = m_pGame->GetMaterialsMgr()->Load("ammo_bar_power_0.tga");
-    m_pAmmoSignalGreenTex = m_pGame->GetMaterialsMgr()->Load("ammo_signal_green_0.tga");
-    m_pAmmoSignalRedTex = m_pGame->GetMaterialsMgr()->Load("ammo_signal_red_0.tga");
+    m_pAmmoBarTex = m_pGame->GetTextureMgr()->Load("ammo_bar_0.tga");
+    m_pAmmoBarPowerTex = m_pGame->GetTextureMgr()->Load("ammo_bar_power_0.tga");
+    m_pAmmoSignalGreenTex = m_pGame->GetTextureMgr()->Load("ammo_signal_green_0.tga");
+    m_pAmmoSignalRedTex = m_pGame->GetTextureMgr()->Load("ammo_signal_red_0.tga");
     
-    m_pReticleTexture = m_pGame->GetMaterialsMgr()->Load("reticle_0.tga");
+    m_pReticleTexture = m_pGame->GetTextureMgr()->Load("reticle_0.tga");
 }
 
 CHud::~CHud()
@@ -103,7 +103,7 @@ void CHud::RenderHealthArmor(CEntity *pEntity)
     else if(iHealthTex < 0)
         iHealthTex = 0;
     
-    CMaterial *pHealthTex = m_HealthTextures[iHealthTex];
+    CMultiTexture *pHealthTex = m_HealthTextures[iHealthTex];
     
     const core::dimension2du &HealthImgSize = pHealthTex->GetFrame(0)->getSize();
     core::position2di HealthDestPos(30, 30);
@@ -117,7 +117,7 @@ void CHud::RenderHealthArmor(CEntity *pEntity)
     else if(iEnviroTex < 0)
         iEnviroTex = 0;
     
-    CMaterial *pEnviroTex = m_EnviroTextures[iEnviroTex];
+    CMultiTexture *pEnviroTex = m_EnviroTextures[iEnviroTex];
     
     const core::dimension2du &EnviroImgSize = pEnviroTex->GetFrame(0)->getSize();
     core::position2di EnviroDestPos(10, 10);
@@ -155,7 +155,7 @@ void CHud::RenderAmmo(CEntity *pEntity)
     
     m_pGame->GetVideoDriver()->draw2DImage(m_pAmmoBarTex->GetFrame(0), AmmoBarDestPos, AmmoBarSrcRect, 0, video::SColor(96, 255, 255, 255), true);
     
-    CMaterial *pSignalTex = bHasAmmo ? m_pAmmoSignalGreenTex : m_pAmmoSignalRedTex;
+    CMultiTexture *pSignalTex = bHasAmmo ? m_pAmmoSignalGreenTex : m_pAmmoSignalRedTex;
     const core::dimension2du &AmmoSignalSize = pSignalTex->GetFrame(0)->getSize();
     core::position2di AmmoSignalDestPos(ScrSize.Width - AmmoBarSize.Width - 30 - AmmoSignalSize.Width, 30);
     core::recti AmmoSignalSrcRect(0, 0, AmmoSignalSize.Width, AmmoSignalSize.Height);

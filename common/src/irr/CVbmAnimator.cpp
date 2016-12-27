@@ -8,35 +8,37 @@
 *
 *****************************************************************************/
 
+#define OF_CLIENT // FIXME
+
 #include "irr/CVbmAnimator.h"
-#include "CMaterial.h"
+#include "CMultiTexture.h"
 
 using namespace std;
 using namespace irr;
 
-CIrrVbmAnimator::CIrrVbmAnimator(CMaterial *pMaterial, unsigned iMaterial):
-    m_pMaterial(pMaterial), m_iMaterial(iMaterial)
+CIrrVbmAnimator::CIrrVbmAnimator(CMultiTexture *pMaterial, unsigned iMaterial):
+    m_pMultiTexture(pMaterial), m_iMaterial(iMaterial)
 {
-    m_pMaterial->AddRef();
+    m_pMultiTexture->AddRef();
 }
 
 CIrrVbmAnimator::~CIrrVbmAnimator()
 {
-    m_pMaterial->Release();
+    m_pMultiTexture->Release();
 }
 
 void CIrrVbmAnimator::animateNode(scene::ISceneNode *pNode, u32 uTimeMs)
 {
-    if(!pNode || !m_pMaterial || !m_pMaterial->GetFramesCount())
+    if(!pNode || !m_pMultiTexture || !m_pMultiTexture->GetFramesCount())
 		return;
     
-    unsigned uAnimationTime = uTimeMs % (m_pMaterial->GetFramesCount() * 1000 / m_pMaterial->GetFps());
-    unsigned iFrame = uAnimationTime * m_pMaterial->GetFps() / 1000;
+    unsigned uAnimationTime = uTimeMs % (m_pMultiTexture->GetFramesCount() * 1000 / m_pMultiTexture->GetFps());
+    unsigned uFrame = uAnimationTime * m_pMultiTexture->GetFps() / 1000;
     
-    pNode->getMaterial(m_iMaterial).setTexture(0, m_pMaterial->GetFrame(iFrame));
+    pNode->getMaterial(m_iMaterial).setTexture(0, m_pMultiTexture->GetFrame(uFrame));
 }
 
 scene::ISceneNodeAnimator *CIrrVbmAnimator::createClone(scene::ISceneNode *pNode, scene::ISceneManager *pNewManager)
 {
-	return new CIrrVbmAnimator(m_pMaterial, m_iMaterial);
+	return new CIrrVbmAnimator(m_pMultiTexture, m_iMaterial);
 }

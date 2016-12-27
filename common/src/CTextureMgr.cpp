@@ -8,32 +8,30 @@
 *
 *****************************************************************************/
 
-#include "CMaterialsMgr.h"
+#include "CTextureMgr.h"
 
-using namespace std;
-
-CMaterialsMgr::~CMaterialsMgr()
+CTextureMgr::~CTextureMgr()
 {
     assert(m_Materials.empty());
 }
 
-CMaterial *CMaterialsMgr::Load(const CString &strFilename)
+CMultiTexture *CTextureMgr::Load(const CString &strFilename)
 {
-    map<CString, CMaterial*>::iterator it = m_Materials.find(strFilename);
+    auto it = m_Materials.find(strFilename);
     if(it != m_Materials.end())
     {
         it->second->AddRef();
         return it->second;
     }
     
-    CMaterial *pMaterial = new CMaterial(this, strFilename);
-    m_Materials.insert(pair<CString, CMaterial*>(strFilename, pMaterial));
+    CMultiTexture *pMaterial = new CMultiTexture(this, strFilename);
+    m_Materials.insert(std::make_pair(strFilename, pMaterial));
     return pMaterial;
 }
 
-void CMaterialsMgr::Remove(CMaterial *pMaterial)
+void CTextureMgr::Remove(CMultiTexture *pMaterial)
 {
-    map<CString, CMaterial*>::iterator it;
+    std::map<CString, CMultiTexture*>::iterator it;
     for(it = m_Materials.begin(); it != m_Materials.end(); ++it)
         if(it->second == pMaterial)
         {

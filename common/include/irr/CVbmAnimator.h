@@ -8,24 +8,21 @@
 *
 *****************************************************************************/
 
-#ifndef CIRRVBMANIMATOR_H
-#define CIRRVBMANIMATOR_H
+#pragma once
 
 #include <irrlicht.h>
-#include "CMaterial.h"
+#include "CMultiTexture.h"
 
 class CIrrVbmAnimator: public irr::scene::ISceneNodeAnimator
 {
     public:
-        CIrrVbmAnimator(CMaterial *pVbm, unsigned iMaterial = 0);
+        CIrrVbmAnimator(CMultiTexture *pVbm, unsigned MaterialIndex = 0);
         
         virtual ~CIrrVbmAnimator();
         void animateNode(irr::scene::ISceneNode* node, irr::u32 uTimeMs);
         ISceneNodeAnimator *createClone(irr::scene::ISceneNode *pNode, irr::scene::ISceneManager *pNewManager);
     
     private:
-        CMaterial *m_pMaterial;
+        CMultiTexture *m_pMultiTexture;
         unsigned m_iMaterial;
 };
-
-#endif // CIRRVBMANIMATOR_H

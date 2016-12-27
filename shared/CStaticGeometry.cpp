@@ -12,11 +12,11 @@
 #include "CLevel.h"
 #include "CLevelProperties.h"
 #include "CConsole.h"
-#include "CMaterialsMgr.h"
 #include "rfl_format.h"
 #include "CGame.h"
 #include "CEventsHandler.h"
 #ifdef OF_CLIENT
+# include "CTextureMgr.h"
 # include "CLightmaps.h"
 # include "irr/CReadFile.h"
 # include "irr/CMeshSkyboxSceneNode.h"
@@ -24,6 +24,7 @@
 #endif // OF_CLIENT
 #include <utils.h>
 #include <cmath>
+#include <cassert>
 
 using namespace std;
 #ifdef OF_CLIENT
@@ -103,12 +104,17 @@ void CStaticGeometry::Load(CLevel *pLevel, CInputBinaryStream &Stream, unsigned 
     
     unsigned cTextures = Stream.ReadUInt32();
     assert(m_Materials.empty());
-    
+
+    std::vector<CString> MaterialNames;
+
     for(unsigned i = 0; i < cTextures; ++i)
     {
         CString strFilename = Stream.ReadString2();
-        CMaterial *pMaterial = pLevel->GetGame()->GetMaterialsMgr()->Load(strFilename);
+        MaterialNames.push_back(strFilename);
+#ifdef OF_CLIENT
+        CMultiTexture *pMaterial = pLevel->GetGame()->GetTextureMgr()->Load(strFilename);
         m_Materials.push_back(pMaterial);
+#endif // OF_CLIENT
     }
     
     unsigned cScrollAnim = Stream.ReadUInt32();
@@ -280,8 +286,9 @@ void CStaticGeometry::Load(CLevel *pLevel, CInputBinaryStream &Stream, unsigned 
     {
         SFace &Face = Faces[i];
         CRoom *pRoom = m_Rooms[Face.iRoom];
-        CMaterial *pMaterial = (Face.iTexture != 0xFFFFFFFF) ? m_Materials[Face.iTexture] : NULL;
-        bool bIsTransparent = (Face.uPortalUnk != 0) || (Face.uFlags & RFL_FF_SHOW_SKY) || (pMaterial && pMaterial->IsInvisible());
+        CMultiTexture *pMaterial = (Face.iTexture != 0xFFFFFFFF) ? m_Materials[Face.iTexture] : NULL;
+        const CString &MaterialName = (Face.iTexture != 0xFFFFFFFF) ? MaterialNames[Face.iTexture] : "";
+        bool bIsTransparent = (Face.uPortalUnk != 0) || (Face.uFlags & RFL_FF_SHOW_SKY) || IsInvisibleLevelTexture(MaterialName);
         
 #ifdef OF_CLIENT
         video::ITexture *pTexture = NULL, *pLightmapTexture = NULL;
@@ -471,8 +478,10 @@ void CStaticGeometry::Unload()
     // Cleanup rooms - they are deleted by CLevel
     m_Rooms.clear();
     
+#ifdef OF_CLIENT
     // Cleanup materials
     for(unsigned i = 0; i < m_Materials.size(); ++i)
         m_Materials[i]->Release();
     m_Materials.clear();
+#endif // OF_CLIENT
 }

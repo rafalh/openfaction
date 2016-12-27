@@ -13,7 +13,6 @@
 #include "CConsole.h"
 #include "CLevelProperties.h"
 #include "CMeshMgr.h"
-#include "CMaterialsMgr.h"
 #include "CGame.h"
 #include "CObject.h"
 #include "CException.h"
@@ -21,7 +20,8 @@
 # include "irr/CReadFile.h"
 # include "CLevel.h"
 # include "camera/CCamera.h"
-#include "irr/CLodSceneNodeAnimator.h"
+# include "irr/CLodSceneNodeAnimator.h"
+# include "CTextureMgr.h"
 #endif // OF_CLIENT
 
 #define USE_LOD_MODELS
@@ -168,8 +168,11 @@ void CMesh::LoadBones(CInputBinaryStream &Stream)
         //printf("%s (parent %d)\n\tpos: %.1f %.1f %.1f\n", Bone.strName.c_str(), Bone.iParent, Bone.vPos[0], Bone.vPos[1], Bone.vPos[2]);
         //printf("\trot: %.1f %.1f %.1f %.1f\n", Bone.qRot[0], Bone.qRot[1], Bone.qRot[2], Bone.qRot[3]);
         
-        if(Bone.iParent == -1)
+        if (Bone.iParent == -1)
+        {
+            assert(Root == -1); // only one root
             Root = i;
+        }
         
         m_Bones.push_back(Bone);
     }
@@ -186,15 +189,15 @@ void CMesh::PrepareBones(int iParent)
 {
     for(unsigned i = 0; i < m_Bones.size(); ++i)
     {
-        if(m_Bones[i].iParent == iParent)
-        {
+        //if(m_Bones[i].iParent == iParent)
+        //{
             SBone &Bone = m_Bones[i];
             
             Bone.ModelToBoneTransform = btTransform(Bone.qRot.inverse(), Bone.vPos);
             Bone.BoneToModelTransform = Bone.ModelToBoneTransform.inverse();
             
-            PrepareBones(i);
-        }
+        //    PrepareBones(i);
+        //}
     }
 }
 
@@ -277,12 +280,12 @@ CSubMesh::~CSubMesh()
         pMesh->drop();
     m_LodIrrMeshes.clear();
     m_LodDistances.clear();
-#endif // OF_CLIENT
-    
+
     // Cleanup materials
-    for(unsigned i = 0; i < m_Materials.size(); ++i)
+    for (unsigned i = 0; i < m_Materials.size(); ++i)
         m_Materials[i]->Release();
     m_Materials.clear();
+#endif // OF_CLIENT
 }
 
 void CSubMesh::Load(CInputBinaryStream &Stream)
@@ -386,10 +389,12 @@ void CSubMesh::LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrr
         CString strFilename = Stream.ReadString();
         if(bIrrMesh)
         {
-            CMaterial *pMaterial = m_pMeshMgr->GetGame()->GetMaterialsMgr()->Load(strFilename);
+#ifdef OF_CLIENT
+            CMultiTexture *pMaterial = m_pMeshMgr->GetGame()->GetTextureMgr()->Load(strFilename);
             if(!pMaterial)
                 m_pMeshMgr->GetGame()->GetConsole()->DbgPrint("Failed to load texture %s\n", strFilename.c_str());
             m_Materials.push_back(pMaterial);
+#endif // OF_CLIENT
         }
     }
     
@@ -425,7 +430,7 @@ void CSubMesh::LoadLodModel(CInputBinaryStream &Stream, bool bColMesh, bool bIrr
                 
                 if(i < cTextures)
                 {
-                    CMaterial *pMaterial = m_Materials[i];
+                    CMultiTexture *pMaterial = m_Materials[i];
                     video::ITexture *pTexture = pMaterial->GetFrame(0);
                     assert(pTexture);
                     pIrrMeshBuf->Material.setTexture(0, pTexture);
